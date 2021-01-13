@@ -15,7 +15,7 @@ export default function App() {
         Open up App.js to start working on your app! Hello babe! Is it me,
         you're looking for?
       </Text>
-      <Button title="sí?" onPress={yes} />
+      <Button style={styles.myButton} title="sí?" onPress={yes} />
       {sweety}
       <StatusBar style="auto" />
     </View>
@@ -29,4 +29,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  myButton: {
+    backgroundColor: "#ff6600",
+    color:"#fff"
+  }
+  
 });
