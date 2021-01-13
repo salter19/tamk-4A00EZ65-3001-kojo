@@ -1,14 +1,22 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, {useState} from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
+import Honey from './Honey'
 
 export default function App() {
+  const [sweety, setSweety] = useState();
+
+  const yes = () => {
+    setSweety(Honey);
+  }
   return (
     <View style={styles.container}>
       <Text>
         Open up App.js to start working on your app! Hello babe! Is it me,
         you're looking for?
       </Text>
+      <Button title="sí?" onPress={yes} />
+      {sweety}
       <StatusBar style="auto" />
     </View>
   );
