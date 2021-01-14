@@ -3,17 +3,28 @@ import React, {useState} from "react";
 import { Button, Text, View, StyleSheet } from "react-native";
 import InputText from './components/InputText'
 
+/*
+  const yes = () => {
+    setMessage('Tappara!');
+  };
+
+  const lectureView = () => {
+    return (
+      <View style={styles.root}>
+        <InputText onSubmitPress={yes}/>
+        <Text>{message}</Text>
+      </View>
+    );
+  };
+ */
+
 export default function App() {
   const [message, setMessage] = useState('');
 
-  const yes = () => {
-    setMessage('Tappara!');
-  }
 
   return (
     <View style={styles.root}>
-      <InputText onSubmitPress={yes}/>
-      <Text>{message}</Text>
+
       <StatusBar style="auto" />
     </View>
   );
