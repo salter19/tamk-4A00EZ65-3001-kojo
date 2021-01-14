@@ -1,37 +1,38 @@
 import { StatusBar } from "expo-status-bar";
 import React, {useState} from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
-import Honey from './Honey'
+import { Button, Text, View, StyleSheet } from "react-native";
+import InputText from './components/InputText'
 
 export default function App() {
-  const [sweety, setSweety] = useState();
+  const [message, setMessage] = useState('');
 
   const yes = () => {
-    setSweety(Honey);
+    setMessage('Tappara!');
   }
+
   return (
-    <View style={styles.container}>
-      <Text>
-        Open up App.js to start working on your app! Hello babe! Is it me,
-        you're looking for?
-      </Text>
-      <Button style={styles.myButton} title="sí?" onPress={yes} />
-      {sweety}
+    <View style={styles.root}>
+      <InputText onSubmitPress={yes}/>
+      <Text>{message}</Text>
       <StatusBar style="auto" />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+  root: {
+    flexDirection: "column",
     justifyContent: "center",
+    backgroundColor:"#ff6600",
+    height:"100%",
+    paddingTop:"25%",
+    paddingLeft:"5%"
   },
-  myButton: {
-    backgroundColor: "#ff6600",
-    color:"#fff"
+  text: {
+    width: 100
+  },
+  button: {
+    color: "#ff6600"
   }
-  
+
 });
