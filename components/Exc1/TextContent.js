@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   body: {
-    textAlign:"justify"
+    textAlign:"justify",
+    width: "61%"
   }
 });
 
