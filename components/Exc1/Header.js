@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     alignItems:"center"
   },
   header: {
-    fontWeight: "700",
+    fontWeight: "bold",
     fontSize: 27,
   }
 });
