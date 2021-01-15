@@ -97,4 +97,5 @@ const styles = StyleSheet.create({
   }
 });
 
+// Table3x3 needs to be exported to be used in elsewhere.
 export default Table3x3;

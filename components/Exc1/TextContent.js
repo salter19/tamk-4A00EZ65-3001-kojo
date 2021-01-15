@@ -27,4 +27,5 @@ const styles = StyleSheet.create({
   }
 });
 
+// TextContent needs to be exported to be used in elsewhere.
 export default TextContent;

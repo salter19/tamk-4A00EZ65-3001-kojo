@@ -24,4 +24,5 @@ const styles = StyleSheet.create({
   }
 });
 
+// Header needs to be exported to be used in elsewhere.
 export default Header;
