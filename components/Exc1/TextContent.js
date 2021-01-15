@@ -1,6 +1,10 @@
+// imports
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
+// TextContent component takes in content as props,
+// which it uses as the text content.
+// Props in here are destructed for the sake of compact code.
 const TextContent = ({content}) => {
 
   return (
@@ -8,9 +12,9 @@ const TextContent = ({content}) => {
       <Text style={styles.body}>{content}</Text>
     </View>
   );
-
 };
 
+// Styling of the elements in TextContent.
 const styles = StyleSheet.create({
   root: {
     alignItems: "center"
