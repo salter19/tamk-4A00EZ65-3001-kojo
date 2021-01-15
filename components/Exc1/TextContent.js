@@ -17,7 +17,9 @@ const styles = StyleSheet.create({
   },
   body: {
     textAlign:"justify",
-    width: "61%"
+    width: "61%",
+    color:"#fff",
+    letterSpacing: 0.8
   }
 });
 
