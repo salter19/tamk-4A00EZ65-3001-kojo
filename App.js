@@ -4,7 +4,7 @@ import { Button, Text, View, StyleSheet } from "react-native";
 // import InputText from './components/InputText'
 import Header from './components/Exc1/Header'
 import TextContent from './components/Exc1/TextContent'
-import Table from './components/Exc1/Table'
+import Table3x3 from './components/Exc1/Table3x3'
 
 /*
   const yes = () => {
@@ -29,7 +29,7 @@ export default function App() {
     <View style={styles.root}>
       <Header headerText="Otsikko"/>
       <TextContent content={message}/>
-      <Table />
+      <Table3x3 />
       <StatusBar style="auto" />
     </View>
   );
