@@ -1,30 +1,46 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {TextInput, Button, View, StyleSheet} from 'react-native';
+
+const InputText = (props) => {
+
+  const placeholder = 'Your message?'
+  const [message, onChangeText] = useState('');
+
+
+  const onSubmit = () => {
+    props.onSubmitPress(message);
+    onChangeText('');
+  }
+
+  return (
+    <View style={styles.root}>
+      <TextInput 
+        style={styles.input} 
+        placeholder={placeholder}
+        onChangeText={e => onChangeText(e)}
+        value={message}
+      />
+      <Button title="Submit" onPress={onSubmit}/>
+    </View>
+  );
+
+};
 
 const styles = StyleSheet.create({
   root: {
     flexDirection:"row",
-    borderColor: "#fff"
+    borderColor: "#fff", 
+    justifyContent: "center"
   },
   input: {
     height:40,
     borderColor: "#0c2576",
     backgroundColor:"#fff",
     borderWidth: 4,
-    width: "20%",
-    margin: 2
+    width: "40%",
+    margin: 2,
+    paddingLeft: 6,
   }
 });
-
-const InputText = (props) => {
-
-  return (
-    <View style={styles.root}>
-      <TextInput style={styles.input} onTouchEnd={e => console.log('end of touch')}/>
-      <Button title="Submit" onPress={props.onSubmitPress}/>
-    </View>
-  );
-
-};
 
 export default InputText;
