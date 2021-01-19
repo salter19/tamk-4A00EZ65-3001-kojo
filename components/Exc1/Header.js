@@ -8,7 +8,7 @@ import {View, Text, StyleSheet} from 'react-native';
 const Header = ({headerText}) => {
   return (
     <View style={styles.root}>
-      <Text style={styles.header}>{headerText}</Text>
+      <Text style={styles.header} numberOfLines={1}>{headerText}</Text>
     </View>
   );
 };

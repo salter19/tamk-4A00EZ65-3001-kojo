@@ -17,7 +17,7 @@ const Table3x3 = () => {
 
   // boxRow create a table row.
   // It takes as a param rowID, which is used for numbering the table elements.
-  const boxRow = (rowID) => {
+  const setRow = (rowID) => {
 
     // result will hold the row.
     let result = [];
@@ -56,7 +56,7 @@ const Table3x3 = () => {
         <View key={i} style={styles.horizontal}>
 
           {/* Param given to boxRow is it's rowID. */}
-          {boxRow(i + 1)}
+          {setRow(i + 1)}
         </View>
       );
     };
