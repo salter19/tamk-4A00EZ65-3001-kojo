@@ -20,11 +20,13 @@ export default function App() {
 
   const onInputTextSubmit = (input) => {
 
+    // Easter egg option included for output
     input === 'Tappara' || input === 'tappara'
     ? setOutputWithImage()
     : setOutput(input);
   }
 
+  // Easter egg brought in while sandboxing
   const setOutputWithImage = () => {
     setMessage('Kaikki jotka mahtuu änkee halliin!');
     setImage(<ImageDisplay/>);
