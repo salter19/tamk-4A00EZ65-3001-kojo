@@ -1,10 +1,10 @@
 // imports needed
 import { StatusBar } from "expo-status-bar";
 import React, {useState} from "react";
-import { Text, View, Image, StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import Constants from 'expo-constants';
 // import TextAndTable from './components/Exc1/TextAndTable';
-import InputText from './components/InputText';
+import InputText from './components/Exc2/InputText';
 import ImageDisplay from './components/ImageDisplay';
 
 
