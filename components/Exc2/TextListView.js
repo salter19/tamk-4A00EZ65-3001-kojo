@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
         width:"80%",
         paddingHorizontal: "8%",
         borderWidth: 2,
-        borderColor: "#ffffff"
+        borderColor: "#ffffff",
+        marginVertical:"3%"
     },
     scrollView: {
         marginVertical:"8%",
