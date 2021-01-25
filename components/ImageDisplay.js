@@ -8,6 +8,7 @@ const ImageDisplay = () => {
   const onPressHandler = () => {
     setMessage('Tappara kun iskee vanhaan malliin!');
   }
+  
   return (
     <View style={styles.root}>
       <Pressable onPress={onPressHandler}>

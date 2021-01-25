@@ -1,35 +1,34 @@
-import React, {useState, useEffect} from 'react';
-import {Text, ScrollView, StyleSheet, SafeAreaView, Touchable} from 'react-native';
-import {v4 as uuidv4} from 'uuid';
+import React, {useState, useEffect, Component} from 'react';
+import {
+    Text, 
+    ScrollView, 
+    StyleSheet, 
+    TouchableOpacity, 
+    View,
+} from 'react-native';
 
 
-const TextListView = ({input}) => {
-
-    const [itemsArr, setItemsArr] = useState([]);
-
-    // call useEffect at each input change
-    useEffect(() => {
-        // add input into itemsArr
-        addItemHandler();
-    }, [input]);
-    
-    const addItemHandler = () => {
-        if (input) {
-            setItemsArr([...itemsArr, input]);
-        }
-    };
+const TextListView = ({input, deleteItem}) => {
 
     return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView 
-                style={styles.scrollView} 
-                indicatorStyle={'white'}
-            >
-                {itemsArr.map(e => 
-                <Text key={uuidv4()} style={styles.text}>{e}</Text>)}
+        <View style={styles.container}>
+            {/* ScrollView for scrolling */}
+            <ScrollView>
+                {
+                    input.map(item => {
+                        return (
+                            // map through items of given array and render them
+                            // as touchable text
+                            <TouchableOpacity key={item.key} onPress={deleteItem(item.key)}>
+                                <Text style={styles.text}>{item.text}</Text>
+                            </TouchableOpacity>
+                        )
+                    })
+                }
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
+   
 };
 
 const styles = StyleSheet.create({
@@ -40,6 +39,9 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: "#ffffff",
         marginVertical:"3%"
+    },
+    itemContainer:{
+        backgroundColor:"#c9c9c9"
     },
     scrollView: {
         marginVertical:"8%",
