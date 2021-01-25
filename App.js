@@ -6,6 +6,7 @@ import Constants from 'expo-constants';
 // import TextAndTable from './components/Exc1/TextAndTable';
 import InputText from './components/Exc2/InputText';
 import ImageDisplay from './components/ImageDisplay';
+import ListView from './components/Exc2/ListView';
 
 
 // helper variables to demonstrate dynamic nature of component(s) in components/Exc1/
@@ -15,7 +16,7 @@ import ImageDisplay from './components/ImageDisplay';
 // the App to rule them all
 export default function App() {
 
-  const [message, setMessage] = useState('');
+  const [task, setTask] = useState('');
   const [image, setImage] = useState();
 
   const onInputTextSubmit = (input) => {
@@ -28,12 +29,12 @@ export default function App() {
 
   // Easter egg brought in while sandboxing
   const setOutputWithImage = () => {
-    setMessage('Kaikki jotka mahtuu änkee halliin!');
+    setTask('Kaikki jotka mahtuu änkee halliin!');
     setImage(<ImageDisplay/>);
   }
 
   const setOutput = (input) => {
-    setMessage(input);
+    setTask(input);
     setImage(null);
   }
 
@@ -46,7 +47,9 @@ export default function App() {
 
       {/* InputText is a sandbox thingy, now with image! */}
       <InputText onSubmitPress={onInputTextSubmit}/>
-      <Text style={styles.message}>{message}</Text>
+      {/* <Text style={styles.message}>{task}</Text> */}
+      
+      <ListView input={task}/>
       <View>{image}</View>
 
       {/* StatusBar component is phone's statusbar. */}
