@@ -6,7 +6,7 @@ import Constants from 'expo-constants';
 // import TextAndTable from './components/Exc1/TextAndTable';
 import InputText from './components/Exc2/InputText';
 import ImageDisplay from './components/ImageDisplay';
-import ListView from './components/Exc2/ListView';
+import TextListView from './components/Exc2/TextListView';
 
 
 // helper variables to demonstrate dynamic nature of component(s) in components/Exc1/
@@ -49,7 +49,7 @@ export default function App() {
       <InputText onSubmitPress={onInputTextSubmit}/>
       {/* <Text style={styles.message}>{task}</Text> */}
       
-      <ListView input={task}/>
+      <TextListView input={task}/>
       <View>{image}</View>
 
       {/* StatusBar component is phone's statusbar. */}

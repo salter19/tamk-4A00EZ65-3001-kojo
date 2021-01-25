@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Array, Text, View} from 'react-native';
 
-const ListView = ({input}) => {
+const TextListView = ({input}) => {
 
     const [itemsArr, setItemsArr] = useState([]);
 
@@ -24,4 +24,4 @@ const ListView = ({input}) => {
     );
 };
 
-export default ListView;
+export default TextListView;
