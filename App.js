@@ -48,14 +48,26 @@ export default function App() {
     setTaskArr([...taskArr, {key:uuidv4(), text:task}]);
   }
 
-  // this is the delete but it is activated with every touch of the screen
-  // so it does not work as it should
+  // this is the delete, which removes
+  // task pressed by its id
   const deleteItem = (itemKey) => {
-    for (let item of taskArr) {
+
+    // iterate / work on a temp
+    let tmp = taskArr;
+
+    // find the item that matches the given key
+    for (let item of tmp) {
       if (item.key === itemKey) {
-        console.log('remove item:' + itemKey)
+        const index = tmp.indexOf(item);
+        // splice it off
+        if (index > -1) {
+          tmp.splice(index, 1);
+        }
       }
     }
+
+    // set the temp into taskArr
+    setTaskArr(tmp);
   }
 
   return (
