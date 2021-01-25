@@ -46,7 +46,7 @@ export default function App() {
       {/* <TextAndTable header={tableAndTextHeader} textContent={loremIpsum}/> */}
 
       {/* InputText is a sandbox thingy, now with image! */}
-      <InputText onSubmitPress={onInputTextSubmit} style={styles.inputText}/>
+      <InputText onSubmitPress={onInputTextSubmit} />
       {/* <Text style={styles.message}>{task}</Text> */}
       
       <TextListView input={task}/>
@@ -74,7 +74,4 @@ const styles = StyleSheet.create({
   statusbar: {
     height: Constants.statusBarHeight,    
   }, 
-  inputText: {
-    marginTop: Constants.statusBarHeight * 2,
-  }
 });
