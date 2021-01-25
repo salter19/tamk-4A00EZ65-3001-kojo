@@ -1,32 +1,54 @@
-import React, {useState, useEffect, Component} from 'react';
+import React, {useState} from 'react';
 import {
     Text, 
     ScrollView, 
     StyleSheet, 
     TouchableOpacity, 
     View,
+    FlatList,
+    SafeAreaView
 } from 'react-native';
 
 
 const TextListView = ({input, deleteItem}) => {
+    const [deleteI, setDeleteI] = useState(null);
+
+    const _onPress = (item) => {
+        // set state deleteI
+        // it is used to update the flatlist
+        setDeleteI(item.key);
+
+        // call deleteItem in App
+        deleteItem(item.key);
+    }
+
+    const renderItem = ({item}) => {
+         
+        return (
+            <TouchableOpacity 
+                key={item.key} 
+                onPress={() => _onPress(item)}>
+    
+                <View style={styles.touchableItem}>
+                    <Text style={styles.text}>{item.text}</Text>
+                </View>
+                
+            </TouchableOpacity>);
+        
+    }
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             {/* ScrollView for scrolling */}
-            <ScrollView>
-                {
-                    input.map(item => {
-                        return (
-                            // map through items of given array and render them
-                            // as touchable text
-                            <TouchableOpacity key={item.key} onPress={deleteItem(item.key)}>
-                                <Text style={styles.text}>{item.text}</Text>
-                            </TouchableOpacity>
-                        )
-                    })
-                }
-            </ScrollView>
-        </View>
+            <FlatList 
+            style={styles.scrollView}
+            data={input}
+            renderItem={renderItem}
+            extraData={deleteI}
+            >
+            <Text>{deleteI}</Text>
+            </FlatList>
+        </SafeAreaView>
     );
    
 };
@@ -40,9 +62,6 @@ const styles = StyleSheet.create({
         borderColor: "#ffffff",
         marginVertical:"3%"
     },
-    itemContainer:{
-        backgroundColor:"#c9c9c9"
-    },
     scrollView: {
         marginVertical:"8%",
     },
@@ -51,6 +70,13 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 32,
         lineHeight: 42,
+    },
+    touchableItem: {
+        width: "100%",
+        borderColor: "#ffffff",
+        borderWidth: 2,
+        marginVertical: 4,
+        paddingHorizontal: 6
     }
 });
 
