@@ -33,10 +33,14 @@ const TextListView = ({input, deleteItem}) => {
                     <Text style={styles.text}>{item.text}</Text>
                 </View>
                 
-            </TouchableOpacity>);
-        
+            </TouchableOpacity>);   
     }
 
+    const itemSeparator = () => {
+        return (
+            <View style={styles.separator}/>
+        );
+    }
     return (
         <SafeAreaView style={styles.container}>
             {/* ScrollView for scrolling */}
@@ -45,6 +49,7 @@ const TextListView = ({input, deleteItem}) => {
             data={input}
             renderItem={renderItem}
             extraData={deleteI}
+            ItemSeparatorComponent={itemSeparator}
             >
             <Text>{deleteI}</Text>
             </FlatList>
@@ -77,6 +82,15 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         marginVertical: 4,
         paddingHorizontal: 6
+    },
+    separator: {
+        height: 6,
+        width:"80%",
+        backgroundColor: "#0c2576",
+        alignSelf:"center",
+        borderTopColor:"#ffffff",
+        borderBottomColor:"#ffffff",
+        borderWidth:1
     }
 });
 
