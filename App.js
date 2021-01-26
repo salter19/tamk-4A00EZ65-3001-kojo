@@ -7,7 +7,7 @@ import Constants from "expo-constants";
 import InputText from "./components/Exc2/InputText";
 import ImageDisplay from "./components/ImageDisplay";
 import TextListView from "./components/Exc2/TextListView";
-import EditTask from './components/EditTask';
+import EditTask from "./components/EditTask";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from "uuid";
 // const loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 // const tableAndTextHeader = 'Otsikko';
 
-const buttonTitles = {ok:'OK', close:'Close'};
+const buttonTitles = { ok: "OK", close: "Close" };
 
 // the App to rule them all
 export default function App() {
@@ -47,8 +47,8 @@ export default function App() {
       <TextListView input={taskArr} deleteItem={deleteItem} />
       {/* <View>{image}</View> */}
 
-      <EditTask 
-        onSubmitPress={addTaskHandler} 
+      <EditTask
+        onSubmitPress={addTaskHandler}
         buttonTitle1={buttonTitles.close}
         buttonTitle2={buttonTitles.ok}
       />
