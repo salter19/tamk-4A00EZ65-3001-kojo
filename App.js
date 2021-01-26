@@ -52,22 +52,8 @@ export default function App() {
   // task pressed by its id
   const deleteItem = (itemKey) => {
 
-    // iterate / work on a temp
-    let tmp = taskArr;
+    setTaskArr(taskArr.filter((item) => item.key !== itemKey ));
 
-    // find the item that matches the given key
-    for (let item of tmp) {
-      if (item.key === itemKey) {
-        const index = tmp.indexOf(item);
-        // splice it off
-        if (index > -1) {
-          tmp.splice(index, 1);
-        }
-      }
-    }
-
-    // set the temp into taskArr
-    setTaskArr(tmp);
   }
 
   return (
