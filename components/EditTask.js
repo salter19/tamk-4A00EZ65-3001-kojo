@@ -13,8 +13,10 @@ const EditTask = (props) => {
         {/*ToDo: dynamic title */}
         <InputText
           onSubmitPressed={props.onSubmitPressed}
-          buttonTitle="Close"
+          buttonTitle1={props.buttonTitle1}
+          buttonTitle2={props.buttonTitle2}
         />
+        
       </View>
     </Modal>
   );
