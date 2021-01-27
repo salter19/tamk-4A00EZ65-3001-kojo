@@ -56,6 +56,8 @@ export default function App() {
       {/* StatusBar component is phone's statusbar. */}
       <View style={styles.statusbar}>
         <StatusBar style="auto" />
+        <View></View>
+        <View></View>
       </View>
     </View>
   );
