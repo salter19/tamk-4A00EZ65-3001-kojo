@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 // my components
 import InputText from "./components/Exc2/InputText";
 import TextListView from "./components/Exc2/TextListView";
-// import EditTask from "./components/EditTask";
+import EditTask from "./components/EditTask";
 import { LoadTasks, SaveTasks } from './data/TaskStorage';
 
 
@@ -39,11 +39,7 @@ export default function App() {
       {/* TextListView  to list those tasks*/}
       <TextListView input={taskArr} deleteItem={deleteItem} />
 
-      {/* <EditTask
-        onSubmitPress={addTaskHandler}
-        buttonTitle1={buttonTitles.close}
-        buttonTitle2={buttonTitles.ok}
-      /> */}      
+      <EditTask />
 
       {/* StatusBar component is phone's statusbar. */}
       <View style={styles.statusbar}>
