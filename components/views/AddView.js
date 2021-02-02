@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { v4 as uuidv4 } from "uuid";
 
 // my components
 import Textfield from '../Exc2/InputText';
-import TaskList from '../Exc2/TextListView';
 
-const AddView = ({onAddSubmit, deleteItem}) => {
+const AddView = ({onAddSubmit}) => {
 
   const [taskArr, setTaskArr] = useState([]);
 
+
   const onSubmit = (task) => {
-    setTaskArr([...taskArr, {key: uuidv4(), text:task}]);
-    onAddSubmit(taskArr);
+    let tmp = taskArr;
+    tmp.push({ key: uuidv4(), text:task });
+    onAddSubmit(tmp);
   };
 
   return (
     <View style={styles.root}>
       <Textfield onSubmitPress={onSubmit} buttonTitle="Add"/>
-      <TaskList input={taskArr} deleteItem={deleteItem}/>
     </View>
   );
 };
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#ff6600",
     height: "100%",
-    paddingLeft: "5%",
+    width: "61%"
   }
 });
 
