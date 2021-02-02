@@ -3,26 +3,33 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import { v4 as uuidv4 } from "uuid";
 
 // my components
-
-
-const buttonTitles = { ok: "OK", close: "Close" };
+import AddView from './components/views/AddView';
 
 // the App to rule them all
 export default function App() {
+
+  const [taskArr, setTaskArr] = useState([]);
   
+  const onAddSubmit = (tasks) => {
+    setTaskArr(tasks);
+  };
+
+  const deleteTask = (key) => {
+    setTaskArr(taskArr.filter((item) => item.key !== key));
+  };
 
   return (
     <View style={styles.root}>
 
-
       {/* StatusBar component is phone's statusbar. */}
       <View style={styles.statusbar}>
         <StatusBar style="auto" />
-        
       </View>
+
+      <AddView onAddSubmit={onAddSubmit} deleteItem={deleteTask}/>
+      
     </View>
   );
 }
