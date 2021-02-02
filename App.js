@@ -6,10 +6,6 @@ import Constants from "expo-constants";
 import { v4 as uuidv4 } from "uuid";
 
 // my components
-import InputText from "./components/Exc2/InputText";
-import TextListView from "./components/Exc2/TextListView";
-import EditTask from "./components/EditTask";
-import { LoadTasks, SaveTasks } from './data/TaskStorage';
 
 
 const buttonTitles = { ok: "OK", close: "Close" };
@@ -17,7 +13,6 @@ const buttonTitles = { ok: "OK", close: "Close" };
 // the App to rule them all
 export default function App() {
   const [taskArr, setTaskArr] = useState([]);
-  const [isEditViewVisible, setEditViewVisible] = useState(false);
 
   // add tasks to an array
   const addTaskHandler = (task) => {
@@ -33,13 +28,6 @@ export default function App() {
   return (
     <View style={styles.root}>
 
-      {/* InputText for text input */}
-      <InputText onSubmitPress={addTaskHandler} buttonTitle={buttonTitles.ok} />
-
-      {/* TextListView  to list those tasks*/}
-      <TextListView input={taskArr} deleteItem={deleteItem} />
-
-      <EditTask />
 
       {/* StatusBar component is phone's statusbar. */}
       <View style={styles.statusbar}>
