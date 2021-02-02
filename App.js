@@ -5,7 +5,6 @@ import { Text, View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
 
 // my components
-import AddView from './components/views/AddView';
 
 // the App to rule them all
 export default function App() {
@@ -28,7 +27,6 @@ export default function App() {
         <StatusBar style="auto" />
       </View>
 
-      <AddView onAddSubmit={onAddSubmit} deleteItem={deleteTask}/>
       
     </View>
   );
