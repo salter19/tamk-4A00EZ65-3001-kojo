@@ -12,18 +12,7 @@ const buttonTitles = { ok: "OK", close: "Close" };
 
 // the App to rule them all
 export default function App() {
-  const [taskArr, setTaskArr] = useState([]);
-
-  // add tasks to an array
-  const addTaskHandler = (task) => {
-    setTaskArr([...taskArr, { key: uuidv4(), text: task }]);
-  };
-
-  // this is the delete, which removes
-  // task pressed by its id
-  const deleteItem = (itemKey) => {
-    setTaskArr(taskArr.filter((item) => item.key !== itemKey));
-  };
+  
 
   return (
     <View style={styles.root}>
