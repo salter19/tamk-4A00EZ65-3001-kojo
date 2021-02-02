@@ -3,12 +3,11 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
-// import TextAndTable from './components/Exc1/TextAndTable';
+
+// my components
 import InputText from "./components/Exc2/InputText";
-import ImageDisplay from "./components/ImageDisplay";
 import TextListView from "./components/Exc2/TextListView";
 // import EditTask from "./components/EditTask";
-import Timer from './components/Exc3/Timer';
 import { LoadTasks, SaveTasks } from './data/TaskStorage';
 
 import { v4 as uuidv4 } from "uuid";
