@@ -9,6 +9,7 @@ import ImageDisplay from "./components/ImageDisplay";
 import TextListView from "./components/Exc2/TextListView";
 // import EditTask from "./components/EditTask";
 import Timer from './components/Exc3/Timer';
+import { LoadTasks, SaveTasks } from './components/TaksStorage';
 
 import { v4 as uuidv4 } from "uuid";
 
