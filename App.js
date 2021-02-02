@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
+import { v4 as uuidv4 } from "uuid";
 
 // my components
 import InputText from "./components/Exc2/InputText";
@@ -10,11 +11,6 @@ import TextListView from "./components/Exc2/TextListView";
 // import EditTask from "./components/EditTask";
 import { LoadTasks, SaveTasks } from './data/TaskStorage';
 
-import { v4 as uuidv4 } from "uuid";
-
-// helper variables to demonstrate dynamic nature of component(s) in components/Exc1/
-// const loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
-// const tableAndTextHeader = 'Otsikko';
 
 const buttonTitles = { ok: "OK", close: "Close" };
 
