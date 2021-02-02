@@ -4,4 +4,4 @@ const ButtonTypes = {
   UPDATE: 'UPDATE' 
 };
 
-export default { ADD, DELETE, UPDATE };
+export default ButtonTypes;
