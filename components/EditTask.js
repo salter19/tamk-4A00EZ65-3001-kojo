@@ -1,24 +1,14 @@
-import React, { useState } from "react";
-import { Modal, StyleSheet, View, Button } from "react-native";
+import React from "react";
+import { Modal, StyleSheet, View} from "react-native";
 
 import InputText from "./Exc2/InputText";
 
 const EditTask = (props) => {
-  const onClosePressed = () => {
-    console.log("Close modal");
-  };
+  
   return (
-    <Modal animationType="fade" transparent={true} visible={props.visible}>
-      <View style={styles.root}>
-        {/*ToDo: dynamic title */}
-        <InputText
-          onSubmitPressed={props.onSubmitPressed}
-          buttonTitle1={props.buttonTitle1}
-          buttonTitle2={props.buttonTitle2}
-        />
-        
+      <View>
+          <Text>Edit task</Text>
       </View>
-    </Modal>
   );
 };
 
