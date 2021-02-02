@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {
     Text, 
-    ScrollView, 
     StyleSheet, 
     TouchableOpacity, 
     View,
@@ -12,6 +11,7 @@ import {
 
 const TextListView = ({input, deleteItem}) => {
     const [deleteI, setDeleteI] = useState(null);
+    console.log(input.length)
 
     const _onPress = (item) => {
         // set state deleteI
@@ -43,7 +43,7 @@ const TextListView = ({input, deleteItem}) => {
     }
     return (
         <SafeAreaView style={styles.container}>
-            {/* ScrollView for scrolling */}
+            {/* FlatList for scrolling */}
             <FlatList 
             style={styles.scrollView}
             data={input}
@@ -61,7 +61,7 @@ const TextListView = ({input, deleteItem}) => {
 const styles = StyleSheet.create({
     container: {
         height: "30%",
-        width:"80%",
+        width:"100%",
         paddingHorizontal: "8%",
         borderWidth: 2,
         borderColor: "#ffffff",
