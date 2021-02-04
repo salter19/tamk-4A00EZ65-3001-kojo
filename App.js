@@ -9,6 +9,7 @@ import {v4 as uuidv4} from 'uuid';
 import ButtonTypes from './data/ButtonTypes';
 import Textfield from './components/Exc2/InputText';
 import TaskList from './components/Exc2/TextListView';
+import EditTask from "./components/EditTask";
 
 // the App to rule them all
 export default function App() {
@@ -47,7 +48,11 @@ export default function App() {
       </View>
 
       <View>
-        <Text>{() => isModify ? "true": "false"}</Text>
+        {
+          isModify 
+          ? <EditTask isModify={isModify} onClose={() => setModify(false)}/>
+          : <Text>Whadup?</Text>
+        }
       </View>
 
       
