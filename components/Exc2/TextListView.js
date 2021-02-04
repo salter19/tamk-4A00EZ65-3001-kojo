@@ -13,6 +13,10 @@ const TextListView = ({input, deleteItem}) => {
     const [deleteI, setDeleteI] = useState(null);
 
     const _onPress = (item) => {
+      console.log("I want to modify!")
+    }
+
+    const _onLongPress = (item) => {
         // set state deleteI
         // it is used to update the flatlist
         setDeleteI(item.key);
@@ -26,7 +30,9 @@ const TextListView = ({input, deleteItem}) => {
         return (
             <TouchableOpacity 
                 key={item.key} 
-                onPress={() => _onPress(item)}>
+                onPress={() => _onPress(item)}
+                onLongPress= { () => _onLongPress(item)}
+            >
     
                 <View style={styles.touchableItem}>
                     <Text style={styles.text}>{item.text}</Text>

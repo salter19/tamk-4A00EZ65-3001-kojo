@@ -6,8 +6,11 @@ const InputText = (props) => {
   const [message, onChangeText] = useState("");
 
   const onSubmit = () => {
-    props.onSubmitPress(message);
-    onChangeText("");
+
+    if (message.length > 0 && message !== " ") {
+      props.onSubmitPress(message);
+      onChangeText("");
+    }
   };
 
   return (
