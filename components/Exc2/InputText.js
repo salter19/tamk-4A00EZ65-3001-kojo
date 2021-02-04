@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextInput, Button, View, StyleSheet } from "react-native";
 
 const InputText = (props) => {
-  const placeholder = "Your message?";
+  const placeholder = "Your task?";
   const [message, onChangeText] = useState("");
 
   const onSubmit = () => {
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     borderColor: "#0c2576",
     backgroundColor: "#fff",
     borderWidth: 4,
-    width: "40%",
+    width: "61%",
     margin: 2,
     paddingLeft: 6,
   },

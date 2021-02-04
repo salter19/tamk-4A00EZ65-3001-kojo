@@ -11,7 +11,6 @@ import {
 
 const TextListView = ({input, deleteItem}) => {
     const [deleteI, setDeleteI] = useState(null);
-    console.log(input.length)
 
     const _onPress = (item) => {
         // set state deleteI
@@ -41,11 +40,12 @@ const TextListView = ({input, deleteItem}) => {
             <View style={styles.separator}/>
         );
     }
+    
     return (
         <SafeAreaView style={styles.container}>
             {/* FlatList for scrolling */}
             <FlatList 
-            style={styles.scrollView}
+            style={styles.flatListView}
             data={input}
             renderItem={renderItem}
             extraData={deleteI}
@@ -60,14 +60,13 @@ const TextListView = ({input, deleteItem}) => {
 
 const styles = StyleSheet.create({
     container: {
-        height: "30%",
-        width:"100%",
+        width: "100%",
         paddingHorizontal: "8%",
         borderWidth: 2,
         borderColor: "#ffffff",
         marginVertical:"3%"
     },
-    scrollView: {
+    flatListView: {
         marginVertical:"8%",
     },
     text: {
