@@ -14,10 +14,9 @@ import TaskList from './components/Exc2/TextListView';
 export default function App() {
 
   const [taskArr, setTaskArr] = useState([]);
+  const [isModify, setModify] = useState(false);
   
   const onAddSubmit = (strItem) => {
-    console.log(strItem);
-
     setTaskArr([... taskArr, { key: uuidv4(), text:strItem}]);
   };
 
@@ -27,6 +26,7 @@ export default function App() {
 
   const modifyTask = (key) => {
     console.log(`you want to modify ${key}`);
+    setModify(true);
   }
   console.log(taskArr)
 
@@ -44,6 +44,10 @@ export default function App() {
 
       <View style={styles.list}>
         <TaskList input={taskArr} deleteItem={deleteTask} modifyItem={modifyTask}/>
+      </View>
+
+      <View>
+        <Text>{() => isModify ? "true": "false"}</Text>
       </View>
 
       
