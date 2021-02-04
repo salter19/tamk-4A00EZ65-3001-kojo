@@ -25,6 +25,9 @@ export default function App() {
     setTaskArr(taskArr.filter((item) => item.key !== key));
   };
 
+  const modifyTask = (key) => {
+    console.log(`you want to modify ${key}`);
+  }
   console.log(taskArr)
 
   return (
@@ -40,7 +43,7 @@ export default function App() {
       </View>
 
       <View style={styles.list}>
-        <TaskList input={taskArr} deleteItem={deleteTask}/>
+        <TaskList input={taskArr} deleteItem={deleteTask} modifyItem={modifyTask}/>
       </View>
 
       
