@@ -9,11 +9,11 @@ import {
 } from 'react-native';
 
 
-const TextListView = ({input, deleteItem}) => {
+const TextListView = ({input, deleteItem, modifyItem}) => {
     const [deleteI, setDeleteI] = useState(null);
 
     const _onPress = (item) => {
-      console.log("I want to modify!")
+      modifyItem(item.text);
     }
 
     const _onLongPress = (item) => {
