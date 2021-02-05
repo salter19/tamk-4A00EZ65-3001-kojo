@@ -1,25 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextInput, Button, View, StyleSheet } from "react-native";
 
 const InputText = (props) => {
   const placeholder = "Your task?";
-  const [message, onChangeText] = useState("");
+  const [userText, setUserText] = useState("");
 
   const onSubmit = () => {
 
-    if (message.length > 0 && message !== " ") {
-      props.onSubmitPress(message);
-      onChangeText("");
+    if (userText.length > 0 && userText !== " ") {
+      props.onSubmitPress(userText);
+      setUserText("");
     }
   };
+
+  useEffect(() => {
+    props.userText !== undefined 
+    ? setUserText(props.userText)
+    : setUserText("");
+    
+  }, [props.userText]);
 
   return (
     <View style={styles.root}>
       <TextInput
         style={styles.input}
-        placeholder={placeholder}
-        onChangeText={(e) => onChangeText(e)}
-        value={message}
+        placeholder={userText === "" ? placeholder : userText}
+        onChangeText={(e) => setUserText(e)}
+        value={userText}
       />
       <Button title={props.buttonTitle} onPress={onSubmit} />
     </View>

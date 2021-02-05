@@ -1,73 +1,69 @@
 import React, {useEffect, useState} from "react";
-import { Modal, StyleSheet, View, Text, TouchableHighlight} from "react-native";
+import { Modal, StyleSheet, View, Button} from "react-native";
 
-const EditTask = ({isModify, onClose}) => {
+import Textfield from '../components/Exc2/InputText';
+import ButtonTypes from "../data/ButtonTypes";
+
+const EditTask = ({isModify, onClose, onSubmitPress, currentTaskText}) => {
   const [isVisible, setVisible] = useState(false);
+  const [currentItem, setCurrentItem] = useState(undefined);
 
-  useEffect(()=> {
+  useEffect(() => {
     setVisible(true)
   }, [isModify])
+
+  useEffect(() => {
+    currentTaskText !== undefined ? 
+      setCurrentItem(currentTaskText)
+      : setCurrentItem(undefined);
+    
+  }, [currentTaskText]);
 
   const saveOnClose = () => {
     console.log('Should save here, before closing')
     onClose();
   }
+
+  const onClosePressed = () => {
+    console.log('pressed close, should save')
+    onClose();
+
+  }
   
   return (
-      <View style={styles.centeredView}>
-          <Modal 
-            animationType= "slide"
-            transparent={true}
-            visible={isVisible}
-            onRequestClose={saveOnClose}
-          >
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <TouchableHighlight
-                style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-                onPress={() => {
-                  setVisible(!isVisible);
-                }}
-                >
-                  <Text style={styles.textStyle}>Hide Modal</Text>
-                </TouchableHighlight>
+    <Modal 
+      animationType= "fade"
+      transparent={true}
+      visible={isVisible}
+      onRequestClose={saveOnClose}
+    >
+      <View style={[styles.centeredView, styles.root]}>
 
-              </View>
-            </View>
-           
-          </Modal>
+        <Textfield 
+          onSubmitPress={onSubmitPress}
+          buttonTitle={currentItem ? ButtonTypes.UPDATE : ButtonTypes.ADD}
+          userText={currentItem}
+        />
+
+        <Button title={ButtonTypes.CLOSE} onPress={onClosePressed}></Button>
+
       </View>
+      
+    </Modal>
+    
   );
 };
 
 const styles = StyleSheet.create({
+  root: {
+    backgroundColor:"rgba(255, 255, 255, 0.81)"
+  },
   centeredView: {
     flex:1,
     justifyContent:"center",
     alignItems:"center",
     marginTop:"2%"
   }, 
-  modalView: {
-    margin: 2,
-    backgroundColor: "white",
-    borderRadius: 8,
-    padding: 3,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5
-  },
-  openButton: {
-    backgroundColor: "#F194FF",
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2
-  },
 });
 
 export default EditTask;

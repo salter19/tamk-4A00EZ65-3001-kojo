@@ -1,7 +1,8 @@
 const ButtonTypes = {
   ADD: 'ADD', 
   DELETE: 'DELETE',
-  UPDATE: 'UPDATE' 
+  UPDATE: 'UPDATE',
+  CLOSE: 'CLOSE' 
 };
 
 export default ButtonTypes;

@@ -13,7 +13,7 @@ const TextListView = ({input, deleteItem, modifyItem}) => {
     const [deleteI, setDeleteI] = useState(null);
 
     const _onPress = (item) => {
-      modifyItem(item.text);
+      modifyItem(item);
     }
 
     const _onLongPress = (item) => {
@@ -24,21 +24,24 @@ const TextListView = ({input, deleteItem, modifyItem}) => {
         // call deleteItem in App
         deleteItem(item.key);
     }
-
-    const renderItem = ({item}) => {
-         
+    const renderItem = ({item, index}) => {
+        
         return (
-            <TouchableOpacity 
-                key={item.key} 
-                onPress={() => _onPress(item)}
-                onLongPress= { () => _onLongPress(item)}
-            >
-    
-                <View style={styles.touchableItem}>
-                    <Text style={styles.text}>{item.text}</Text>
-                </View>
-                
-            </TouchableOpacity>);   
+          
+          <TouchableOpacity 
+              key={item.key} 
+              onPress={() => _onPress(item)}
+              onLongPress= { () => _onLongPress(item)}
+          >
+            <View style={[
+              index % 2 === 0 
+              ? styles.touchableItem_even
+              : styles.touchableItem_odd,
+              ]}>
+                <Text style={styles.text}>{item.text}</Text>
+            </View>          
+              
+          </TouchableOpacity>);   
     }
 
     const itemSeparator = () => {
@@ -49,16 +52,17 @@ const TextListView = ({input, deleteItem, modifyItem}) => {
     
     return (
         <SafeAreaView style={styles.container}>
-            {/* FlatList for scrolling */}
-            <FlatList 
-            style={styles.flatListView}
-            data={input}
-            renderItem={renderItem}
-            extraData={deleteI}
-            ItemSeparatorComponent={itemSeparator}
-            >
-            <Text>{deleteI}</Text>
-            </FlatList>
+          <Text style={styles.text}>Tasks:</Text>
+          {/* FlatList for scrolling */}
+          <FlatList 
+          style={styles.flatListView}
+          data={input}
+          renderItem={renderItem}
+          extraData={deleteI}
+          ItemSeparatorComponent={itemSeparator}
+          >
+          <Text>{deleteI}</Text>
+          </FlatList>
         </SafeAreaView>
     );
    
@@ -80,14 +84,23 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 32,
         lineHeight: 42,
+        alignSelf: 'center'
     },
-    touchableItem: {
+    touchableItem_odd: {
         width: "100%",
         borderColor: "#ffffff",
         borderWidth: 2,
         marginVertical: 4,
         paddingHorizontal: 6
     },
+    touchableItem_even: {
+      width: "100%",
+      borderColor: "#ffffff",
+      backgroundColor:"#0c2576",
+      borderWidth: 2,
+      marginVertical: 4,
+      paddingHorizontal: 6
+  },
     separator: {
         height: 6,
         width:"80%",
