@@ -4,21 +4,21 @@ import { Text, TextInput, Button, View, StyleSheet } from "react-native";
 const InputText = (props) => {
   const placeholder = "Your task?";
   const titles = ['Task title', 'Description', 'Date'];
-  const [userText, setUserText] = useState("");
+  const [userInput, setUserInput] = useState("");
   const [fieldTitle, setFieldTitle] = useState(undefined);
 
   const onSubmit = () => {
 
-    if (userText.length > 0 && userText !== " ") {
-      props.onSubmitPress(userText);
-      setUserText("");
+    if (userInput.length > 0 && userInput !== " ") {
+      props.onSubmitPress(userInput);
+      setUserInput("");
     }
   };
 
   useEffect(() => {
     props.userText !== undefined 
-    ? setUserText(props.userText)
-    : setUserText("");
+    ? setUserInput(props.userText)
+    : setUserInput("");
     
   }, [props.userText]);
 
@@ -39,9 +39,9 @@ const InputText = (props) => {
       <View style={styles.row}>
         <TextInput
           style={styles.input}
-          placeholder={userText === "" ? placeholder : userText}
-          onChangeText={(e) => setUserText(e)}
-          value={userText}
+          placeholder={userInput === "" ? placeholder : userInput}
+          onChangeText={(e) => setUserInput(e)}
+          value={userInput}
         />
         {/* <Button title={props.buttonTitle} onPress={onSubmit} /> */}
       </View>
