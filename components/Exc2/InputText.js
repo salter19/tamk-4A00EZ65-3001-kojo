@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { TextInput, Button, View, StyleSheet } from "react-native";
+import { Text, TextInput, Button, View, StyleSheet } from "react-native";
 
 const InputText = (props) => {
   const placeholder = "Your task?";
+  const titles = ['Task title', 'Description', 'Date'];
   const [userText, setUserText] = useState("");
+  const [fieldTitle, setFieldTitle] = useState(undefined);
 
   const onSubmit = () => {
 
@@ -20,23 +22,41 @@ const InputText = (props) => {
     
   }, [props.userText]);
 
+  useEffect(() => {
+
+    if (props.fieldtype != undefined) {
+      if (props.fieldtype <= titles.length -1) {
+        setFieldTitle(titles[props.fieldtype]);
+      }        
+    }
+  
+  }, [])
+
   return (
     <View style={styles.root}>
-      <TextInput
-        style={styles.input}
-        placeholder={userText === "" ? placeholder : userText}
-        onChangeText={(e) => setUserText(e)}
-        value={userText}
-      />
-      {/* <Button title={props.buttonTitle} onPress={onSubmit} /> */}
+      <Text>{fieldTitle}</Text>
+      <View style={styles.row}>
+        <TextInput
+          style={styles.input}
+          placeholder={userText === "" ? placeholder : userText}
+          onChangeText={(e) => setUserText(e)}
+          value={userText}
+        />
+        {/* <Button title={props.buttonTitle} onPress={onSubmit} /> */}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   root: {
-    flexDirection: "row",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     borderColor: "#fff",
+  },
+  row: {
+    flexDirection: "row",
     justifyContent: "center",
   },
   input: {
