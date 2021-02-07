@@ -52,7 +52,14 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTaskText}) => {
           userText={currentItem}
         />
 
-        <Button title={ButtonTypes.CLOSE} onPress={onClosePressed}></Button>
+        <View style={styles.buttonRow}>
+          <View style={[styles.buttonLeft, styles.button]}>
+            <Button title={ButtonTypes.UPDATE} onPress={onClosePressed} />
+          </View>
+          <View style={[styles.buttonRight, styles.button]}>
+            <Button title={ButtonTypes.CLOSE} onPress={onClosePressed} />
+          </View>          
+        </View>
 
       </View>
       
@@ -71,6 +78,19 @@ const styles = StyleSheet.create({
     alignItems:"center",
     marginTop:"2%"
   }, 
+  buttonRow: {
+    marginTop:"10%",
+    flexDirection:"row",
+  },
+  button: {
+    width: 100,
+  },
+  buttonLeft: {
+    marginRight: "5%",
+  },
+  buttonRight: {
+    marginLeft: "5%",
+  },
 });
 
 export default EditTask;
