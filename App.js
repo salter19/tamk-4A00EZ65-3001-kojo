@@ -46,41 +46,45 @@ export default function App() {
   const onSubmit = (taskToSave) => {
     if (currentTask !== undefined) {
       // handle updated data
+      console.log('at update')
+      console.log(taskToSave)
     } else {
       // create new task
-      //setTaskArr([... taskArr, { key: uuidv4(), text:taskToSave}]);
-      console.log('this is app, and task to save is:')
-
-      let title_tmp = undefined;
-      let description_tmp = undefined;
-      let date_tmp = undefined;
-      
-      if (taskToSave.fieldtype === 0) {
-        console.log('add me to title ' + taskToSave.value)
-        title_tmp = taskToSave.value;
-      } else if (taskToSave.fieldtype === 1) {
-        console.log('add me to description ' + taskToSave.value)
-        description_tmp = taskToSave.value;
-      } else if (taskToSave.fieldtype === 2) {
-        console.log('add me to date ' + taskToSave.value)
-        date_tmp = taskToSave.value;
-      }
-
-      setTask({ key:uuidv4(), title:title_tmp, description:description_tmp, date:date_tmp });
+      createNewTask(taskToSave);
     }
 
     setCurrentTask(undefined);
     setModifyActive(false);
   };
+  const createNewTask = (taskToSave) => {
+    console.log('this is app, and task to save is:');
 
+    let title_tmp = undefined;
+    let description_tmp = undefined;
+    let date_tmp = undefined;
+
+    if (taskToSave.fieldtype === 0) {
+      console.log('add me to title ' + taskToSave.value);
+      title_tmp = taskToSave.value;
+    } else if (taskToSave.fieldtype === 1) {
+      console.log('add me to description ' + taskToSave.value);
+      description_tmp = taskToSave.value;
+    } else if (taskToSave.fieldtype === 2) {
+      console.log('add me to date ' + taskToSave.value);
+      date_tmp = taskToSave.value;
+    }
+
+    setTask({ key: uuidv4(), title: title_tmp, description: description_tmp, date: date_tmp });
+  }
+
+  // add task to tasks if key is found
   useEffect(() => {
-    console.log('task was created')
-    console.log(task)
     if (task.key !== undefined) {
       setTasks([...tasks, task]);
     }
   }, [task])
 
+  // check that tasks was updated
   useEffect(() => {
     console.log('tasks was updated')
     console.log(tasks)
@@ -134,6 +138,8 @@ export default function App() {
      
     </View>
   );
+
+  
 }
 
 // Styling for elements in App
