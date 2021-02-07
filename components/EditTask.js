@@ -8,6 +8,7 @@ import Fieldtypes from '../data/TextfieldTitles';
 const EditTask = ({isModify, onClose, onSubmitPress, currentTaskText}) => {
   const [isVisible, setVisible] = useState(false);
   const [currentItem, setCurrentItem] = useState(undefined);
+  // const [taskToSave, setTaskToSave] = useState({});
 
   useEffect(() => {
     setVisible(true)
@@ -28,7 +29,11 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTaskText}) => {
   const onClosePressed = () => {
     console.log('pressed close, should save')
     onClose();
+  }
 
+  const handleUpdateData = (data) => {
+    console.log('At edit task, handling update')
+    console.log(data)
   }
   
   return (
@@ -45,11 +50,13 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTaskText}) => {
           buttonTitle={currentItem ? ButtonTypes.UPDATE : ButtonTypes.ADD}
           userText={currentItem}
           fieldtype={Fieldtypes.TITLE}
+          updateData={handleUpdateData}
         />
         <Textfield 
           onSubmitPress={onSubmitPress}
           buttonTitle={currentItem ? ButtonTypes.UPDATE : ButtonTypes.ADD}
           userText={currentItem}
+          updateData={handleUpdateData}
         />
 
         <View style={styles.buttonRow}>
