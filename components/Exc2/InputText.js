@@ -15,6 +15,19 @@ const InputText = (props) => {
     }
   };
 
+  // send user input to EditTask as it changes
+  const handleOnChangeText = (event) => {
+    // show on field
+    setUserInput(event);
+
+    // send data to EditTask if field is known
+    if (props.fieldtype !== undefined) {
+      props.updateData({fieldtype:props.fieldtype, value:event});
+    }
+    
+  }
+
+  // set field value, while on update view (!== add new task view)
   useEffect(() => {
     props.userText !== undefined 
     ? setUserInput(props.userText)
@@ -22,8 +35,8 @@ const InputText = (props) => {
     
   }, [props.userText]);
 
+  // set field title if one is given
   useEffect(() => {
-
     if (props.fieldtype != undefined) {
       if (props.fieldtype <= titles.length -1) {
         setFieldTitle(titles[props.fieldtype]);
@@ -40,7 +53,7 @@ const InputText = (props) => {
         <TextInput
           style={styles.input}
           placeholder={userInput === "" ? placeholder : userInput}
-          onChangeText={(e) => setUserInput(e)}
+          onChangeText={handleOnChangeText}
           value={userInput}
         />
         {/* <Button title={props.buttonTitle} onPress={onSubmit} /> */}
