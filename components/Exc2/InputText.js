@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Text, TextInput, Button, View, StyleSheet } from "react-native";
 
 const InputText = (props) => {
-  const placeholder = "Your task?";
+  const placeholder = "Fill in";
   const titles = ['Task title', 'Description', 'Date'];
   const [userInput, setUserInput] = useState("");
   const [fieldTitle, setFieldTitle] = useState(undefined);

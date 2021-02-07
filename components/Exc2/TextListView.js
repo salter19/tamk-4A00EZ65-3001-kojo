@@ -13,9 +13,6 @@ const TextListView = ({input, deleteItem, modifyItem}) => {
     const [deleteI, setDeleteI] = useState(null);
 
     const _onPress = (item) => {
-      console.log('at list sending this to be modified')
-      console.log(item)
-
       modifyItem(item);
     }
 

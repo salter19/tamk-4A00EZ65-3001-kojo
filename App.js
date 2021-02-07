@@ -31,10 +31,6 @@ export default function App() {
       const tasks1 = await TaskStorage.LoadTasks().catch(e => console.log(e));
       
       setTasks(tasks1);
-
-      for (t in tasks1) {
-        console.log(tasks1[t].title)
-      }
     })()
   }, []);
 
@@ -64,7 +60,6 @@ export default function App() {
   };
 
   const createNewTask = (taskToSave, key_tmp) => {
-    console.log('creating new task')
 
     let title_tmp = undefined;
     let description_tmp = undefined;
@@ -98,8 +93,7 @@ export default function App() {
 
   // check that tasks was updated
   useEffect(() => {
-    console.log('tasks was updated')
-    // console.log(tasks)
+    //console.log('tasks was updated')
   }, [tasks])
 
   const deleteTask = (key) => {
