@@ -3,6 +3,7 @@ import { Modal, StyleSheet, View, Button} from "react-native";
 
 import Textfield from '../components/Exc2/InputText';
 import ButtonTypes from "../data/ButtonTypes";
+import Fieldtypes from '../data/TextfieldTitles';
 
 const EditTask = ({isModify, onClose, onSubmitPress, currentTaskText}) => {
   const [isVisible, setVisible] = useState(false);
@@ -39,6 +40,12 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTaskText}) => {
     >
       <View style={[styles.centeredView, styles.root]}>
 
+        <Textfield 
+          onSubmitPress={onSubmitPress}
+          buttonTitle={currentItem ? ButtonTypes.UPDATE : ButtonTypes.ADD}
+          userText={currentItem}
+          fieldtype={Fieldtypes.TITLE}
+        />
         <Textfield 
           onSubmitPress={onSubmitPress}
           buttonTitle={currentItem ? ButtonTypes.UPDATE : ButtonTypes.ADD}
