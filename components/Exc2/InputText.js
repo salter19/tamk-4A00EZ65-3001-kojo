@@ -28,7 +28,7 @@ const InputText = (props) => {
         onChangeText={(e) => setUserText(e)}
         value={userText}
       />
-      <Button title={props.buttonTitle} onPress={onSubmit} />
+      {/* <Button title={props.buttonTitle} onPress={onSubmit} /> */}
     </View>
   );
 };
