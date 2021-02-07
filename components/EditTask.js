@@ -5,24 +5,26 @@ import Textfield from '../components/Exc2/InputText';
 import ButtonTypes from "../data/ButtonTypes";
 import Fieldtypes from '../data/TextfieldTitles';
 
-const EditTask = ({isModify, onClose, onSubmitPress, currentTaskText}) => {
+const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
   const [isVisible, setVisible] = useState(false);
   const [currentItem, setCurrentItem] = useState(undefined);
   const [taskToSave, setTaskToSave] = useState({fieldtype:undefined, value:undefined});
 
   useEffect(() => {
     setVisible(true)
+    console.log('current task is')
+    console.log(currentTask)
+
   }, [isModify])
 
   useEffect(() => {
-    currentTaskText !== undefined ? 
-      setCurrentItem(currentTaskText)
+    currentTask !== undefined ? 
+      setCurrentItem(currentTask)
       : setCurrentItem(undefined);
     
-  }, [currentTaskText]);
+  }, [currentTask]);
 
   const saveAndClose = () => {
-    console.log('Should save here, before closing');
     if (taskToSave.fieldtype !== undefined) {
       onSubmitPress(taskToSave);
     }
@@ -35,9 +37,20 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTaskText}) => {
   }
 
   const handleUpdateData = (data) => {
-    console.log('At edit task, handling update')
-    console.log(data)
-    setTaskToSave({ fieldtype:data.fieldtype, value:data.value });
+    // if (data.key !== undefined) {
+    //   setTaskToSave({
+    //     key: data.key, 
+    //     fieldtype:data.fieldtype, 
+    //     value:data.value
+    //   });
+    // } else {
+    //   setTaskToSave({
+    //     fieldtype:data.fieldtype,
+    //     value
+    //   });
+    // }
+    setTaskToSave(data);
+    
   }
   
   return (
@@ -52,14 +65,14 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTaskText}) => {
         <Textfield 
           onSubmitPress={onSubmitPress}
           buttonTitle={currentItem ? ButtonTypes.UPDATE : ButtonTypes.ADD}
-          userText={currentItem}
+          currentItem={currentItem}
           fieldtype={Fieldtypes.TITLE}
           updateData={handleUpdateData}
         />
         <Textfield 
           onSubmitPress={onSubmitPress}
           buttonTitle={currentItem ? ButtonTypes.UPDATE : ButtonTypes.ADD}
-          userText={currentItem}
+          currentItem={currentItem}
           updateData={handleUpdateData}
         />
 

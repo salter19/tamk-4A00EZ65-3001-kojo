@@ -14,7 +14,7 @@ import TaskStorage from './data/TaskStorage';
 // the App to rule them all
 export default function App() {
 
-  const [taskArr, setTaskArr] = useState([]);
+  //const [taskArr, setTaskArr] = useState([]);
   const [task, setTask] = useState({
     key:undefined, 
     title:undefined, 
@@ -28,70 +28,82 @@ export default function App() {
   useEffect(() => {
     (async() => {
       console.log('Loading...');
-      const tasks = await TaskStorage.LoadTasks().catch(e => console.log(e));
-      console.log(tasks)
-      setTaskArr(tasks);
+      const tasks1 = await TaskStorage.LoadTasks().catch(e => console.log(e));
+      
+      setTasks(tasks1);
+
+      for (t in tasks1) {
+        console.log(tasks1[t].title)
+      }
     })()
   }, []);
 
   useEffect(() => {
     (async() => {
       console.log('Saving...');
-      const saveup = await TaskStorage.SaveTasks(taskArr).catch(e => console.log(e));
-      console.log(saveup);
+      await TaskStorage.SaveTasks(tasks).catch(e => console.log(e));
     })();
-  }, [taskArr]);
+  }, [tasks]);
   
   // 2:38 =>
   const onSubmit = (taskToSave) => {
+    let key_tmp = undefined;
     if (currentTask !== undefined) {
       // handle updated data
-      console.log('at update')
-      console.log(taskToSave)
+      key_tmp = taskToSave.key;
+      
     } else {
       // create new task
-      createNewTask(taskToSave);
+      key_tmp = uuidv4();
     }
+
+    createNewTask(taskToSave, key_tmp);
 
     setCurrentTask(undefined);
     setModifyActive(false);
   };
-  const createNewTask = (taskToSave) => {
-    console.log('this is app, and task to save is:');
+
+  const createNewTask = (taskToSave, key_tmp) => {
+    console.log('creating new task')
 
     let title_tmp = undefined;
     let description_tmp = undefined;
     let date_tmp = undefined;
 
     if (taskToSave.fieldtype === 0) {
-      console.log('add me to title ' + taskToSave.value);
       title_tmp = taskToSave.value;
     } else if (taskToSave.fieldtype === 1) {
-      console.log('add me to description ' + taskToSave.value);
       description_tmp = taskToSave.value;
     } else if (taskToSave.fieldtype === 2) {
-      console.log('add me to date ' + taskToSave.value);
       date_tmp = taskToSave.value;
     }
 
-    setTask({ key: uuidv4(), title: title_tmp, description: description_tmp, date: date_tmp });
+    setTask({ 
+      key: key_tmp, 
+      title: title_tmp, 
+      description: description_tmp, 
+      date: date_tmp 
+    });   
   }
 
   // add task to tasks if key is found
   useEffect(() => {
     if (task.key !== undefined) {
-      setTasks([...tasks, task]);
+      
+      // make sure no duplicates are created
+      const tmp = (tasks.filter((item) => item.key !== task.key));
+      setTasks([...tmp, task]);
     }
   }, [task])
 
   // check that tasks was updated
   useEffect(() => {
     console.log('tasks was updated')
-    console.log(tasks)
+    // console.log(tasks)
   }, [tasks])
 
   const deleteTask = (key) => {
-    setTaskArr(taskArr.filter((item) => item.key !== key));
+    setTasks(tasks.filter((item) => item.key !== key));
   };
 
   const modifyTask = (item) => {
@@ -122,7 +134,7 @@ export default function App() {
       </View>
 
       <View style={styles.list}>
-        <TaskList input={taskArr} deleteItem={deleteTask} modifyItem={modifyTask}/>
+        <TaskList input={tasks} deleteItem={deleteTask} modifyItem={modifyTask}/>
       </View>
 
   
@@ -131,7 +143,7 @@ export default function App() {
           isModify={isModifyActive}  
           onSubmitPress={onSubmit} 
           onClose={() => setModifyActive(false)}
-          currentTaskText={currentTask !== undefined ? currentTask.text : undefined}
+          currentTask={currentTask}
         />
         : <Button title={ButtonTypes.ADD} onPress={addNewTask}></Button>
       }
