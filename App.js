@@ -15,6 +15,13 @@ import TaskStorage from './data/TaskStorage';
 export default function App() {
 
   const [taskArr, setTaskArr] = useState([]);
+  const [task, setTask] = useState({
+    key:undefined, 
+    title:undefined, 
+    description:undefined, 
+    date:undefined
+  });
+  const [tasks, setTasks] = useState([]);
   const [isModifyActive, setModifyActive] = useState(false);
   const [currentTask, setCurrentTask] = useState(undefined);
 
@@ -36,16 +43,48 @@ export default function App() {
   }, [taskArr]);
   
   // 2:38 =>
-  const onSubmit = (strItem) => {
+  const onSubmit = (taskToSave) => {
     if (currentTask !== undefined) {
-      currentTask.text = strItem;
+      // handle updated data
     } else {
-      setTaskArr([... taskArr, { key: uuidv4(), text:strItem}]);
+      // create new task
+      //setTaskArr([... taskArr, { key: uuidv4(), text:taskToSave}]);
+      console.log('this is app, and task to save is:')
+
+      let title_tmp = undefined;
+      let description_tmp = undefined;
+      let date_tmp = undefined;
+      
+      if (taskToSave.fieldtype === 0) {
+        console.log('add me to title ' + taskToSave.value)
+        title_tmp = taskToSave.value;
+      } else if (taskToSave.fieldtype === 1) {
+        console.log('add me to description ' + taskToSave.value)
+        description_tmp = taskToSave.value;
+      } else if (taskToSave.fieldtype === 2) {
+        console.log('add me to date ' + taskToSave.value)
+        date_tmp = taskToSave.value;
+      }
+
+      setTask({ key:uuidv4(), title:title_tmp, description:description_tmp, date:date_tmp });
     }
 
     setCurrentTask(undefined);
     setModifyActive(false);
   };
+
+  useEffect(() => {
+    console.log('task was created')
+    console.log(task)
+    if (task.key !== undefined) {
+      setTasks([...tasks, task]);
+    }
+  }, [task])
+
+  useEffect(() => {
+    console.log('tasks was updated')
+    console.log(tasks)
+  }, [tasks])
 
   const deleteTask = (key) => {
     setTaskArr(taskArr.filter((item) => item.key !== key));
