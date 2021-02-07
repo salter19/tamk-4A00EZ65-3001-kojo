@@ -40,9 +40,12 @@ const InputText = (props) => {
 
   // set field value, while on update view (!== add new task view)
   useEffect(() => {
-    props.currentItem !== undefined 
-    ? setUserInput(props.currentItem.title)
-    : setUserInput("");
+
+    if (props.currentItem !== undefined) {
+      setUserInput(props.currentItem.title);
+    } else {
+      setUserInput("")
+    }
     
   }, [props.currentItem]);
 
@@ -63,11 +66,10 @@ const InputText = (props) => {
       <View style={styles.row}>
         <TextInput
           style={styles.input}
-          // placeholder={userInput === "" ? placeholder : userInput}
+          placeholder={userInput === "" ? placeholder : userInput}
           onChangeText={handleOnChangeText}
           value={userInput}
         />
-        {/* <Button title={props.buttonTitle} onPress={onSubmit} /> */}
       </View>
     </View>
   );
