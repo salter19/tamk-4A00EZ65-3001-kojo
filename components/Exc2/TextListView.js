@@ -8,10 +8,13 @@ import {
     SafeAreaView
 } from 'react-native';
 
+// my components
+import ImageDisplay from '../ImageDisplay';
+
 
 const TextListView = ({input, deleteItem, modifyItem}) => {
     const [deleteI, setDeleteI] = useState(null);
-
+    const imgpath = './../assets/steel.png';
     const _onPress = (item) => {
       modifyItem(item);
     }
@@ -40,16 +43,26 @@ const TextListView = ({input, deleteItem, modifyItem}) => {
               : styles.touchableItem_odd,
               ]}>
 
-                <View>
-                  <Text style={[styles.text, styles.titleText]}>
-                    {item.title}
-                  </Text>
-                </View>
-                
-                <View>
-                  <Text style={[styles.text, styles.descriptionText]}>
-                    {item.description}
-                  </Text>
+                <View style={styles.rowItem}>
+                  <ImageDisplay />
+                  <View style={styles.columnItem}>
+
+                    <View>
+                      <Text style={[styles.text, styles.titleText]}>
+                        {item.title}
+                      </Text>
+                    </View>
+                    
+                    <View>
+                      <Text style={[styles.text, styles.descriptionText]}>
+                        {item.description}
+                      </Text>
+                    </View>
+
+                    <View>
+                      
+                    </View>
+                  </View>
                 </View>
                 
             </View>          
@@ -120,15 +133,21 @@ const styles = StyleSheet.create({
       marginVertical: 4,
       paddingHorizontal: 6
   },
-    separator: {
-        height: 6,
-        width:"80%",
-        backgroundColor: "#0c2576",
-        alignSelf:"center",
-        borderTopColor:"#ffffff",
-        borderBottomColor:"#ffffff",
-        borderWidth:1
-    }
+  separator: {
+      height: 6,
+      width:"80%",
+      backgroundColor: "#0c2576",
+      alignSelf:"center",
+      borderTopColor:"#ffffff",
+      borderBottomColor:"#ffffff",
+      borderWidth:1
+  },
+  rowItem: {
+    flexDirection:'row',
+  },
+  columnItem: {
+    flexDirection:'column'
+  }
 });
 
 export default TextListView;

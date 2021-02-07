@@ -19,7 +19,7 @@ export default function App() {
     key:undefined, 
     title:undefined, 
     description:undefined, 
-    date:undefined
+    date:undefined,
   });
   const [tasks, setTasks] = useState([]);
   const [isModifyActive, setModifyActive] = useState(false);
