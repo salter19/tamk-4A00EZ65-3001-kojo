@@ -11,10 +11,7 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
   const [taskToSave, setTaskToSave] = useState({fieldtype:undefined, value:undefined});
 
   useEffect(() => {
-    setVisible(true)
-    console.log('current task is')
-    console.log(currentTask)
-
+    setVisible(true);
   }, [isModify])
 
   useEffect(() => {
