@@ -70,13 +70,15 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTaskText}) => {
 
 const styles = StyleSheet.create({
   root: {
-    backgroundColor:"rgba(255, 255, 255, 0.81)"
+    backgroundColor:"rgba(255, 255, 255, 0.81)",
+    height: "80%"
   },
   centeredView: {
     flex:1,
     justifyContent:"center",
     alignItems:"center",
-    marginTop:"2%"
+    marginTop:"2%",
+    height:"80%",
   }, 
   buttonRow: {
     marginTop:"10%",
