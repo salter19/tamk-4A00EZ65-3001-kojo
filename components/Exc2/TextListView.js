@@ -38,7 +38,7 @@ const TextListView = ({input, deleteItem, modifyItem}) => {
               ? styles.touchableItem_even
               : styles.touchableItem_odd,
               ]}>
-                <Text style={styles.text}>{item.text}</Text>
+                <Text style={styles.text}>{item.title}</Text>
             </View>          
               
           </TouchableOpacity>);   
