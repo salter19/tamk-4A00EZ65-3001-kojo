@@ -34,7 +34,8 @@ const InputText = (props) => {
 
   return (
     <View style={styles.root}>
-      <Text>{fieldTitle}</Text>
+      <Text style={styles.title}>{fieldTitle}</Text>
+
       <View style={styles.row}>
         <TextInput
           style={styles.input}
@@ -68,6 +69,10 @@ const styles = StyleSheet.create({
     margin: 2,
     paddingLeft: 6,
   },
+  title: {
+    alignSelf: 'flex-start',
+    fontSize: 24,
+  }
 });
 
 export default InputText;
