@@ -26,6 +26,7 @@ const TextListView = ({input, deleteItem, modifyItem}) => {
     }
 
     const renderItem = ({item, index}) => {
+      console.log(item)
         
         return (
           
@@ -39,7 +40,19 @@ const TextListView = ({input, deleteItem, modifyItem}) => {
               ? styles.touchableItem_even
               : styles.touchableItem_odd,
               ]}>
-                <Text style={styles.text}>{item.title}</Text>
+
+                <View>
+                  <Text style={[styles.text, styles.titleText]}>
+                    {item.title}
+                  </Text>
+                </View>
+                
+                <View>
+                  <Text style={[styles.text, styles.descriptionText]}>
+                    {item.description}
+                  </Text>
+                </View>
+                
             </View>          
               
           </TouchableOpacity>);   
@@ -53,7 +66,7 @@ const TextListView = ({input, deleteItem, modifyItem}) => {
     
     return (
         <SafeAreaView style={styles.container}>
-          <Text style={styles.text}>Tasks:</Text>
+          <Text style={[styles.text, styles.titleText]}>Tasks:</Text>
           {/* FlatList for scrolling */}
           <FlatList 
           style={styles.flatListView}
@@ -82,10 +95,16 @@ const styles = StyleSheet.create({
     },
     text: {
         color:"#ffffff", 
-        fontWeight: "bold",
-        fontSize: 32,
-        lineHeight: 42,
         alignSelf: 'center'
+    },
+    titleText: {
+      fontWeight: "bold",
+      fontSize: 32,
+      lineHeight: 42,
+    },
+    descriptionText: {
+      fontSize: 26,
+      lineHeight: 36,
     },
     touchableItem_odd: {
         width: "100%",
