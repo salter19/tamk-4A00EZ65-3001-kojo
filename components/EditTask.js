@@ -8,7 +8,7 @@ import Fieldtypes from '../data/TextfieldTitles';
 const EditTask = ({isModify, onClose, onSubmitPress, currentTaskText}) => {
   const [isVisible, setVisible] = useState(false);
   const [currentItem, setCurrentItem] = useState(undefined);
-  // const [taskToSave, setTaskToSave] = useState({});
+  const [taskToSave, setTaskToSave] = useState({fieldtype:undefined, value:undefined});
 
   useEffect(() => {
     setVisible(true)
@@ -21,8 +21,11 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTaskText}) => {
     
   }, [currentTaskText]);
 
-  const saveOnClose = () => {
-    console.log('Should save here, before closing')
+  const saveAndClose = () => {
+    console.log('Should save here, before closing');
+    if (taskToSave.fieldtype !== undefined) {
+      onSubmitPress(taskToSave);
+    }
     onClose();
   }
 
@@ -34,6 +37,7 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTaskText}) => {
   const handleUpdateData = (data) => {
     console.log('At edit task, handling update')
     console.log(data)
+    setTaskToSave({ fieldtype:data.fieldtype, value:data.value });
   }
   
   return (
@@ -41,7 +45,7 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTaskText}) => {
       animationType= "fade"
       transparent={true}
       visible={isVisible}
-      onRequestClose={saveOnClose}
+      onRequestClose={saveAndClose}
     >
       <View style={[styles.centeredView, styles.root]}>
 
@@ -61,7 +65,7 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTaskText}) => {
 
         <View style={styles.buttonRow}>
           <View style={[styles.buttonLeft, styles.button]}>
-            <Button title={ButtonTypes.UPDATE} onPress={onClosePressed} />
+            <Button title={ButtonTypes.UPDATE} onPress={saveAndClose} />
           </View>
           <View style={[styles.buttonRight, styles.button]}>
             <Button title={ButtonTypes.CLOSE} onPress={onClosePressed} />
