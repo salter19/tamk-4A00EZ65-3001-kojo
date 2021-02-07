@@ -27,7 +27,7 @@ const InputText = (props) => {
 
   return (
     <View style={styles.root}>
-      {console.log(userInput)}
+      {/* {console.log(userInput)} */}
 
       <View style={styles.row}>
         <TextInput

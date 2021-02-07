@@ -26,7 +26,6 @@ const TextListView = ({input, deleteItem, modifyItem}) => {
     }
 
     const renderItem = ({item, index}) => {
-      console.log(item)
         
         return (
           

@@ -43,41 +43,26 @@ export default function App() {
   
   // 2:38 =>
   const onSubmit = (taskToSave) => {
+    
     let key_tmp = undefined;
-    if (currentTask !== undefined) {
+    
+    currentTask !== undefined
       // handle updated data
-      key_tmp = taskToSave.key;
-      
-    } else {
+      ? key_tmp = taskToSave.key   
       // create new task
-      key_tmp = uuidv4();
-    }
-
-    createNewTask(taskToSave, key_tmp);
-
+      : key_tmp = uuidv4();
+    
+    createTask(taskToSave, key_tmp);
     setCurrentTask(undefined);
     setModifyActive(false);
   };
 
-  const createNewTask = (taskToSave, key_tmp) => {
-
-    let title_tmp = undefined;
-    let description_tmp = undefined;
-    let date_tmp = undefined;
-
-    if (taskToSave.fieldtype === 0) {
-      title_tmp = taskToSave.value;
-    } else if (taskToSave.fieldtype === 1) {
-      description_tmp = taskToSave.value;
-    } else if (taskToSave.fieldtype === 2) {
-      date_tmp = taskToSave.value;
-    }
-
+  const createTask = (taskToSave, key_tmp) => {
+    
     setTask({ 
       key: key_tmp, 
-      title: title_tmp, 
-      description: description_tmp, 
-      date: date_tmp 
+      title: taskToSave.title, 
+      description: taskToSave.description, 
     });   
   }
 

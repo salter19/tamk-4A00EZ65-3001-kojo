@@ -1,30 +1,29 @@
 import React, {useEffect, useState} from "react";
-import { Modal, StyleSheet, View, Button} from "react-native";
+import { Text, Modal, StyleSheet, View, Button} from "react-native";
 
 import Textfield from '../components/Exc2/InputText';
 import ButtonTypes from "../data/ButtonTypes";
-import Fieldtypes from '../data/TextfieldTitles';
 
 const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
   const [isVisible, setVisible] = useState(false);
-  const [currentItem, setCurrentItem] = useState(undefined);
-  const [taskToSave, setTaskToSave] = useState({fieldtype:undefined, value:undefined});
+  const [taskToSave, setTaskToSave] = useState({
+    key:undefined,
+    title:undefined,
+    description:undefined
+  });
+  const [key, setKey] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const titles = ['Task title', 'Description', 'Date'];
 
   useEffect(() => {
     setVisible(true);
+    
   }, [isModify])
 
-  useEffect(() => {
-    currentTask !== undefined ? 
-      setCurrentItem(currentTask)
-      : setCurrentItem(undefined);
-    
-  }, [currentTask]);
 
   const saveAndClose = () => {
-    if (taskToSave.fieldtype !== undefined) {
-      onSubmitPress(taskToSave);
-    }
+    onSubmitPress({key:key, title:title, description:description});
     onClose();
   }
 
@@ -33,9 +32,25 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
     onClose();
   }
 
-  const handleUpdateData = (data) => {
-    setTaskToSave(data);
-  }
+  useEffect(() => {
+    if (currentTask !== undefined) {
+      setKey(currentTask.key);
+      setTitle(currentTask.title);
+      setDescription(currentTask.description);
+    }
+  }, []);
+
+  const updateTitle = (data) => {
+    setTitle(data);
+  };
+
+
+  const updateDescription = (data) => {
+    setDescription(data);
+  };
+  
+  // TODO: add due date handling
+  // const updateDate = (data) => {};
   
   return (
     <Modal 
@@ -46,23 +61,26 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
     >
       <View style={[styles.centeredView, styles.root]}>
 
-        <Textfield 
-          onSubmitPress={onSubmitPress}
-          buttonTitle={currentItem ? ButtonTypes.UPDATE : ButtonTypes.ADD}
-          currentItem={currentItem}
-          fieldtype={Fieldtypes.TITLE}
-          updateData={handleUpdateData}
-        />
-        <Textfield 
-          onSubmitPress={onSubmitPress}
-          buttonTitle={currentItem ? ButtonTypes.UPDATE : ButtonTypes.ADD}
-          currentItem={currentItem}
-          updateData={handleUpdateData}
-        />
+        <View>
+          <Text>{titles[0]}</Text>
+          <Textfield 
+            currentItem={currentTask ? currentTask.title : ''}
+            updateData={updateTitle}
+          />
+        </View>
+        
+        <View>
+          <Text>{titles[1]}</Text>
+          <Textfield 
+            currentItem={currentTask ? currentTask.description : ''}
+            updateData={updateDescription}
+          />
+        </View>
+        
 
         <View style={styles.buttonRow}>
           <View style={[styles.buttonLeft, styles.button]}>
-            <Button title={ButtonTypes.UPDATE} onPress={saveAndClose} />
+            <Button title={currentTask ? ButtonTypes.UPDATE : ButtonTypes.ADD} onPress={saveAndClose} />
           </View>
           <View style={[styles.buttonRight, styles.button]}>
             <Button title={ButtonTypes.CLOSE} onPress={onClosePressed} />
