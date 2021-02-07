@@ -32,25 +32,12 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
   }
 
   const onClosePressed = () => {
-    console.log('pressed close, should save')
+    console.log('pressed close, should save?')
     onClose();
   }
 
   const handleUpdateData = (data) => {
-    // if (data.key !== undefined) {
-    //   setTaskToSave({
-    //     key: data.key, 
-    //     fieldtype:data.fieldtype, 
-    //     value:data.value
-    //   });
-    // } else {
-    //   setTaskToSave({
-    //     fieldtype:data.fieldtype,
-    //     value
-    //   });
-    // }
     setTaskToSave(data);
-    
   }
   
   return (
