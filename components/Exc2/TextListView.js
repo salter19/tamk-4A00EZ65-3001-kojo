@@ -18,13 +18,34 @@ const wrap = (str) => {
 }
 
 const format = (dateStr) => {
-  let tmp_date = dateStr.split(new RegExp('[-:T]'), 3);
-  const date = tmp_date.reverse().join('.');
-  let tmp_t = dateStr.split(new RegExp('[\\.]'), 1).join();
-  let tmp_time = tmp_t.split(new RegExp('[-T]'), 4).slice(3).toString();
-  
-  return date + ' ' + tmp_time;
+  // type tester
+  const str = "this a string";
+
+  if (typeof dateStr !== typeof str) {
+    // if Date object, proceed with funcs
+    const date = dateStr.getDate();
+    const month = dateStr.getMonth() +1;
+    const year = dateStr.getFullYear();
+    const hour = dateStr.getHours();
+    let minute = dateStr.getMinutes();
+
+    // add zero in front, if one digit
+    if (minute < 10) {
+      const tmp = `0+${minute}`;
+      minute = tmp;
+    }
+    return (date + "." + month + "." + year + " " + hour + ":" + minute);
+
+  } else {
+    // if string object, proceed with string operations
+    let tmp_date = dateStr.split(new RegExp('[-:T]'), 3);
+    const date = tmp_date.reverse().join('.');
+    const time = dateStr.split(new RegExp('[-T:]'), 5).slice(3).join(':');
+    return date + ' ' + time;
+  }
 }
+
+  
 
 const TextListView = ({tasksArr, deleteItem, modifyItem}) => {
     const [deleteI, setDeleteI] = useState(null);
