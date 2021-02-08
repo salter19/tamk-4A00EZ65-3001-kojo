@@ -63,6 +63,7 @@ export default function App() {
       key: key_tmp, 
       title: taskToSave.title, 
       description: taskToSave.description, 
+      date: taskToSave.date,
     });   
   }
 
@@ -95,15 +96,6 @@ export default function App() {
     setModifyActive(true);
   };
 
-  // TODO: figure if you want to use this or no
-  // const clearCurrentTask = (clearTask) => {
-  //   if (clearTask) {
-  //     setCurrentTask(undefined);
-  //   }
-
-  //   setModifyActive(!clearTask);
-  // }
-
   return (
     <View style={styles.root}>
 
@@ -113,7 +105,7 @@ export default function App() {
       </View>
 
       <View style={styles.list}>
-        <TaskList input={tasks} deleteItem={deleteTask} modifyItem={modifyTask}/>
+        <TaskList tasksArr={tasks} deleteItem={deleteTask} modifyItem={modifyTask}/>
       </View>
 
   
@@ -147,7 +139,7 @@ const styles = StyleSheet.create({
     height: Constants.statusBarHeight,
   },
   list: {
-    width: "61%",
+    width: "81%",
     maxHeight: "42%",
   },
 });

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     Text, 
     StyleSheet, 
@@ -11,13 +11,27 @@ import {
 // my components
 import ImageDisplay from '../ImageDisplay';
 
+// static width wrapper for text
+const wrap = (str) => {
+  const res = str.replace(new RegExp(`(?![^\\n]{1,24}$)([^\\n]{1,24})\\s`, 'g'),'$1\n');
+  return res;
+}
 
-const TextListView = ({input, deleteItem, modifyItem}) => {
+const format = (dateStr) => {
+  let tmp_date = dateStr.split(new RegExp('[-:T]'), 3);
+  const date = tmp_date.reverse().join('.');
+  let tmp_t = dateStr.split(new RegExp('[\\.]'), 1).join();
+  let tmp_time = tmp_t.split(new RegExp('[-T]'), 4).slice(3).toString();
+  
+  return date + ' ' + tmp_time;
+}
+
+const TextListView = ({tasksArr, deleteItem, modifyItem}) => {
     const [deleteI, setDeleteI] = useState(null);
-    const imgpath = './../assets/steel.png';
+
     const _onPress = (item) => {
       modifyItem(item);
-    }
+    };
 
     const _onLongPress = (item) => {
         // set state deleteI
@@ -26,48 +40,50 @@ const TextListView = ({input, deleteItem, modifyItem}) => {
 
         // call deleteItem in App
         deleteItem(item.key);
-    }
+    };
 
     const renderItem = ({item, index}) => {
+
+      return (
         
-        return (
-          
-          <TouchableOpacity 
-              key={item.key} 
-              onPress={() => _onPress(item)}
-              onLongPress= { () => _onLongPress(item)}
-          >
-            <View style={[
-              index % 2 === 0 
-              ? styles.touchableItem_even
-              : styles.touchableItem_odd,
-              ]}>
+        <TouchableOpacity 
+            key={item.key} 
+            onPress={() => _onPress(item)}
+            onLongPress= { () => _onLongPress(item)}
+        >
+          <View style={[
+            index % 2 === 0 
+            ? styles.touchableItem_even
+            : styles.touchableItem_odd,
+            ]}>
 
-                <View style={styles.rowItem}>
-                  <ImageDisplay />
-                  <View style={styles.columnItem}>
+              <View style={styles.rowItem}>
+                <ImageDisplay />
+                <View style={styles.columnItem}>
 
-                    <View>
-                      <Text style={[styles.text, styles.titleText]}>
-                        {item.title}
-                      </Text>
-                    </View>
-                    
-                    <View>
-                      <Text style={[styles.text, styles.descriptionText]}>
-                        {item.description}
-                      </Text>
-                    </View>
-
-                    <View>
-                      
-                    </View>
+                  <View>
+                    <Text style={[styles.text, styles.titleText]}>
+                      {wrap(item.title)}
+                    </Text>
                   </View>
-                </View>
-                
-            </View>          
+                  
+                  <View>
+                    <Text style={[styles.text, styles.descriptionText]}>
+                      {wrap(item.description)}
+                    </Text>
+                  </View>
+
+                  <View>
+                    <Text style={styles.text}>
+                      {format(item.date)}
+                    </Text>
+                  </View>
+                </View> 
+              </View>
               
-          </TouchableOpacity>);   
+          </View>          
+            
+        </TouchableOpacity>);   
     }
 
     const itemSeparator = () => {
@@ -82,7 +98,7 @@ const TextListView = ({input, deleteItem, modifyItem}) => {
           {/* FlatList for scrolling */}
           <FlatList 
           style={styles.flatListView}
-          data={input}
+          data={tasksArr}
           renderItem={renderItem}
           extraData={deleteI}
           ItemSeparatorComponent={itemSeparator}
@@ -97,7 +113,7 @@ const TextListView = ({input, deleteItem, modifyItem}) => {
 const styles = StyleSheet.create({
     container: {
         width: "100%",
-        paddingHorizontal: "8%",
+        paddingHorizontal: "2%",
         borderWidth: 2,
         borderColor: "#ffffff",
         marginVertical:"3%"
@@ -107,16 +123,16 @@ const styles = StyleSheet.create({
     },
     text: {
         color:"#ffffff", 
-        alignSelf: 'center'
     },
     titleText: {
       fontWeight: "bold",
-      fontSize: 32,
-      lineHeight: 42,
+      fontSize: 24,
+      lineHeight: 36,
     },
     descriptionText: {
-      fontSize: 26,
-      lineHeight: 36,
+      fontSize: 18,
+      lineHeight: 24,
+      flexWrap:"wrap",
     },
     touchableItem_odd: {
         width: "100%",
