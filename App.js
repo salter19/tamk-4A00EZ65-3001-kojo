@@ -20,6 +20,7 @@ export default function App() {
     title:undefined, 
     description:undefined, 
     date:undefined,
+    location:{ latitude:undefined, longitude:undefined},
   });
   const [tasks, setTasks] = useState([]);
   const [isModifyActive, setModifyActive] = useState(false);
@@ -64,6 +65,7 @@ export default function App() {
       title: taskToSave.title, 
       description: taskToSave.description, 
       date: taskToSave.date,
+      location: {latitude: '61.49572', longitude:'23.82407'}
     });   
   }
 

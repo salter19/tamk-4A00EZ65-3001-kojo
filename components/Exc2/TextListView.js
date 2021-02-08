@@ -99,6 +99,16 @@ const TextListView = ({tasksArr, deleteItem, modifyItem}) => {
                       {format(item.date)}
                     </Text>
                   </View>
+
+                  <View>
+                    <Text style={styles.text}>
+                      {'latitude: ' + item.location.latitude}
+                    </Text>
+                    <Text style={styles.text}>
+                      {'longitude: ' + item.location.longitude}
+                    </Text>
+                  </View>
+
                 </View> 
               </View>
               
