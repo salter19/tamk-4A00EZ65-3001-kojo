@@ -5,6 +5,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import Textfield from '../components/Exc2/InputText';
 import ButtonTypes from "../data/ButtonTypes";
 import Cam from './CameraComponent';
+import {formatDate, formatTime} from './utils';
 
 const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
   const [isVisible, setVisible] = useState(false);
@@ -51,19 +52,31 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
   }, []);
 
   const formatDateTime = (dateToFormat) => {
-    formatDate(dateToFormat);
-    formatTime(dateToFormat);
+    const str = 'this is a str';
+
+    if (typeof dateToFormat !==  typeof str) {
+      console.log('not a string')
+      formatDateToStr(dateToFormat);
+      formatTimeToStr(dateToFormat);
+    } else {
+      console.log('is a string')
+      setDate(new Date(dateToFormat));
+      const date = formatDate(dateToFormat);
+      const time = formatTime(dateToFormat);
+      setFormattedDate(date);
+      setFormattedTime(time);
+    }
   };
 
-  const formatDate = (dateToFormat) => {
+  const formatDateToStr = (dateToFormat) => {
     const day = dateToFormat.getDate();
     const month = dateToFormat.getMonth() + 1;
     const year = dateToFormat.getFullYear();
 
-    setFormattedDate(`${day} / ${month} / ${year}`);
+    setFormattedDate(`${day}.${month}.${year}`);
   };
   
-  const formatTime = (dateToFormat) => {
+  const formatTimeToStr = (dateToFormat) => {
 
     let minute = dateToFormat.getMinutes();
     let hour = dateToFormat.getHours();
@@ -71,7 +84,7 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
     if  (minute < 10 ) {
       minute = `0${minute}`;
     }
-    setFormattedTime(`${hour} : ${minute}`);
+    setFormattedTime(`${hour}:${minute}`);
   };
 
   const updateTitle = (data) => {
@@ -100,8 +113,8 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
     const currentDate = selectedDate || date;
     setShowPicker(Platform.OS === 'ios');
     setDate(currentDate);
-    formatDate(currentDate);
-    formatTime(currentDate);
+    formatDateToStr(currentDate);
+    formatTimeToStr(currentDate);
   }
 
   const openCamera = () => {
@@ -167,14 +180,14 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
             />
           )}
         </View>
-        
+{/*         
         <View style={styles.button}>
           <Button title={titles[5]} onPress={openCamera}/>
         </View>
 
         {showCamera && (
           <Cam onCloseCamera={handleCloseCamera}/>
-        )}
+        )} */}
 
         <View style={styles.row}>
           <View style={[styles.buttonLeft, styles.button]}>
