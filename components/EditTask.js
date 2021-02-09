@@ -4,14 +4,10 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Textfield from '../components/Exc2/InputText';
 import ButtonTypes from "../data/ButtonTypes";
+import Cam from './CameraComponent';
 
 const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
   const [isVisible, setVisible] = useState(false);
-  const [taskToSave, setTaskToSave] = useState({
-    key:undefined,
-    title:undefined,
-    description:undefined
-  });
   const [key, setKey] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -20,8 +16,11 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
   const [showPicker, setShowPicker] = useState(false);
   const [formattedDate, setFormattedDate] = useState('');
   const [formattedTime, setFormattedTime] = useState('');
+  const [showCamera, setShowCamera] = useState(false);
 
-  const titles = ['Task title', 'Description', 'Date', 'Set Date', 'Set Time'];
+  const titles = 
+  ['Task title', 'Description', 'Date', 
+  'Set Date', 'Set Time', 'Open Camera'];
 
   useEffect(() => {
     setVisible(true);   
@@ -104,6 +103,14 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
     formatDate(currentDate);
     formatTime(currentDate);
   }
+
+  const openCamera = () => {
+    setShowCamera(true);
+  }
+
+  const handleCloseCamera = () => {
+    setShowCamera(false);
+  }
   
   return (
     <Modal 
@@ -130,7 +137,7 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
           />
         </View>
 
-        <View>
+        <View style={styles.rightAligned}>
 
           <View style={styles.row}>
             {/* ToDo: add textfield possibility to add date */}
@@ -161,6 +168,13 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
           )}
         </View>
         
+        <View style={styles.button}>
+          <Button title={titles[5]} onPress={openCamera}/>
+        </View>
+
+        {showCamera && (
+          <Cam onCloseCamera={handleCloseCamera}/>
+        )}
 
         <View style={styles.row}>
           <View style={[styles.buttonLeft, styles.button]}>
@@ -211,6 +225,12 @@ const styles = StyleSheet.create({
   buttonRight: {
     marginLeft: "5%",
   },
+  leftAligned: {
+    alignItems:"flex-start",
+  },
+  rightAligned:{
+    alignItems:"flex-end",
+  }
 });
 
 export default EditTask;
