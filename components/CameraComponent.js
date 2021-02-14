@@ -5,16 +5,16 @@ import {Camera} from 'expo-camera';
 
 const CameraComponent = ({onCloseCamera}) => {
   // camera permissions
-  const [hasPermission, setHasPermission] = useState(null);
+  const [hasPermission, setHasPermission] = useState(undefined);
   const [camera, setCamera] = useState(null);
 
   // set camera type, screen ratio and image padding
   const [type, setType] = useState(Camera.Constants.Type.back);
-  const [isRatioSet, setIsRatioSet] = useState(false);
-  const [ratio, setRatio] = useState('4:3');
-  const {height, width} = Dimensions.get('screen');
-  const screenRatio = height / width;
-  const [imgPadding, setImgPadding] = useState(0);  
+//   const [isRatioSet, setIsRatioSet] = useState(false);
+//   const [ratio, setRatio] = useState('4:3');
+//   const {height, width} = Dimensions.get('screen');
+//   const screenRatio = height / width;
+//   const [imgPadding, setImgPadding] = useState(0);  
 
   // get permission to use camera
   // ToDo: why does this not ask persmission?
@@ -26,12 +26,20 @@ const CameraComponent = ({onCloseCamera}) => {
   }, []);
 
   // handle !== haspermission situations
-  if (hasPermission === null) {
+  if (hasPermission === undefined) {
     return (
-      <View style={styles.info}>
-        <Text>Waiting for permission to use camera.</Text>
-      </View>
+        <Modal onShow={}>
+            <View style={styles.info}>
+                <Text>Waiting for permission to use camera.</Text>
+            </View>
+      </Modal>
     );
+  }
+
+  const onShowCamera = () => {
+      (async () => {
+          await CameraComponent.re
+      })()
   }
 
   if (hasPermission === false) {
@@ -118,7 +126,7 @@ const CameraComponent = ({onCloseCamera}) => {
           ratio={ratio}
           ref={(ref) => setCamera(ref)}
         >
-          <View>
+          <View style={}>
             <TouchableOpacity onPress={handleTypeChoice}>
               <Text>Flip Camera</Text>
             </TouchableOpacity>
