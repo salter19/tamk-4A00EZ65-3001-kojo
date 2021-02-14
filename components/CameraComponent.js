@@ -5,7 +5,7 @@ import {Camera as CameraView} from 'expo-camera';
 import * as FileSystem from 'expo-file-system';
 
 import { IMAGE_DIR, CAMERA_BACK, CAMERA_FRONT, WINDOW_WIDTH } from '../data/Constants';
-
+import LoadingAnimation from './LoadingAnimation';
 
 const CameraComponent = ({onCloseCamera, isVisible}) => {
   // camera permissions
@@ -39,7 +39,7 @@ const CameraComponent = ({onCloseCamera, isVisible}) => {
     (async() => {
       if (cameraRef !== undefined) {
         let photo = await cameraRef.current.takePictureAsync().catch(e => console.error(e));
-
+        setLatestPic(<LoadingAnimation duration={1000} style={ { width: 200, height: 200 } }/>);
         // move taken picture to permanent location
         let imgFolderInfo = await FileSystem.getInfoAsync(IMAGE_DIR).catch(e => console.error(e));
         if (!imgFolderInfo.exists) {
@@ -52,7 +52,6 @@ const CameraComponent = ({onCloseCamera, isVisible}) => {
         const fileName = Date.now().toString() + ".jpg";
         const fullPath = IMAGE_DIR + fileName;
 
-        console.log(`from${photo.uri} to:${fullPath}`);
         await FileSystem.moveAsync({from: photo.uri, to: fullPath}).catch(e => console.error(e));
         setLatestPic(fullPath);
       }
@@ -69,8 +68,9 @@ const CameraComponent = ({onCloseCamera, isVisible}) => {
         onRequestClose={onCloseCamera}
       >
         <View style={styles.info}>
-          <Text>Waiting for permission to use camera.</Text>
 
+          <LoadingAnimation duration={1000} style={ { width: 400, height: 400 } }/>
+          <Text>Waiting for permission to use camera.</Text>
           <View style={styles.button}>
             <TouchableOpacity onPress={onCloseCamera}>
               <Text>close view</Text>
