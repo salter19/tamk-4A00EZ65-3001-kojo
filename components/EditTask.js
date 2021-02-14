@@ -185,12 +185,12 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
           <Button title={titles[5]} onPress={openCamera}/>
         </View>
 
-        {showCamera && (
-          <Cam 
-            onCloseCamera={handleCloseCamera}
-            isVisible={showCamera}
-          />
-        )}
+       
+        <Cam 
+          onCloseCamera={handleCloseCamera}
+          isVisible={showCamera}
+        />
+       
 
         <View style={styles.row}>
           <View style={[styles.buttonLeft, styles.button]}>
