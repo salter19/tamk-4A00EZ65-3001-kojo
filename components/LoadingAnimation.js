@@ -2,7 +2,7 @@ import React, {useRef, useEffect} from 'react';
 import {Animated, View, Image, StyleSheet, Easing} from 'react-native';
 
 
-const LoadingAnimation = ({ duration }) => {
+const LoadingAnimation = (props) => {
   // the current rotation in degrees
   const spinValue = useRef(new Animated.Value(0));
 
@@ -11,30 +11,30 @@ const LoadingAnimation = ({ duration }) => {
       Animated.timing(spinValue.current, 
         {
           toValue: 1,
-          duration: duration,
+          duration: props.duration,
           easing: Easing.linear,
           useNativeDriver: true,
-        }
-      )
+        })
     ).start();
     
-  }, [spinValue]);
+  });
 
   const spin = () => {
     return (
     spinValue.current.interpolate( {
       inputRange: [0, 1],
-      outputRange: ['0deg', '360deg']
+      outputRange: ["0deg", "360deg"]
     })
     );
   }
+  console.log(spinValue.current)
   return (
-    <Animated.View style={{transform: [ { rotate: spin() } ]}}>
-      <Image 
+    <View >
+      <Animated.Image 
         source={require('../assets/spinner.png')}
-        style={StyleSheet.img}
+        style={[StyleSheet.img, {transform: [ { rotate: spin() } ]}]}
       />
-    </Animated.View>
+    </View>
   );
 
 };
@@ -42,8 +42,8 @@ const LoadingAnimation = ({ duration }) => {
 const styles = StyleSheet.create(
   {
     img: {
-      width: 200,
-      height: 200,
+      width: 100,
+      height: 100,
     }
   }
 );

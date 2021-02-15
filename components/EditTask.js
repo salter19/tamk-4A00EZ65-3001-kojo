@@ -7,7 +7,7 @@ import ButtonTypes from "../data/ButtonTypes";
 import Cam from './CameraComponent';
 import {formatDate, formatTime} from './utils';
 
-const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
+const EditTask = ({isModify, onClose, onSubmitPress, currentTask, saveNewImg}) => {
   const [isVisible, setVisible] = useState(false);
   const [key, setKey] = useState('');
   const [title, setTitle] = useState('');
@@ -55,11 +55,9 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
     const str = 'this is a str';
 
     if (typeof dateToFormat !==  typeof str) {
-      console.log('not a string')
       formatDateToStr(dateToFormat);
       formatTimeToStr(dateToFormat);
     } else {
-      console.log('is a string')
       setDate(new Date(dateToFormat));
       const date = formatDate(dateToFormat);
       const time = formatTime(dateToFormat);
@@ -189,6 +187,7 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
         <Cam 
           onCloseCamera={handleCloseCamera}
           isVisible={showCamera}
+          saveImg={saveNewImg}
         />
        
 

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Image, StyleSheet} from 'react-native';
 
-const ImageDisplay = () => {
+const ImageDisplay = (props) => {
         
   const [image, setImage] = useState(<Image source={require('./../assets/TaikuriToRight.png')} />)
   

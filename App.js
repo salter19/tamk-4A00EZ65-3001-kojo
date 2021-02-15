@@ -10,11 +10,12 @@ import ButtonTypes from './data/ButtonTypes';
 import TaskList from './components/Exc2/TextListView';
 import EditTask from "./components/EditTask";
 import TaskStorage from './data/TaskStorage';
+import PicStorage from './data/PicStorage';
+import Gallery from './components/Gallery';
 
 // the App to rule them all
 export default function App() {
 
-  //const [taskArr, setTaskArr] = useState([]);
   const [task, setTask] = useState({
     key:undefined, 
     title:undefined, 
@@ -22,15 +23,17 @@ export default function App() {
     date:undefined,
     location:{ latitude:undefined, longitude:undefined},
   });
+
   const [tasks, setTasks] = useState([]);
   const [isModifyActive, setModifyActive] = useState(false);
   const [currentTask, setCurrentTask] = useState(undefined);
+  const [imgPaths, setImgPaths] = useState([]);
+  const [isGalleryActive, setGalleryActive] = useState(false);
 
   useEffect(() => {
     (async() => {
       console.log('Loading...');
       const tasks1 = await TaskStorage.LoadTasks().catch(e => console.log(e));
-      
       setTasks(tasks1);
     })()
   }, []);
@@ -42,6 +45,7 @@ export default function App() {
     })();
   }, [tasks]);
   
+  console.log(imgPaths)
   // 2:38 =>
   const onSubmit = (taskToSave) => {
     
@@ -65,14 +69,36 @@ export default function App() {
       title: taskToSave.title, 
       description: taskToSave.description, 
       date: taskToSave.date,
-      location: {latitude: '61.49572', longitude:'23.82407'}
+      location: {latitude: '61.49572', longitude:'23.82407'},
     });   
   }
+  
+  // when ever picture is taken its path is pushed here
+  const saveNewImg = (item) => {
+    setImgPaths([...imgPaths, { path: item }]);
+  }
 
+  // load img paths
+  useEffect(() => {
+    (async() => {
+      console.log('Loading paths...')
+      const paths = await PicStorage.LoadPicPaths().catch(e => {console.error(e)});
+      setImgPaths(paths); 
+    })();
+  }, []);
+
+  // save img paths
+  useEffect(() => {
+    (async() => {
+      console.log('saving paths...')
+      await PicStorage.SavePicPaths(imgPaths).catch(e => console.error(e));
+    })();
+  }, [imgPaths]);
+
+  
   // add task to tasks if key is found
   useEffect(() => {
     if (task.key !== undefined) {
-      
       // make sure no duplicates are created
       const tmp = (tasks.filter((item) => item.key !== task.key));
       setTasks([...tmp, task]);
@@ -117,9 +143,19 @@ export default function App() {
           onSubmitPress={onSubmit} 
           onClose={() => setModifyActive(false)}
           currentTask={currentTask}
+          saveNewImg={saveNewImg}
         />
         : <Button title={ButtonTypes.ADD} onPress={addNewTask}></Button>
       }
+
+      {isGalleryActive ?
+        <Gallery onClose={() => setGalleryActive(false)} />
+        :
+        <View style={styles.button}>
+          <Button title="Picture Gallery" onPress={() => setGalleryActive(true)} />
+        </View>
+      }
+
      
     </View>
   );
@@ -144,4 +180,7 @@ const styles = StyleSheet.create({
     width: "81%",
     maxHeight: "42%",
   },
+  button: {
+    marginTop: "2%",
+  }
 });
