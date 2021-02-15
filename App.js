@@ -124,6 +124,8 @@ export default function App() {
     setModifyActive(true);
   };
 
+  console.log(imgPaths)
+
   return (
     <View style={styles.root}>
 
@@ -149,7 +151,10 @@ export default function App() {
       }
 
       {isGalleryActive ?
-        <Gallery onClose={() => setGalleryActive(false)} />
+        <Gallery 
+          onClose={() => setGalleryActive(false)} 
+          paths={imgPaths}
+        />
         :
         <View style={styles.button}>
           <Button title="Picture Gallery" onPress={() => setGalleryActive(true)} />
