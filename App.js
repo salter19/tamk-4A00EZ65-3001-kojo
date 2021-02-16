@@ -45,7 +45,6 @@ export default function App() {
     })();
   }, [tasks]);
   
-  console.log(imgPaths)
   // 2:38 =>
   const onSubmit = (taskToSave) => {
     
@@ -149,10 +148,16 @@ export default function App() {
       }
 
       {isGalleryActive ?
-        <Gallery onClose={() => setGalleryActive(false)} />
+        <Gallery 
+          onClose={() => setGalleryActive(false)} 
+          paths={imgPaths}
+        />
         :
         <View style={styles.button}>
-          <Button title="Picture Gallery" onPress={() => setGalleryActive(true)} />
+          <Button 
+            title="Picture Gallery" 
+            onPress={() => setGalleryActive(true)}
+          />
         </View>
       }
 

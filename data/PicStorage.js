@@ -19,8 +19,6 @@ const LoadPicPaths = () => {
 
 const SavePicPaths = (picPaths) => {
     const func = async(resolve, reject) => {
-      console.log('savePicPaths')
-      console.log(picPaths)
       const save = await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(picPaths)).
       catch((e) => reject(e));
 
