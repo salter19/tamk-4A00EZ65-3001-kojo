@@ -1,7 +1,7 @@
 // imports needed
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Button } from "react-native";
+import { View, StyleSheet, Text, Pressable } from "react-native";
 import Constants from "expo-constants";
 import {v4 as uuidv4} from 'uuid';
 
@@ -123,6 +123,40 @@ export default function App() {
     setModifyActive(true);
   };
 
+  const addButton = 
+    <View style={[styles.center, styles.buttonRow]}>
+      <View style={styles.button}>
+            <Pressable 
+              onPress={addNewTask}
+              style={({pressed}) => [{
+                backgroundColor: pressed
+                ? "rgba(12, 37, 103, 0.81)"
+                : "rgba(12, 37, 103, 1)"
+              }, styles.myButton]}
+            >
+              <Text style={styles.buttonText}>Add Task</Text>
+            </Pressable>
+      </View>
+    </View>
+  ;
+
+  const buttonRow = 
+    <View style={[styles.center, styles.buttonRow]}>
+      <View style={styles.button}>
+        <Pressable
+          onPress={() => setGalleryActive(true)}
+          style={({pressed}) => [{
+            backgroundColor: pressed
+            ? "rgba(12, 37, 103, 0.81)"
+            : "rgba(12, 37, 103, 1)"
+          }, styles.myButton]}
+        >
+          <Text style={styles.buttonText}>Open Gallery</Text></Pressable>
+
+      </View>
+    </View>
+  ;
+
   return (
     <View style={styles.root}>
 
@@ -135,7 +169,6 @@ export default function App() {
         <TaskList tasksArr={tasks} deleteItem={deleteTask} modifyItem={modifyTask}/>
       </View>
 
-  
       {isModifyActive ? 
         <EditTask 
           isModify={isModifyActive}  
@@ -144,7 +177,7 @@ export default function App() {
           currentTask={currentTask}
           saveNewImg={saveNewImg}
         />
-        : <Button title={ButtonTypes.ADD} onPress={addNewTask}></Button>
+        : addButton
       }
 
       {isGalleryActive ?
@@ -152,15 +185,8 @@ export default function App() {
           onClose={() => setGalleryActive(false)} 
           paths={imgPaths}
         />
-        :
-        <View style={styles.button}>
-          <Button 
-            title="Picture Gallery" 
-            onPress={() => setGalleryActive(true)}
-          />
-        </View>
+        : buttonRow
       }
-
      
     </View>
   );
@@ -174,7 +200,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#ff6600",
     height: "100%",
     paddingLeft: "5%",
   },
@@ -184,8 +209,39 @@ const styles = StyleSheet.create({
   list: {
     width: "81%",
     maxHeight: "42%",
+    marginBottom:"6%",
   },
   button: {
     marginTop: "2%",
-  }
+  },
+  myButton: {
+    width: 100,
+    height: 61,
+    justifyContent: 'center',
+    alignItems:'center',
+    marginBottom:'10%',
+    marginHorizontal: '19%',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor:"#fff",
+  },
+  buttonText: {
+    color:"#fff",
+    fontWeight:"700",
+  },
+  buttonRow: {
+    height: 100,
+    width:"81%",
+    marginTop: "2%",
+    paddingTop: "5%",
+    justifyContent:"center",
+    alignItems:"center",
+    backgroundColor: "rgba(255, 103, 0, 1)",
+    borderColor: "#0c2567",
+    borderWidth: 4,
+  },
+  center: {
+    justifyContent:"center",
+    alignItems:"center",
+  },
 });
