@@ -108,7 +108,6 @@ const TextListView = ({tasksArr, deleteItem, modifyItem}) => {
     
     return (
         <SafeAreaView style={styles.container}>
-          <Text style={[styles.text, styles.titleText]}>Tasks:</Text>
           {/* FlatList for scrolling */}
           <FlatList 
             style={styles.flatListView}

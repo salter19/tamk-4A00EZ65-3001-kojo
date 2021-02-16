@@ -4,10 +4,9 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Textfield from '../components/Exc2/InputText';
 import ButtonTypes from "../data/ButtonTypes";
-import Cam from './CameraComponent';
 import {formatDate, formatTime} from './utils';
 
-const EditTask = ({isModify, onClose, onSubmitPress, currentTask, saveNewImg}) => {
+const EditTask = ({isModify, onClose, onSubmitPress, currentTask}) => {
   const [isVisible, setVisible] = useState(false);
   const [key, setKey] = useState('');
   const [title, setTitle] = useState('');
@@ -17,11 +16,11 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask, saveNewImg}) =
   const [showPicker, setShowPicker] = useState(false);
   const [formattedDate, setFormattedDate] = useState('');
   const [formattedTime, setFormattedTime] = useState('');
-  const [showCamera, setShowCamera] = useState(false);
+ 
 
   const titles = 
   ['Task title', 'Description', 'Date', 
-  'Set Date', 'Set Time', 'Open Camera'];
+  'Set Date', 'Set Time'];
 
   useEffect(() => {
     setVisible(true);   
@@ -115,14 +114,6 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask, saveNewImg}) =
     formatTimeToStr(currentDate);
   }
 
-  const openCamera = () => {
-    setShowCamera(true);
-  }
-
-  const handleCloseCamera = () => {
-    setShowCamera(false);
-  }
-  
   return (
     <Modal 
       animationType= "fade"
@@ -177,19 +168,7 @@ const EditTask = ({isModify, onClose, onSubmitPress, currentTask, saveNewImg}) =
               onChange={handlePickerChange}
             />
           )}
-        </View>
-        
-        <View style={styles.button}>
-          <Button title={titles[5]} onPress={openCamera}/>
-        </View>
-
-       
-        <Cam 
-          onCloseCamera={handleCloseCamera}
-          isVisible={showCamera}
-          saveImg={saveNewImg}
-        />
-       
+        </View>       
 
         <View style={styles.row}>
           <View style={[styles.buttonLeft, styles.button]}>

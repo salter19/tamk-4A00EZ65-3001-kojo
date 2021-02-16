@@ -6,12 +6,12 @@ import Constants from "expo-constants";
 import {v4 as uuidv4} from 'uuid';
 
 // my components
-import ButtonTypes from './data/ButtonTypes';
 import TaskList from './components/Exc2/TextListView';
 import EditTask from "./components/EditTask";
 import TaskStorage from './data/TaskStorage';
 import PicStorage from './data/PicStorage';
-import Gallery from './components/Gallery';
+import Gallery from './components/Gallery'; 
+import Cam from './components/CameraComponent';
 
 // the App to rule them all
 export default function App() {
@@ -29,6 +29,7 @@ export default function App() {
   const [currentTask, setCurrentTask] = useState(undefined);
   const [imgPaths, setImgPaths] = useState([]);
   const [isGalleryActive, setGalleryActive] = useState(false);
+  const [showCamera, setShowCamera] = useState(false);
 
   useEffect(() => {
     (async() => {
@@ -122,6 +123,14 @@ export default function App() {
     setCurrentTask(undefined);
     setModifyActive(true);
   };
+  
+  const openCamera = () => {
+    setShowCamera(true);
+  }
+
+  const handleCloseCamera = () => {
+    setShowCamera(false);
+  }
 
   const addButton = 
     <View style={[styles.center, styles.buttonRow]}>
@@ -142,6 +151,7 @@ export default function App() {
 
   const buttonRow = 
     <View style={[styles.center, styles.buttonRow]}>
+
       <View style={styles.button}>
         <Pressable
           onPress={() => setGalleryActive(true)}
@@ -152,8 +162,21 @@ export default function App() {
           }, styles.myButton]}
         >
           <Text style={styles.buttonText}>Open Gallery</Text></Pressable>
-
       </View>
+
+      <View style={styles.button}>
+        <Pressable 
+          onPress={openCamera}
+          style={({pressed}) => [{
+            backgroundColor: pressed
+            ? "rgba(12, 37, 103, 0.81)"
+            : "rgba(12, 37, 103, 1)"
+          }, styles.myButton]}
+        >
+          <Text style={styles.buttonText}>Camera</Text>
+        </Pressable>
+      </View>
+
     </View>
   ;
 
@@ -165,6 +188,7 @@ export default function App() {
         <StatusBar style="auto" />
       </View>
 
+      <Text style={[styles.titleText]}>MY TASKS</Text>
       <View style={styles.list}>
         <TaskList tasksArr={tasks} deleteItem={deleteTask} modifyItem={modifyTask}/>
       </View>
@@ -187,6 +211,13 @@ export default function App() {
         />
         : buttonRow
       }
+
+       
+      <Cam 
+        onCloseCamera={handleCloseCamera}
+        isVisible={showCamera}
+        saveImg={saveNewImg}
+      />
      
     </View>
   );
@@ -209,10 +240,10 @@ const styles = StyleSheet.create({
   list: {
     width: "81%",
     maxHeight: "42%",
-    marginBottom:"6%",
   },
   button: {
-    marginTop: "2%",
+    marginHorizontal:"3%",
+    marginBottom:"3%",
   },
   myButton: {
     width: 100,
@@ -220,7 +251,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems:'center',
     marginBottom:'10%',
-    marginHorizontal: '19%',
     borderRadius: 8,
     borderWidth: 2,
     borderColor:"#fff",
@@ -239,9 +269,16 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 103, 0, 1)",
     borderColor: "#0c2567",
     borderWidth: 4,
+    flexDirection: "row"
   },
   center: {
     justifyContent:"center",
     alignItems:"center",
   },
+  titleText: {
+    fontWeight: "bold",
+    fontSize: 24,
+    lineHeight: 30,
+    paddingTop: "2%"
+  }
 });
