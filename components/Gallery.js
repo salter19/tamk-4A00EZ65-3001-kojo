@@ -162,17 +162,22 @@ const Gallery = (props) => {
             <Text style={styles.buttonText}>Previous</Text>
           </Pressable>
 
-          <Pressable onPress={onPressNext} style={({pressed}) => [{
-            backgroundColor: pressed
-            ? "rgba(12, 37, 103, 0.81)"
-            : "rgba(12, 37, 103, 1)"
-          }, styles.myButton]}>
+          <Pressable 
+            onPress={onPressNext} 
+            style={({pressed}) => [{
+              backgroundColor: pressed
+              ? "rgba(12, 37, 103, 0.81)"
+              : "rgba(12, 37, 103, 1)"
+            }, styles.myButton]}
+          >
             <Text style={styles.buttonText}>Next</Text>
           </Pressable>
         </View>
 
         <View style={[styles.row, styles.buttonRow, {backgroundColor:"rgba(12, 37, 103, 1)"}]}>
-          <Pressable onPress={props.onClose} style={({pressed}) => [{
+          <Pressable 
+            onPress={props.onClose} 
+            style={({pressed}) => [{
               backgroundColor: pressed
               ? "rgba( 255, 102, 0, 0.81)"
               : "rgba(255, 102, 0, 1)"
