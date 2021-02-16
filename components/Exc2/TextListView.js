@@ -128,15 +128,16 @@ const styles = StyleSheet.create({
   container: {
       width: "100%",
       paddingHorizontal: "2%",
-      borderWidth: 2,
-      borderColor: "#ffffff",
-      borderRadius: 1,
+      borderWidth: 4,
+      borderColor: "#0c2567",
+      borderRadius: 2,
       marginVertical:"3%",
       alignItems:"center",
+      backgroundColor:"#ff6600",
   },
   flatListView: {
       marginVertical:"8%",
-      width: "100%",
+      width: "97%",
   },
   text: {
       color:"#ffffff", 
