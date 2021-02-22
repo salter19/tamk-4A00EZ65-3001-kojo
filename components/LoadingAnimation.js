@@ -27,7 +27,6 @@ const LoadingAnimation = (props) => {
     })
     );
   }
-  console.log(spinValue.current)
   return (
     <View >
       <Animated.Image 

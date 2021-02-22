@@ -1,17 +1,17 @@
 // imports needed
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Button } from "react-native";
+import { View, StyleSheet, Text, Pressable } from "react-native";
 import Constants from "expo-constants";
 import {v4 as uuidv4} from 'uuid';
 
 // my components
-import ButtonTypes from './data/ButtonTypes';
 import TaskList from './components/Exc2/TextListView';
 import EditTask from "./components/EditTask";
 import TaskStorage from './data/TaskStorage';
 import PicStorage from './data/PicStorage';
-import Gallery from './components/Gallery';
+import Gallery from './components/Gallery'; 
+import Cam from './components/CameraComponent';
 
 // the App to rule them all
 export default function App() {
@@ -29,6 +29,7 @@ export default function App() {
   const [currentTask, setCurrentTask] = useState(undefined);
   const [imgPaths, setImgPaths] = useState([]);
   const [isGalleryActive, setGalleryActive] = useState(false);
+  const [showCamera, setShowCamera] = useState(false);
 
   useEffect(() => {
     (async() => {
@@ -45,7 +46,6 @@ export default function App() {
     })();
   }, [tasks]);
   
-  console.log(imgPaths)
   // 2:38 =>
   const onSubmit = (taskToSave) => {
     
@@ -123,6 +123,62 @@ export default function App() {
     setCurrentTask(undefined);
     setModifyActive(true);
   };
+  
+  const openCamera = () => {
+    setShowCamera(true);
+  }
+
+  const handleCloseCamera = () => {
+    setShowCamera(false);
+  }
+
+  const addButton = 
+    <View style={[styles.center, styles.buttonRow]}>
+      <View style={styles.button}>
+            <Pressable 
+              onPress={addNewTask}
+              style={({pressed}) => [{
+                backgroundColor: pressed
+                ? "rgba(12, 37, 103, 0.81)"
+                : "rgba(12, 37, 103, 1)"
+              }, styles.myButton]}
+            >
+              <Text style={styles.buttonText}>Add Task</Text>
+            </Pressable>
+      </View>
+    </View>
+  ;
+
+  const buttonRow = 
+    <View style={[styles.center, styles.buttonRow]}>
+
+      <View style={styles.button}>
+        <Pressable
+          onPress={() => setGalleryActive(true)}
+          style={({pressed}) => [{
+            backgroundColor: pressed
+            ? "rgba(12, 37, 103, 0.81)"
+            : "rgba(12, 37, 103, 1)"
+          }, styles.myButton]}
+        >
+          <Text style={styles.buttonText}>Open Gallery</Text></Pressable>
+      </View>
+
+      <View style={styles.button}>
+        <Pressable 
+          onPress={openCamera}
+          style={({pressed}) => [{
+            backgroundColor: pressed
+            ? "rgba(12, 37, 103, 0.81)"
+            : "rgba(12, 37, 103, 1)"
+          }, styles.myButton]}
+        >
+          <Text style={styles.buttonText}>Camera</Text>
+        </Pressable>
+      </View>
+
+    </View>
+  ;
 
   console.log(imgPaths)
 
@@ -134,11 +190,11 @@ export default function App() {
         <StatusBar style="auto" />
       </View>
 
+      <Text style={[styles.titleText]}>MY TASKS</Text>
       <View style={styles.list}>
         <TaskList tasksArr={tasks} deleteItem={deleteTask} modifyItem={modifyTask}/>
       </View>
 
-  
       {isModifyActive ? 
         <EditTask 
           isModify={isModifyActive}  
@@ -147,7 +203,7 @@ export default function App() {
           currentTask={currentTask}
           saveNewImg={saveNewImg}
         />
-        : <Button title={ButtonTypes.ADD} onPress={addNewTask}></Button>
+        : addButton
       }
 
       {isGalleryActive ?
@@ -155,12 +211,15 @@ export default function App() {
           onClose={() => setGalleryActive(false)} 
           paths={imgPaths}
         />
-        :
-        <View style={styles.button}>
-          <Button title="Picture Gallery" onPress={() => setGalleryActive(true)} />
-        </View>
+        : buttonRow
       }
 
+       
+      <Cam 
+        onCloseCamera={handleCloseCamera}
+        isVisible={showCamera}
+        saveImg={saveNewImg}
+      />
      
     </View>
   );
@@ -174,7 +233,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#ff6600",
     height: "100%",
     paddingLeft: "5%",
   },
@@ -186,6 +244,43 @@ const styles = StyleSheet.create({
     maxHeight: "42%",
   },
   button: {
+    marginHorizontal:"3%",
+    marginBottom:"3%",
+  },
+  myButton: {
+    width: 100,
+    height: 61,
+    justifyContent: 'center',
+    alignItems:'center',
+    marginBottom:'10%',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor:"#fff",
+  },
+  buttonText: {
+    color:"#fff",
+    fontWeight:"700",
+  },
+  buttonRow: {
+    height: 100,
+    width:"81%",
     marginTop: "2%",
+    paddingTop: "5%",
+    justifyContent:"center",
+    alignItems:"center",
+    backgroundColor: "rgba(255, 103, 0, 1)",
+    borderColor: "#0c2567",
+    borderWidth: 4,
+    flexDirection: "row"
+  },
+  center: {
+    justifyContent:"center",
+    alignItems:"center",
+  },
+  titleText: {
+    fontWeight: "bold",
+    fontSize: 24,
+    lineHeight: 30,
+    paddingTop: "2%"
   }
 });

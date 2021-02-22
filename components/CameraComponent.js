@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {View, StyleSheet, Text, 
-  TouchableOpacity, Modal, Image} from 'react-native';
+  Pressable, Modal, Image} from 'react-native';
 import {Camera as CameraView} from 'expo-camera';
 import * as FileSystem from 'expo-file-system';
 
@@ -82,9 +82,16 @@ const CameraComponent = ({onCloseCamera, isVisible, saveImg}) => {
         <View style={styles.info}>
           <Text>Waiting for permission to use camera.</Text>
           <View style={styles.button}>
-            <TouchableOpacity onPress={onCloseCamera}>
+            <Pressable 
+              onPress={onCloseCamera}
+              style={({pressed}) => [{
+                backgroundColor: pressed
+                ? "rgba(12, 37, 103, 0.81)"
+                : "rgba(12, 37, 103, 1)"
+              }, styles.myButton]}
+            >
               <Text>close view</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </View>
     </Modal>
@@ -101,9 +108,16 @@ const CameraComponent = ({onCloseCamera, isVisible, saveImg}) => {
           <Text>Camera access denied.</Text>
 
           <View style={styles.button}>
-            <TouchableOpacity onPress={onCloseCamera}>
+            <Pressable 
+              onPress={onCloseCamera}
+              style={({pressed}) => [{
+                backgroundColor: pressed
+                ? "rgba(12, 37, 103, 0.81)"
+                : "rgba(12, 37, 103, 1)"
+              }, styles.myButton]}
+            >
               <Text>close view</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </View>
       </Modal>
@@ -118,7 +132,6 @@ const CameraComponent = ({onCloseCamera, isVisible, saveImg}) => {
         <View style={styles.root}>
 
           <View>
-            {/* -> */}
             <CameraView 
               style={styles.cameraPreview}
               type={type}
@@ -127,29 +140,50 @@ const CameraComponent = ({onCloseCamera, isVisible, saveImg}) => {
             </CameraView>
           </View>
 
-          <View style={styles.bottomButtonContainer}>
+          <View style={[styles.buttonRow, styles.row]}>
 
             <View style={styles.button}>
-                <TouchableOpacity onPress={toggleCameras}>
-                  <Text>flip camera</Text>
-                </TouchableOpacity>
+                <Pressable 
+                  onPress={toggleCameras}
+                  style={({pressed}) => [{
+                    backgroundColor: pressed
+                    ? "rgba(12, 37, 103, 0.81)"
+                    : "rgba(12, 37, 103, 1)"
+                  }, styles.myButton]}
+                >
+                  <Text style={styles.buttonText}>flip camera</Text>
+                </Pressable>
             </View>
 
             <View style={styles.button}>
-                <TouchableOpacity onPress={takePicture}>
-                  <Text>OH SNAP!</Text>
-                </TouchableOpacity>
+                <Pressable 
+                  onPress={takePicture}
+                  style={({pressed}) => [{
+                    backgroundColor: pressed
+                    ? "rgba(12, 37, 103, 0.81)"
+                    : "rgba(12, 37, 103, 1)"
+                  }, styles.myButton]}
+                >
+                  <Text style={styles.buttonText}>OH SNAP!</Text>
+                </Pressable>
             </View>
 
             <View style={styles.button}>
-              <TouchableOpacity onPress={onCloseCamera}>
-                <Text>close view</Text>
-              </TouchableOpacity>
+              <Pressable 
+                onPress={onCloseCamera}
+                style={({pressed}) => [{
+                  backgroundColor: pressed
+                  ? "rgba(12, 37, 103, 0.81)"
+                  : "rgba(12, 37, 103, 1)"
+                }, styles.myButton]}
+              >
+                <Text style={styles.buttonText}>close view</Text>
+              </Pressable>
             </View>
 
           </View>
 
-          <View style={styles.latest}>
+          <View style={[styles.latest, styles.preview]}>
             <Image source={{uri:latestPic}}  style={styles.prevPic}/>
           </View>
 
@@ -179,32 +213,60 @@ const styles = StyleSheet.create({
   cameraPreview: {
     width: WINDOW_WIDTH,
     height: WINDOW_WIDTH * (4 / 3),
-  },
-  bottomButtonContainer: {
-    marginTop: 3,
-    flexDirection:"row",
-    width:"100%",
-    height:100,
-    backgroundColor:"#ff6600",
-    justifyContent:"center",
-    alignItems:"center",
-  },
-  button: {
-    borderColor:"#ff6600",
-    width: 100,
-    color:"#ffffff",
-  },
+  }, 
   latest: {
     flexDirection:"row",
     justifyContent:"center",
   },
+  preview: {
+    backgroundColor: "#0c2567",
+    borderWidth: 4,
+    borderColor: "#fff",
+    height: 140,
+    justifyContent:"center",
+    alignItems:"center",
+  },
   prevPic: {
-    width: 120,
-    height: 90,
+    width: 124,
+    height: 93,
+    borderWidth: 2,
+    borderRadius: 2,
+    borderColor: "#fff",
   },
   loading: {
     width:"100%",
     height:400,
+  },
+  myButton: {
+    width: 100,
+    height: 61,
+    justifyContent: 'center',
+    alignItems:'center',
+    marginBottom:'10%',
+    marginHorizontal: '5%',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor:"#fff",
+  }, 
+  buttonText: {
+    color:"#fff",
+    fontWeight:"700",
+  },
+  buttonRow: {
+    height: 100,
+    marginVertical: "2%",
+    paddingLeft: "5%",
+    paddingTop: "2%",
+    justifyContent:"center",
+    alignItems:"center",
+    backgroundColor: "rgba(255, 103, 0, 1)",
+    borderWidth: 4,
+    borderColor: "#fff",
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems:"center",
   }
 });
 

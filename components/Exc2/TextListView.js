@@ -57,8 +57,8 @@ const TextListView = ({tasksArr, deleteItem, modifyItem}) => {
         >
           <View style={[
             index % 2 === 0 
-            ? styles.touchableItem_even
-            : styles.touchableItem_odd,
+            ? [styles.touchableItem_even, styles.listItem]
+            : styles.listItem,
             ]}>
 
               <View style={styles.rowItem}>
@@ -108,14 +108,13 @@ const TextListView = ({tasksArr, deleteItem, modifyItem}) => {
     
     return (
         <SafeAreaView style={styles.container}>
-          <Text style={[styles.text, styles.titleText]}>Tasks:</Text>
           {/* FlatList for scrolling */}
           <FlatList 
-          style={styles.flatListView}
-          data={tasksArr}
-          renderItem={renderItem}
-          extraData={deleteI}
-          ItemSeparatorComponent={itemSeparator}
+            style={styles.flatListView}
+            data={tasksArr}
+            renderItem={renderItem}
+            extraData={deleteI}
+            ItemSeparatorComponent={itemSeparator}
           >
           <Text>{deleteI}</Text>
           </FlatList>
@@ -125,52 +124,55 @@ const TextListView = ({tasksArr, deleteItem, modifyItem}) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        width: "100%",
-        paddingHorizontal: "2%",
-        borderWidth: 2,
-        borderColor: "#ffffff",
-        marginVertical:"3%"
-    },
-    flatListView: {
-        marginVertical:"8%",
-    },
-    text: {
-        color:"#ffffff", 
-    },
-    titleText: {
-      fontWeight: "bold",
-      fontSize: 24,
-      lineHeight: 36,
-    },
-    descriptionText: {
-      fontSize: 18,
-      lineHeight: 24,
-      flexWrap:"wrap",
-    },
-    touchableItem_odd: {
-        width: "100%",
-        borderColor: "#ffffff",
-        borderWidth: 2,
-        marginVertical: 4,
-        paddingHorizontal: 6
-    },
-    touchableItem_even: {
+  container: {
       width: "100%",
-      borderColor: "#ffffff",
-      backgroundColor:"#0c2576",
-      borderWidth: 2,
-      marginVertical: 4,
-      paddingHorizontal: 6
+      paddingHorizontal: "2%",
+      borderWidth: 4,
+      borderColor: "#0c2567",
+      borderRadius: 2,
+      marginVertical:"3%",
+      alignItems:"center",
+      backgroundColor:"#ff6600",
+  },
+  flatListView: {
+      marginVertical:"8%",
+      width: "97%",
+  },
+  text: {
+      color:"#ffffff", 
+  },
+  titleText: {
+    fontWeight: "bold",
+    fontSize: 24,
+    lineHeight: 30,
+    paddingTop: "2%"
+  },
+  descriptionText: {
+    fontSize: 18,
+    lineHeight: 24,
+    flexWrap:"wrap",
+  },
+  listItem: {
+    width: "100%",
+    borderColor: "#ffffff",
+    borderWidth: 4,
+    borderRadius: 2,
+    marginVertical: 2,
+    paddingHorizontal: 6,
+    paddingVertical: 6,
+  },
+  touchableItem_even: {
+    backgroundColor:"#0c2576",
   },
   separator: {
-      height: 6,
-      width:"80%",
-      backgroundColor: "#0c2576",
-      alignSelf:"center",
-      borderTopColor:"#ffffff",
-      borderBottomColor:"#ffffff",
-      borderWidth:1
+    height: 8,
+    width:"80%",
+    backgroundColor: "#0c2576",
+    alignSelf:"center",
+    borderTopColor:"#ffffff",
+    borderBottomColor:"#ffffff",
+    borderWidth:2,
+    marginVertical:4,
   },
   rowItem: {
     flexDirection:'row',
