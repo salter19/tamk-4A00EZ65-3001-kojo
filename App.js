@@ -22,6 +22,7 @@ export default function App() {
     description:undefined, 
     date:undefined,
     location:{ latitude:undefined, longitude:undefined},
+    priority:undefined,
   });
 
   const [tasks, setTasks] = useState([]);
@@ -70,6 +71,7 @@ export default function App() {
       description: taskToSave.description, 
       date: taskToSave.date,
       location: {latitude: '61.49572', longitude:'23.82407'},
+      priority: taskToSave.priority,
     });   
   }
   
@@ -248,7 +250,7 @@ const styles = StyleSheet.create({
   },
   myButton: {
     width: 100,
-    height: 61,
+    height: 42,
     justifyContent: 'center',
     alignItems:'center',
     marginBottom:'10%',
