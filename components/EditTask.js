@@ -8,6 +8,7 @@ import {
   Platform,
   Animated,
   Easing,
+  Pressable,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import CheckBox from '@react-native-community/checkbox';
@@ -107,14 +108,35 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
       setTitle(currentTask.title);
       setDescription(currentTask.description);
       setDate(currentTask.date);
-
       formatDateTime(currentTask.date);
+      resetPriority(currentTask.priority);
     } else {
       formatDateTime(date);
     }
   }, []);
 
+  const resetPriority = (value) => {
+      switch (value) {
+          case Priority.MEDIUM:
+              setPriority(Priority.MEDIUM);
+              toggleMedium(true);
+              toggleHigh(false);
+              toggleLow(false);
+              break;
+      
+          case Priority.LOW:
+              setPriority(Priority.LOW);
+              toggleLow(true);
+              toggleHigh(false);
+              toggleMedium(false);
+              break;
+          default:
+              break;
+      }
+  }
+
   const formatDateTime = (dateToFormat) => {
+    const str = "";
     if (typeof dateToFormat !== typeof str) {
       formatDateToStr(dateToFormat);
       formatTimeToStr(dateToFormat);
@@ -240,7 +262,17 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
             <Text style={styles.dateTime}>{formattedDate}</Text>
 
             <View style={[styles.button]}>
-              <Button title={titles[3]} onPress={showDatePicker} />
+                <Pressable 
+                    onPress={showDatePicker}
+                    style={({pressed}) => [{
+                        backgroundColor: pressed
+                        ? "rgba(12, 37, 103, 0.81)"
+                        : "rgba(12, 37, 103, 1)"
+                    }, styles.myButton]}
+                    >
+                    <Text style={styles.buttonText}>{titles[3]}</Text>
+                </Pressable>
+                
             </View>
           </View>
 
@@ -248,7 +280,16 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
             <Text style={styles.dateTime}>{formattedTime}</Text>
 
             <View style={[styles.button]}>
-              <Button title={titles[4]} onPress={showTimePicker} />
+                <Pressable 
+                    onPress={showTimePicker}
+                    style={({pressed}) => [{
+                        backgroundColor: pressed
+                        ? "rgba(12, 37, 103, 0.81)"
+                        : "rgba(12, 37, 103, 1)"
+                    }, styles.myButton]}
+                    >
+                    <Text style={styles.buttonText}>{titles[4]}</Text>
+                </Pressable>
             </View>
           </View>
 
@@ -301,29 +342,33 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
           </View>
         </View>
         <View style={styles.row}>
-            <View style={styles.button}>
+           
+        </View>
+
+        <View style={styles.row}>
+            <View style={[styles.buttonLeft, styles.button]}>
                     <Pressable 
-                    onPress={addNewTask}
+                    onPress={saveAndClose}
                     style={({pressed}) => [{
                         backgroundColor: pressed
                         ? "rgba(12, 37, 103, 0.81)"
                         : "rgba(12, 37, 103, 1)"
                     }, styles.myButton]}
                     >
-                    <Text style={styles.buttonText}>Add Task</Text>
+                    <Text style={styles.buttonText}>{currentTask ? ButtonTypes.UPDATE : ButtonTypes.ADD}</Text>
                     </Pressable>
             </View>
-        </View>
-
-        <View style={styles.row}>
-          <View style={[styles.buttonLeft, styles.button]}>
-            <Button
-              title={currentTask ? ButtonTypes.UPDATE : ButtonTypes.ADD}
-              onPress={saveAndClose}
-            />
-          </View>
           <View style={[styles.buttonRight, styles.button]}>
-            <Button title={ButtonTypes.CLOSE} onPress={onClosePressed} />
+                <Pressable 
+                    onPress={onClosePressed}
+                    style={({pressed}) => [{
+                        backgroundColor: pressed
+                        ? "rgba(12, 37, 103, 0.81)"
+                        : "rgba(12, 37, 103, 1)"
+                    }, styles.myButton]}
+                >
+                    <Text style={styles.buttonText}>{ButtonTypes.CLOSE}</Text>
+                </Pressable>
           </View>
         </View>
       </View>
@@ -369,6 +414,21 @@ const styles = StyleSheet.create({
   },
   rightAligned: {
     alignItems: 'flex-end',
+  },
+  myButton: {
+    width: 100,
+    height: 42,
+    justifyContent: 'center',
+    alignItems:'center',
+    marginBottom:'10%',
+    marginHorizontal: '5%',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor:"#fff",
+  }, 
+  buttonText: {
+    color:"#fff",
+    fontWeight:"700",
   },
 });
 
