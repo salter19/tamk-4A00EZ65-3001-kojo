@@ -10,11 +10,10 @@ import {
   Easing,
 } from 'react-native';
 
-import { WINDOW_WIDTH } from './../data/Constants';
+import { WINDOW_WIDTH, FADE_DURATION } from './../data/Constants';
 import LoadingAnimation from './LoadingAnimation';
 
 const PADDED_WIDTH = WINDOW_WIDTH * 0.8;
-const FADE_DURATION = 1000;
 
 const Gallery = (props) => {
   const [picGallery, setPicGallery] = useState([]);
