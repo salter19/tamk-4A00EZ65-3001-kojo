@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Text, Modal, StyleSheet, View, Button, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import CheckBox from '@react-native-community/checkbox';
 
 import Textfield from '../components/Exc2/InputText';
 import ButtonTypes from '../data/ButtonTypes';
@@ -31,6 +32,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
       title: title,
       description: description,
       date: date,
+      priority: priority,
     });
     onClose();
   };
