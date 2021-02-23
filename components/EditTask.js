@@ -207,6 +207,8 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
       setPriority(null);
     }
   };
+  
+
 
   return (
     <Modal
@@ -297,6 +299,20 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
               </View>
             </View>
           </View>
+        </View>
+        <View style={styles.row}>
+            <View style={styles.button}>
+                    <Pressable 
+                    onPress={addNewTask}
+                    style={({pressed}) => [{
+                        backgroundColor: pressed
+                        ? "rgba(12, 37, 103, 0.81)"
+                        : "rgba(12, 37, 103, 1)"
+                    }, styles.myButton]}
+                    >
+                    <Text style={styles.buttonText}>Add Task</Text>
+                    </Pressable>
+            </View>
         </View>
 
         <View style={styles.row}>
