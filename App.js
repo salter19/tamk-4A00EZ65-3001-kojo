@@ -208,6 +208,7 @@ export default function App() {
         <Gallery 
           onClose={() => setGalleryActive(false)} 
           paths={imgPaths}
+          openCamera={openCamera}
         />
         : buttonRow
       }
