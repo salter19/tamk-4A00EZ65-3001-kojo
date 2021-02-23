@@ -4,4 +4,4 @@ const Priority = {
   LOW: 1,
 };
 
-export default { HIGH, MEDIUM, LOW };
+export default Priority;
