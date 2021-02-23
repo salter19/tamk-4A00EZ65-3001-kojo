@@ -17,6 +17,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
   const [showPicker, setShowPicker] = useState(false);
   const [formattedDate, setFormattedDate] = useState('');
   const [formattedTime, setFormattedTime] = useState('');
+  const [priority, setPriority] = useState(HIGH);
 
   const titles = ['Task title', 'Description', 'Date', 'Set Date', 'Set Time'];
 
