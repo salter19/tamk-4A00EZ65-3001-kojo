@@ -7,6 +7,7 @@ import {
   FlatList,
   SafeAreaView,
 } from 'react-native';
+import Priority from '../../data/Priority';
 
 // my components
 import ImageDisplay from '../ImageDisplay';
@@ -23,7 +24,7 @@ const wrap = (str) => {
 
 const format = (dateObj) => {
   // type tester
-  const str = 'this a string';
+  const str = '';
 
   if (typeof dateObj !== typeof str) {
     // handle Date object
@@ -47,9 +48,22 @@ const TextListView = ({ tasksArr, deleteItem, modifyItem }) => {
 
     // call deleteItem in App
     deleteItem(item.key);
-  };
+};
 
-  const renderItem = ({ item, index }) => {
+const getPriority = (value) => {
+    switch (value) {
+        case Priority.MEDIUM:
+            return "Med";
+        
+        case Priority.LOW:
+            return "Low";
+    
+        default:
+            return "High";
+    }
+}
+
+const renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
         key={item.key}
@@ -63,37 +77,44 @@ const TextListView = ({ tasksArr, deleteItem, modifyItem }) => {
               : styles.listItem,
           ]}
         >
-          <View style={styles.rowItem}>
-            <ImageDisplay />
+
+            <View>
+                <Text style={styles.priority}>{getPriority(item.priority)}</Text>
+            </View>  
+
+            <View style={styles.rowItem}>
+                <ImageDisplay />
             <View style={styles.columnItem}>
-              <View>
+
+            <View>
                 <Text style={[styles.text, styles.titleText]}>
-                  {wrap(item.title)}
+                {wrap(item.title)}
                 </Text>
-              </View>
+            </View>         
 
-              <View>
-                <Text style={[styles.text, styles.descriptionText]}>
-                  {wrap(item.description)}
-                </Text>
-              </View>
-
-              <View>
-                <Text style={styles.text}>{format(item.date)}</Text>
-              </View>
-
-              <View>
-                <Text style={styles.text}>
-                  {'latitude: ' + item.location.latitude}
-                </Text>
-                <Text style={styles.text}>
-                  {'longitude: ' + item.location.longitude}
-                </Text>
-              </View>
+            <View>
+            <Text style={[styles.text, styles.descriptionText]}>
+                {wrap(item.description)}
+            </Text>
             </View>
+
+            <View>
+            <Text style={styles.text}>{format(item.date)}</Text>
+            </View>
+
+            <View>
+                <Text style={styles.text}>
+                {'latitude: ' + item.location.latitude}
+                </Text>
+                <Text style={styles.text}>
+                {'longitude: ' + item.location.longitude}
+                </Text>
+            </View>
+              
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
+    </TouchableOpacity>
     );
   };
 
@@ -173,6 +194,23 @@ const styles = StyleSheet.create({
   },
   columnItem: {
     flexDirection: 'column',
+  },
+  priority: {
+    color:"#0c2567",
+    fontWeight: "700",
+    borderColor: "#ffffff",
+    borderWidth: 2,
+    marginRight: "-76%",
+    marginBottom: "-42%",
+    paddingLeft: "2%",
+    paddingTop: "4%",
+    alignSelf: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.61)",
+    borderRadius:21,
+    width: 42,
+    height: 42,
+    
+    
   },
 });
 
