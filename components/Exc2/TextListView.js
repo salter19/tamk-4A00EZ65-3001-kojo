@@ -15,7 +15,7 @@ import { formatDateTime, formatDateTimeFromDate } from '../utils';
 // static width wrapper for text
 const wrap = (str) => {
   const res = str.replace(
-    new RegExp(`(?![^\\n]{1,24}$)([^\\n]{1,24})\\s`, 'g'),
+    new RegExp(`(?![^\\n]{1,15}$)([^\\n]{1,15})\\s`, 'g'),
     '$1\n',
   );
   return res;
