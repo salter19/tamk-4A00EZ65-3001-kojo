@@ -1,12 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { Text, Modal, StyleSheet, View, Button, Platform } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import {
+  Text,
+  Modal,
+  StyleSheet,
+  View,
+  Button,
+  Platform,
+  Animated,
+  Easing,
+} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import CheckBox from '@react-native-community/checkbox';
 
 import Textfield from '../components/Exc2/InputText';
 import ButtonTypes from '../data/ButtonTypes';
 import { formatDate, formatTime } from './utils';
-import { HIGH, MEDIUM, LOW } from '../../data/Priority';
+import Priority from './../data/Priority';
+import { FADE_DURATION } from './../data/Constants';
 
 const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
   const [isVisible, setVisible] = useState(false);
@@ -18,13 +28,62 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
   const [showPicker, setShowPicker] = useState(false);
   const [formattedDate, setFormattedDate] = useState('');
   const [formattedTime, setFormattedTime] = useState('');
-  const [priority, setPriority] = useState(HIGH);
+  const [priority, setPriority] = useState(Priority.HIGH);
+  const [priorityHigh, toggleHigh] = useState(true);
+  const [priorityMedium, toggleMedium] = useState(false);
+  const [priorityLow, toggleLow] = useState(false);
+  const [isVisibleNote, setIsVisibleNote] = useState(false);
 
   const titles = ['Task title', 'Description', 'Date', 'Set Date', 'Set Time'];
+  const fadeAnimation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     setVisible(true);
   }, [isModify]);
+
+  useEffect(() => {
+    if (!priority) {
+      setIsVisibleNote(true);
+      fadeIn(3000);
+    }
+  }, [priority]);
+
+  // set fade in animation
+  const fadeOut = (_duration = FADE_DURATION) => {
+    (() => {
+      const timeout = setTimeout(() => {
+        setIsVisibleNote(false);
+      }, 3000);
+      return () => clearTimeout(timeout);
+    })();
+
+    Animated.timing(fadeAnimation, {
+      toValue: 0,
+      duration: _duration,
+      useNativeDriver: true,
+      easing: Easing.in(Easing.circle),
+    }).start();
+
+    setPriority(Priority.HIGH);
+    toggleHigh(true);
+  };
+
+  // set fade in animation
+  const fadeIn = (_duration = FADE_DURATION) => {
+    (() => {
+      const timeout = setTimeout(() => {
+        fadeOut(_duration);
+      }, 3000);
+      return () => clearTimeout(timeout);
+    })();
+
+    Animated.timing(fadeAnimation, {
+      toValue: 1,
+      duration: _duration,
+      useNativeDriver: true,
+      easing: Easing.in(Easing.circle),
+    }).start();
+  };
 
   const saveAndClose = () => {
     onSubmitPress({
@@ -56,8 +115,6 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
   }, []);
 
   const formatDateTime = (dateToFormat) => {
-    const str = 'this is a str';
-
     if (typeof dateToFormat !== typeof str) {
       formatDateToStr(dateToFormat);
       formatTimeToStr(dateToFormat);
@@ -117,6 +174,40 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
     formatTimeToStr(currentDate);
   };
 
+  const setHigh = () => {
+    toggleHigh(!priorityHigh);
+
+    if (!priorityHigh) {
+      setPriority(Priority.HIGH);
+      toggleMedium(false);
+      toggleLow(false);
+    } else {
+      setPriority(null);
+    }
+  };
+  const setMedium = () => {
+    toggleMedium(!priorityMedium);
+
+    if (!priorityMedium) {
+      setPriority(Priority.MEDIUM);
+      toggleHigh(false);
+      toggleLow(false);
+    } else {
+      setPriority(null);
+    }
+  };
+  const setLow = () => {
+    toggleLow(!priorityLow);
+
+    if (!priorityLow) {
+      setPriority(Priority.LOW);
+      toggleMedium(false);
+      toggleHigh(false);
+    } else {
+      setPriority(null);
+    }
+  };
+
   return (
     <Modal
       animationType="fade"
@@ -169,6 +260,43 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
               onChange={handlePickerChange}
             />
           )}
+
+          <View>
+            <Text>Priority</Text>
+
+            {isVisibleNote && (
+              <Animated.Text style={{ opacity: fadeAnimation }}>
+                None chosen, set to default.
+              </Animated.Text>
+            )}
+
+            <View style={styles.row}>
+              <View style={styles.row}>
+                <Text>high</Text>
+                <CheckBox
+                  disabled={false}
+                  value={priorityHigh}
+                  onValueChange={setHigh}
+                />
+              </View>
+              <View style={styles.row}>
+                <Text>medium</Text>
+                <CheckBox
+                  disabled={false}
+                  value={priorityMedium}
+                  onValueChange={setMedium}
+                />
+              </View>
+              <View style={styles.row}>
+                <Text>low</Text>
+                <CheckBox
+                  disabled={false}
+                  value={priorityLow}
+                  onValueChange={setLow}
+                />
+              </View>
+            </View>
+          </View>
         </View>
 
         <View style={styles.row}>
