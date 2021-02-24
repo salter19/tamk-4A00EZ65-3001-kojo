@@ -132,8 +132,6 @@ const Gallery = (props) => {
   };
 
   const onPressDelete = () => {
-    console.log('delete pressed');
-    console.log(currentPic);
     props.del(currentPic.path);
   }
 

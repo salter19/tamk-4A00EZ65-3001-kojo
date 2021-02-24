@@ -28,14 +28,5 @@ const SavePicPaths = (picPaths) => {
     return new Promise(func);
 };
 
-const RemovePicPath = async(pathKey) => {
-  const func = async(resolve, reject) => {
-    const del = await AsyncStorage.removeItem(STORAGE_KEY + pathKey).
-    catch((e) => reject('path ' + pathKey + '\n' + e));
 
-    resolve('Pic deleted!');
-  }
-  return new Promise(func);
-}
-
-export default { LoadPicPaths, SavePicPaths, RemovePicPath };
+export default { LoadPicPaths, SavePicPaths};
