@@ -15,6 +15,9 @@ import { formatDateTime, formatDateTimeFromDate } from '../utils';
 
 // dynamic width wrapper for text
 const wrap = (str, len = 15) => {
+
+  // wraps from whitespace
+  // TODO: handle too long words gracefully
   const res = str.replace(
     new RegExp(`(?![^\\n]{1,${len}}$)([^\\n]{1,${len}})\\s`, 'g'),
     '$1\n',
@@ -79,7 +82,17 @@ const renderItem = ({ item, index }) => {
         >
 
             <View>
-                <Text style={styles.priority}>{getPriority(item.priority)}</Text>
+                <Text 
+                  style={[
+                    styles.priority, 
+                    item.priority === 3
+                      ? styles.priorityHigh
+                      : item.priority === 2
+                        ? styles.priorityMed
+                        : styles.priorityLow]}
+                  >
+                    {getPriority(item.priority)}
+                  </Text>
             </View>  
 
             <View style={styles.rowItem}>
@@ -196,21 +209,29 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   priority: {
-    color:"#0c2567",
+    color: "rgba(255, 255, 255, 1)",
     fontWeight: "700",
     borderColor: "#ffffff",
     borderWidth: 2,
     marginRight: "-76%",
     marginBottom: "-42%",
-    paddingLeft: "2%",
     paddingTop: "4%",
     alignSelf: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.61)",
     borderRadius:21,
     width: 42,
     height: 42,
-    
-    
+  },
+  priorityHigh: {
+    backgroundColor: "rgba(255, 42, 0, 0.81)",
+    paddingLeft: "2.2%",
+  },
+  priorityMed: {
+    backgroundColor: "rgba(230, 161, 0, 1)",
+    paddingLeft: "2.6%",
+  },
+  priorityLow: {
+    backgroundColor: "rgba(42, 255, 8, 0.61)",
+    paddingLeft: "2.8%",
   },
 });
 
