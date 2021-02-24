@@ -1,14 +1,14 @@
 import React from 'react';
 import {Text, Pressable, StyleSheet} from 'react-native';
 
-const ButtonBase = ({onPress, buttonText}) => {
+const ButtonBase = ({onPress, buttonText, buttonColor = 'blue', buttonSize = 1}) => {
 
   const deleteBase = (({ pressed }) => [{
     backgroundColor: pressed
       ? 'rgba(255, 42, 0, 0.81)'
       : 'rgba(255, 42, 0, 1)'
     }, 
-    styles.myButton, styles.buttonDel
+    styles.myButton, styles.buttonDel, styles.smallButton
   ]);
 
   const blueBase = (({ pressed }) => [
@@ -17,21 +17,41 @@ const ButtonBase = ({onPress, buttonText}) => {
         ? 'rgba(12, 37, 103, 0.81)'
         : 'rgba(12, 37, 103, 1)'
     },
-    styles.myButton,
+    buttonSize === 1 
+      ? styles.myButton
+      : [styles.myButton, styles.smallButton]
+        
+  ]);
+
+  const orangeBase = (({ pressed }) => [
+    {
+      backgroundColor: pressed
+        ? 'rgba( 255, 102, 0, 0.81)'
+        : 'rgba( 255, 102, 0, 1)'
+    },
+    buttonSize === 1 
+      ? styles.myButton
+      : [styles.myButton, styles.smallButton]
   ]);
 
   return (
     <Pressable
             onPress={onPress}
-            style={buttonText === 'DELETE'
+            style={
+              buttonText === 'DELETE'
                 ? deleteBase
-                : blueBase
+                : buttonColor === 'blue'
+                  ? blueBase
+                  : orangeBase
             }
     >
-      <Text style={buttonText === 'DELETE'
-                    ? [styles.buttonText, styles.textDel]
-                    : styles.buttonText
-                  }
+      <Text style={
+        buttonText === 'DELETE'
+          ? [styles.buttonText, styles.textSmallButton]
+          : buttonSize === 1
+              ? styles.buttonText
+              : [styles.buttonText, styles.textSmallButton]
+        }
       >
         {buttonText}
       </Text>
@@ -57,14 +77,16 @@ const styles = StyleSheet.create(
     fontWeight: '700',
   },
   buttonDel: {
-    width: 56,
-    height: 42,
     borderColor: '#0c2567',
     borderWidth: 4,
   },
-  textDel: {
-    fontSize: 11,
+  textSmallButton: {
+    fontSize: 10,
   },
+  smallButton: {
+    width: 56,
+    height: 42,
+  }
 }
 )
 

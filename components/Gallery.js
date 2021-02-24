@@ -144,14 +144,26 @@ const Gallery = (props) => {
 
         {isOutOfRange ? (
           currentPic !== undefined && isVisible ? (
-            <Animated.View
-              style={[styles.outerLimits, { opacity: fadeAnimation }]}
-            >
-              <Image
-                source={require('./../assets/TaikuriToRight.png')}
-                style={[styles.prevPic]}
-              />
-            </Animated.View>
+            <View>
+
+              <Animated.View
+                style={[styles.outerLimits, { opacity: fadeAnimation }]}
+              >
+                <Image
+                  source={require('./../assets/TaikuriToRight.png')}
+                  style={[styles.prevPic]}
+                />
+              </Animated.View>
+              <View style={styles.cameraButton}>
+                <ButtonBase
+                  onPress={props.openCamera}
+                  buttonText="CAMERA"
+                  buttonColor="orange"
+                  buttonSize = {0}
+                />
+              </View>
+          
+            </View>
           ) : (
             loadingView
           )
@@ -166,53 +178,23 @@ const Gallery = (props) => {
             <View style={styles.deleteButton}>
               <ButtonBase onPress={onPressDelete} buttonText="DELETE"/>
             </View> 
+
+            <View style={styles.cameraButton}>
+              <ButtonBase
+                onPress={props.openCamera}
+                buttonText="CAMERA"
+                buttonColor="orange"
+                buttonSize = {0}
+              />
+            </View>
           </View>
         ) : (
           loadingView
         )}
 
         <View style={[styles.row, styles.buttonRow]}>
-          <Pressable
-            onPress={onPressPrev}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed
-                  ? 'rgba(12, 37, 103, 0.81)'
-                  : 'rgba(12, 37, 103, 1)',
-              },
-              styles.myButton,
-            ]}
-          >
-            <Text style={styles.buttonText}>Previous</Text>
-          </Pressable>
-
-          <Pressable
-            onPress={props.openCamera}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed
-                  ? 'rgba(12, 37, 103, 0.81)'
-                  : 'rgba(12, 37, 103, 1)',
-              },
-              styles.myButton,
-            ]}
-          >
-            <Text style={styles.buttonText}>Camera</Text>
-          </Pressable>
-
-          <Pressable
-            onPress={onPressNext}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed
-                  ? 'rgba(12, 37, 103, 0.81)'
-                  : 'rgba(12, 37, 103, 1)',
-              },
-              styles.myButton,
-            ]}
-          >
-            <Text style={styles.buttonText}>Next</Text>
-          </Pressable>
+          <ButtonBase onPress={onPressPrev} buttonText="Previous"/>
+          <ButtonBase onPress={onPressNext} buttonText="Next"/>
         </View>
 
         <View
@@ -222,19 +204,11 @@ const Gallery = (props) => {
             { backgroundColor: 'rgba(12, 37, 103, 1)' },
           ]}
         >
-          <Pressable
+          <ButtonBase 
             onPress={props.onClose}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed
-                  ? 'rgba( 255, 102, 0, 0.81)'
-                  : 'rgba(255, 102, 0, 1)',
-              },
-              styles.myButton,
-            ]}
-          >
-            <Text style={styles.buttonText}>Close</Text>
-          </Pressable>
+            buttonText="Close Gallery" 
+            buttonColor="orange"
+          />
         </View>
 
         {isOutOfRange ? (
@@ -318,7 +292,7 @@ const styles = StyleSheet.create({
     height: 100,
     marginTop: '8%',
     paddingTop: '9%',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
     backgroundColor: 'rgba(255, 103, 0, 0.81)',
   },
@@ -329,6 +303,11 @@ const styles = StyleSheet.create({
     marginTop: -55,
     marginBottom: -20,
     alignSelf: "flex-end",
-  }
+  },
+  cameraButton: {
+    marginTop: -65,
+    marginBottom: -20,
+    alignSelf: "flex-start",
+  },
 });
 export default Gallery;
