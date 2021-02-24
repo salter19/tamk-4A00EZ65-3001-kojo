@@ -77,7 +77,9 @@ export default function App() {
   
   // when ever picture is taken its path is pushed here
   const saveNewImg = (item) => {
-    setImgPaths([...imgPaths, { path: item }]);
+    // make sure no duplicates are created
+    const tmp = (imgPaths.filter((pic) => pic !== item));
+    setImgPaths([...tmp, { path: item }]);
   }
 
   // load img paths
@@ -96,6 +98,11 @@ export default function App() {
       await PicStorage.SavePicPaths(imgPaths).catch(e => console.error(e));
     })();
   }, [imgPaths]);
+
+  // remove img
+  const deleteImage = async(img) => {
+    setImgPaths(imgPaths.filter((item) => item.path !== img));
+  }
 
   
   // add task to tasks if key is found
@@ -192,7 +199,7 @@ export default function App() {
 
       <Text style={[styles.titleText]}>MY TASKS</Text>
       <View style={styles.list}>
-        <TaskList tasksArr={tasks} del={deleteTask} modifyItem={modifyTask}/>
+        <TaskList tasksArr={tasks} del={deleteTask} modify={modifyTask}/>
       </View>
 
       {isModifyActive ? 
@@ -211,6 +218,7 @@ export default function App() {
           onClose={() => setGalleryActive(false)} 
           paths={imgPaths}
           openCamera={openCamera}
+          del={deleteImage}
         />
         : buttonRow
       }

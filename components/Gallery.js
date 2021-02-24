@@ -12,6 +12,7 @@ import {
 
 import { WINDOW_WIDTH, FADE_DURATION } from './../data/Constants';
 import LoadingAnimation from './LoadingAnimation';
+import ButtonBase from './ButtonBase';
 
 const PADDED_WIDTH = WINDOW_WIDTH * 0.8;
 
@@ -130,6 +131,12 @@ const Gallery = (props) => {
     }).start();
   };
 
+  const onPressDelete = () => {
+    console.log('delete pressed');
+    console.log(currentPic);
+    props.del(currentPic.path);
+  }
+
   return (
     <Modal>
       <View style={styles.root}>
@@ -156,6 +163,8 @@ const Gallery = (props) => {
               source={{ uri: currentPic.path }}
               style={[styles.prevPic, { opacity: fadeAnimation }]}
             />
+
+            <ButtonBase onPress={onPressDelete} buttonText="DELETE"/>
           </View>
         ) : (
           loadingView
