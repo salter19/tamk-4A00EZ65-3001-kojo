@@ -34,7 +34,7 @@ const format = (dateObj) => {
   }
 };
 
-const TextListView = ({ tasksArr, deleteItem, modifyItem }) => {
+const TextListView = ({ tasksArr, del, modifyItem }) => {
   const [deleteI, setDeleteI] = useState(null);
 
   const _onPress = (item) => {
@@ -47,7 +47,7 @@ const TextListView = ({ tasksArr, deleteItem, modifyItem }) => {
     setDeleteI(item.key);
 
     // call deleteItem in App
-    deleteItem(item.key);
+    del(item.key);
 };
 
 const getPriority = (value) => {

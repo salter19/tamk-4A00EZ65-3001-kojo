@@ -192,7 +192,7 @@ export default function App() {
 
       <Text style={[styles.titleText]}>MY TASKS</Text>
       <View style={styles.list}>
-        <TaskList tasksArr={tasks} deleteItem={deleteTask} modifyItem={modifyTask}/>
+        <TaskList tasksArr={tasks} del={deleteTask} modifyItem={modifyTask}/>
       </View>
 
       {isModifyActive ? 
