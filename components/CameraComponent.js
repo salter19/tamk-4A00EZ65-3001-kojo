@@ -6,8 +6,9 @@ import * as FileSystem from 'expo-file-system';
 
 import { IMAGE_DIR, CAMERA_BACK, CAMERA_FRONT, WINDOW_WIDTH } from '../data/Constants';
 import LoadingAnimation from './LoadingAnimation';
+import ButtonBase from './ButtonBase';
 
-const CameraComponent = ({onCloseCamera, isVisible, saveImg}) => {
+const CameraComponent = ({onCloseCamera, isVisible, saveImg, onGoGallery}) => {
   // camera permissions
   const [hasPermission, setHasPermission] = useState(undefined);
 
@@ -82,16 +83,7 @@ const CameraComponent = ({onCloseCamera, isVisible, saveImg}) => {
         <View style={styles.info}>
           <Text>Waiting for permission to use camera.</Text>
           <View style={styles.button}>
-            <Pressable 
-              onPress={onCloseCamera}
-              style={({pressed}) => [{
-                backgroundColor: pressed
-                ? "rgba(12, 37, 103, 0.81)"
-                : "rgba(12, 37, 103, 1)"
-              }, styles.myButton]}
-            >
-              <Text>close view</Text>
-            </Pressable>
+            <ButtonBase onPress={onCloseCamera} buttonText="Close Camera"/>
           </View>
         </View>
     </Modal>
@@ -108,16 +100,7 @@ const CameraComponent = ({onCloseCamera, isVisible, saveImg}) => {
           <Text>Camera access denied.</Text>
 
           <View style={styles.button}>
-            <Pressable 
-              onPress={onCloseCamera}
-              style={({pressed}) => [{
-                backgroundColor: pressed
-                ? "rgba(12, 37, 103, 0.81)"
-                : "rgba(12, 37, 103, 1)"
-              }, styles.myButton]}
-            >
-              <Text>close view</Text>
-            </Pressable>
+            <ButtonBase onPress={onCloseCamera} buttonText="Close Camera"/>
           </View>
         </View>
       </Modal>
@@ -143,53 +126,25 @@ const CameraComponent = ({onCloseCamera, isVisible, saveImg}) => {
           <View style={[styles.buttonRow, styles.row]}>
 
             <View style={styles.button}>
-                <Pressable 
-                  onPress={toggleCameras}
-                  style={({pressed}) => [{
-                    backgroundColor: pressed
-                    ? "rgba(12, 37, 103, 0.81)"
-                    : "rgba(12, 37, 103, 1)"
-                  }, styles.myButton]}
-                >
-                  <Text style={styles.buttonText}>flip camera</Text>
-                </Pressable>
+              <ButtonBase onPress={toggleCameras} buttonText="Flip"/>
             </View>
 
             <View style={styles.button}>
-                <Pressable 
-                  onPress={takePicture}
-                  style={({pressed}) => [{
-                    backgroundColor: pressed
-                    ? "rgba(12, 37, 103, 0.81)"
-                    : "rgba(12, 37, 103, 1)"
-                  }, styles.myButton]}
-                >
-                  <Text style={styles.buttonText}>OH SNAP!</Text>
-                </Pressable>
+              <ButtonBase onPress={takePicture} buttonText="SNAP!"/>
             </View>
 
             <View style={styles.button}>
-              <Pressable 
-                onPress={onCloseCamera}
-                style={({pressed}) => [{
-                  backgroundColor: pressed
-                  ? "rgba(12, 37, 103, 0.81)"
-                  : "rgba(12, 37, 103, 1)"
-                }, styles.myButton]}
-              >
-                <Text style={styles.buttonText}>close view</Text>
-              </Pressable>
+              <ButtonBase onPress={onCloseCamera} buttonText="Close"/>
             </View>
 
           </View>
 
-          <View style={[styles.latest, styles.preview]}>
-            <Image source={{uri:latestPic}}  style={styles.prevPic}/>
-          </View>
-
-         
-
-        
+          <Pressable onPress={onGoGallery}>
+            <View style={[styles.latest, styles.preview]}>
+              <Image source={{uri:latestPic}}  style={styles.prevPic}/>
+            </View>
+          </Pressable>
+          
         </View>
       </Modal>
     );

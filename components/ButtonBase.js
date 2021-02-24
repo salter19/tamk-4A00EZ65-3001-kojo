@@ -19,7 +19,9 @@ const ButtonBase = ({onPress, buttonText, buttonColor = 'blue', buttonSize = 1})
     },
     buttonSize === 1 
       ? styles.myButton
-      : [styles.myButton, styles.smallButton]
+      : buttonSize = 0
+        ? [styles.myButton, styles.smallButton]
+        : [styles.myButton, styles.smallButton, styles.longButton]
         
   ]);
 
@@ -31,7 +33,9 @@ const ButtonBase = ({onPress, buttonText, buttonColor = 'blue', buttonSize = 1})
     },
     buttonSize === 1 
       ? styles.myButton
-      : [styles.myButton, styles.smallButton]
+      : buttonSize = 0
+        ? [styles.myButton, styles.smallButton]
+        : [styles.myButton, styles.smallButton, styles.longButton]
   ]);
 
   return (
@@ -48,9 +52,9 @@ const ButtonBase = ({onPress, buttonText, buttonColor = 'blue', buttonSize = 1})
       <Text style={
         buttonText === 'DELETE'
           ? [styles.buttonText, styles.textSmallButton]
-          : buttonSize === 1
-              ? styles.buttonText
-              : [styles.buttonText, styles.textSmallButton]
+          : buttonSize === 0
+              ? [styles.buttonText, styles.textSmallButton]
+              : styles.buttonText
         }
       >
         {buttonText}
@@ -86,6 +90,9 @@ const styles = StyleSheet.create(
   smallButton: {
     width: 56,
     height: 42,
+  },
+  longButton: {
+    width: 100,
   }
 }
 )

@@ -13,6 +13,7 @@ import TaskStorage from './data/TaskStorage';
 import PicStorage from './data/PicStorage';
 import Gallery from './components/Gallery'; 
 import Cam from './components/CameraComponent';
+import ButtonBase from './components/ButtonBase';
 
 // the App to rule them all
 export default function App() {
@@ -148,16 +149,7 @@ export default function App() {
   const addButton = 
     <View style={[styles.center, styles.buttonRow]}>
       <View style={styles.button}>
-            <Pressable 
-              onPress={addNewTask}
-              style={({pressed}) => [{
-                backgroundColor: pressed
-                ? "rgba(12, 37, 103, 0.81)"
-                : "rgba(12, 37, 103, 1)"
-              }, styles.myButton]}
-            >
-              <Text style={styles.buttonText}>Add Task</Text>
-            </Pressable>
+        <ButtonBase onPress={addNewTask} buttonText="Add Task" buttonSize={1}/>
       </View>
     </View>
   ;
@@ -166,32 +158,24 @@ export default function App() {
     <View style={[styles.center, styles.buttonRow]}>
 
       <View style={styles.button}>
-        <Pressable
-          onPress={() => setGalleryActive(true)}
-          style={({pressed}) => [{
-            backgroundColor: pressed
-            ? "rgba(12, 37, 103, 0.81)"
-            : "rgba(12, 37, 103, 1)"
-          }, styles.myButton]}
-        >
-          <Text style={styles.buttonText}>Open Gallery</Text></Pressable>
+        <ButtonBase 
+          onPress={() => setGalleryActive(true)} 
+          buttonText="Gallery" 
+          buttonSize={2}
+        />
       </View>
 
       <View style={styles.button}>
-        <Pressable 
-          onPress={openCamera}
-          style={({pressed}) => [{
-            backgroundColor: pressed
-            ? "rgba(12, 37, 103, 0.81)"
-            : "rgba(12, 37, 103, 1)"
-          }, styles.myButton]}
-        >
-          <Text style={styles.buttonText}>Camera</Text>
-        </Pressable>
+        <ButtonBase onPress={openCamera} buttonText="Camera" buttonSize={2}/>
       </View>
 
     </View>
   ;
+
+  const handleFromCameraToGallery = () => {
+    handleCloseCamera();
+    setGalleryActive(true);
+  }
 
   return (
     <View style={styles.root}>
@@ -226,12 +210,12 @@ export default function App() {
         />
         : buttonRow
       }
-
-       
+   
       <Cam 
         onCloseCamera={handleCloseCamera}
         isVisible={showCamera}
         saveImg={saveNewImg}
+        onGoGallery={handleFromCameraToGallery}
       />
      
     </View>
@@ -279,7 +263,8 @@ const styles = StyleSheet.create({
     width:"81%",
     marginTop: "2%",
     paddingTop: "5%",
-    justifyContent:"center",
+    paddingLeft: "3%",
+    justifyContent: "space-around",
     alignItems:"center",
     backgroundColor: "rgba(255, 103, 0, 1)",
     borderColor: "#0c2567",
@@ -287,7 +272,7 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   center: {
-    justifyContent:"center",
+    justifyContent: "center",
     alignItems:"center",
   },
   titleText: {
