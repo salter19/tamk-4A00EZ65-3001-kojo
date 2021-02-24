@@ -13,10 +13,10 @@ import Priority from '../../data/Priority';
 import ImageDisplay from '../ImageDisplay';
 import { formatDateTime, formatDateTimeFromDate } from '../utils';
 
-// static width wrapper for text
-const wrap = (str) => {
+// dynamic width wrapper for text
+const wrap = (str, len = 15) => {
   const res = str.replace(
-    new RegExp(`(?![^\\n]{1,15}$)([^\\n]{1,15})\\s`, 'g'),
+    new RegExp(`(?![^\\n]{1,${len}}$)([^\\n]{1,${len}})\\s`, 'g'),
     '$1\n',
   );
   return res;
@@ -34,11 +34,11 @@ const format = (dateObj) => {
   }
 };
 
-const TextListView = ({ tasksArr, del, modifyItem }) => {
+const TextListView = ({ tasksArr, del, modify }) => {
   const [itemToDelete, setItemToDelete] = useState(null);
 
   const _onPress = (item) => {
-    modifyItem(item);
+    modify(item);
   };
 
   const _onLongPress = (item) => {
@@ -88,7 +88,7 @@ const renderItem = ({ item, index }) => {
 
             <View>
                 <Text style={[styles.text, styles.titleText]}>
-                {wrap(item.title)}
+                {wrap(item.title, 10)}
                 </Text>
             </View>         
 
