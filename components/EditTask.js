@@ -18,6 +18,7 @@ import ButtonTypes from '../data/ButtonTypes';
 import { formatDate, formatTime } from './utils';
 import Priority from './../data/Priority';
 import { FADE_DURATION } from './../data/Constants';
+import ButtonBase from './ButtonBase';
 
 const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
   const [isVisible, setVisible] = useState(false);
@@ -230,8 +231,6 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
     }
   };
   
-
-
   return (
     <Modal
       animationType="fade"
@@ -258,21 +257,11 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
 
         <View style={styles.rightAligned}>
           <View style={styles.row}>
-            {/* ToDo: add textfield possibility to add date */}
+
             <Text style={styles.dateTime}>{formattedDate}</Text>
 
             <View style={[styles.button]}>
-                <Pressable 
-                    onPress={showDatePicker}
-                    style={({pressed}) => [{
-                        backgroundColor: pressed
-                        ? "rgba(12, 37, 103, 0.81)"
-                        : "rgba(12, 37, 103, 1)"
-                    }, styles.myButton]}
-                    >
-                    <Text style={styles.buttonText}>{titles[3]}</Text>
-                </Pressable>
-                
+              <ButtonBase onPress={showDatePicker} buttonText={titles[3]} buttonSize={2}/>                
             </View>
           </View>
 
@@ -280,16 +269,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
             <Text style={styles.dateTime}>{formattedTime}</Text>
 
             <View style={[styles.button]}>
-                <Pressable 
-                    onPress={showTimePicker}
-                    style={({pressed}) => [{
-                        backgroundColor: pressed
-                        ? "rgba(12, 37, 103, 0.81)"
-                        : "rgba(12, 37, 103, 1)"
-                    }, styles.myButton]}
-                    >
-                    <Text style={styles.buttonText}>{titles[4]}</Text>
-                </Pressable>
+              <ButtonBase onPress={showTimePicker} buttonText={titles[4]} buttonSize={2}/>
             </View>
           </View>
 
@@ -347,28 +327,19 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
 
         <View style={styles.row}>
             <View style={[styles.buttonLeft, styles.button]}>
-                    <Pressable 
-                    onPress={saveAndClose}
-                    style={({pressed}) => [{
-                        backgroundColor: pressed
-                        ? "rgba(12, 37, 103, 0.81)"
-                        : "rgba(12, 37, 103, 1)"
-                    }, styles.myButton]}
-                    >
-                    <Text style={styles.buttonText}>{currentTask ? ButtonTypes.UPDATE : ButtonTypes.ADD}</Text>
-                    </Pressable>
+              <ButtonBase 
+                onPress={saveAndClose} 
+                buttonText={currentTask ? ButtonTypes.UPDATE : ButtonTypes.ADD}
+                buttonSize={2}
+              />
             </View>
+
           <View style={[styles.buttonRight, styles.button]}>
-                <Pressable 
-                    onPress={onClosePressed}
-                    style={({pressed}) => [{
-                        backgroundColor: pressed
-                        ? "rgba(12, 37, 103, 0.81)"
-                        : "rgba(12, 37, 103, 1)"
-                    }, styles.myButton]}
-                >
-                    <Text style={styles.buttonText}>{ButtonTypes.CLOSE}</Text>
-                </Pressable>
+            <ButtonBase 
+              onPress={onClosePressed} 
+              buttonText={ButtonTypes.CLOSE} 
+              buttonSize={2}
+            />
           </View>
         </View>
       </View>
