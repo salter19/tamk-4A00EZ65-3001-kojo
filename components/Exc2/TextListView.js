@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
   },
   priorityLow: {
     backgroundColor: "rgba(42, 255, 8, 0.61)",
-    paddingLeft: "2.8%",
+    paddingLeft: "2.9%",
   },
 });
 
