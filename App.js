@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Pressable } from "react-native";
 import Constants from "expo-constants";
 import {v4 as uuidv4} from 'uuid';
+import * as FileSystem from 'expo-file-system';
 
 // my components
 import TaskList from './components/Exc2/TextListView';
@@ -101,10 +102,13 @@ export default function App() {
 
   // remove img
   const deleteImage = async(img) => {
+    // remove img path from storage
     setImgPaths(imgPaths.filter((item) => item.path !== img));
+
+    // remove img from memory
+    await FileSystem.deleteAsync(img).catch(e => console.error(e));
   }
 
-  
   // add task to tasks if key is found
   useEffect(() => {
     if (task.key !== undefined) {
