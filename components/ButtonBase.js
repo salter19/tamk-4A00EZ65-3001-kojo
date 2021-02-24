@@ -3,19 +3,38 @@ import {Text, Pressable, StyleSheet} from 'react-native';
 
 const ButtonBase = ({onPress, buttonText}) => {
 
+  const deleteBase = (({ pressed }) => [{
+    backgroundColor: pressed
+      ? 'rgba(255, 42, 0, 0.81)'
+      : 'rgba(255, 42, 0, 1)'
+    }, 
+    styles.myButton, styles.buttonDel
+  ]);
+
+  const blueBase = (({ pressed }) => [
+    {
+      backgroundColor: pressed
+        ? 'rgba(12, 37, 103, 0.81)'
+        : 'rgba(12, 37, 103, 1)'
+    },
+    styles.myButton,
+  ]);
+
   return (
     <Pressable
             onPress={onPress}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed
-                  ? 'rgba(12, 37, 103, 0.81)'
-                  : 'rgba(12, 37, 103, 1)',
-              },
-              styles.myButton,
-            ]}
+            style={buttonText === 'DELETE'
+                ? deleteBase
+                : blueBase
+            }
     >
-      <Text style={styles.buttonText}>{buttonText}</Text>
+      <Text style={buttonText === 'DELETE'
+                    ? [styles.buttonText, styles.textDel]
+                    : styles.buttonText
+                  }
+      >
+        {buttonText}
+      </Text>
     </Pressable>
   );
 
@@ -36,7 +55,17 @@ const styles = StyleSheet.create(
   buttonText: {
     color: '#fff',
     fontWeight: '700',
-  },}
+  },
+  buttonDel: {
+    width: 56,
+    height: 42,
+    borderColor: '#0c2567',
+    borderWidth: 4,
+  },
+  textDel: {
+    fontSize: 11,
+  },
+}
 )
 
 export default ButtonBase;

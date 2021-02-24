@@ -156,13 +156,16 @@ const Gallery = (props) => {
             loadingView
           )
         ) : currentPic.path !== undefined && isVisible ? (
-          <View style={[styles.latest]}>
-            <Animated.Image
-              source={{ uri: currentPic.path }}
-              style={[styles.prevPic, { opacity: fadeAnimation }]}
-            />
-
-            <ButtonBase onPress={onPressDelete} buttonText="DELETE"/>
+          <View>
+            <View style={[styles.latest]}>
+              <Animated.Image
+                source={{ uri: currentPic.path }}
+                style={[styles.prevPic, { opacity: fadeAnimation }]}
+              />            
+            </View>
+            <View style={styles.deleteButton}>
+              <ButtonBase onPress={onPressDelete} buttonText="DELETE"/>
+            </View> 
           </View>
         ) : (
           loadingView
@@ -322,5 +325,10 @@ const styles = StyleSheet.create({
   bottomView: {
     height: 400,
   },
+  deleteButton: {
+    marginTop: -55,
+    marginBottom: -20,
+    alignSelf: "flex-end",
+  }
 });
 export default Gallery;
