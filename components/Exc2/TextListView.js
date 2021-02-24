@@ -35,7 +35,7 @@ const format = (dateObj) => {
 };
 
 const TextListView = ({ tasksArr, del, modifyItem }) => {
-  const [deleteI, setDeleteI] = useState(null);
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   const _onPress = (item) => {
     modifyItem(item);
@@ -44,7 +44,7 @@ const TextListView = ({ tasksArr, del, modifyItem }) => {
   const _onLongPress = (item) => {
     // set state deleteI
     // it is used to update the flatlist
-    setDeleteI(item.key);
+    setItemToDelete(item.key);
 
     // call deleteItem in App
     del(item.key);
@@ -129,10 +129,10 @@ const renderItem = ({ item, index }) => {
         style={styles.flatListView}
         data={tasksArr}
         renderItem={renderItem}
-        extraData={deleteI}
+        extraData={itemToDelete}
         ItemSeparatorComponent={itemSeparator}
       >
-        <Text>{deleteI}</Text>
+        <Text>{itemToDelete}</Text>
       </FlatList>
     </SafeAreaView>
   );
