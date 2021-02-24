@@ -19,7 +19,7 @@ const ButtonBase = ({onPress, buttonText, buttonColor = 'blue', buttonSize = 1})
     },
     buttonSize === 1 
       ? styles.myButton
-      : buttonSize = 0
+      : buttonSize === 0
         ? [styles.myButton, styles.smallButton]
         : [styles.myButton, styles.smallButton, styles.longButton]
         
@@ -33,7 +33,7 @@ const ButtonBase = ({onPress, buttonText, buttonColor = 'blue', buttonSize = 1})
     },
     buttonSize === 1 
       ? styles.myButton
-      : buttonSize = 0
+      : buttonSize === 0
         ? [styles.myButton, styles.smallButton]
         : [styles.myButton, styles.smallButton, styles.longButton]
   ]);
