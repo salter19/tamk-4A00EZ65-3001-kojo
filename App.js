@@ -14,6 +14,7 @@ import PicStorage from './data/PicStorage';
 import Gallery from './components/Gallery'; 
 import Cam from './components/CameraComponent';
 import ButtonBase from './components/ButtonBase';
+import ImageDisplay from "./components/ImageDisplay";
 
 // the App to rule them all
 export default function App() {
@@ -185,9 +186,22 @@ export default function App() {
         <StatusBar style="auto" />
       </View>
 
-      <Text style={[styles.titleText]}>MY TASKS</Text>
+      <View style={styles.row}>
+        <ImageDisplay />
+        <Text style={[styles.titleText]}>MY TASKS</Text>
+      </View>
+
+      
       <View style={styles.list}>
-        <TaskList tasksArr={tasks} del={deleteTask} modify={modifyTask}/>
+        {tasks.length > 0 ?
+          <TaskList tasksArr={tasks} del={deleteTask} modify={modifyTask}/>
+          :
+          <View style={[styles.buttonRow, { width: "100%"}]}>
+            <Text style={{color: "#fff", fontWeight:"700"}}>
+              No tasks set yet
+            </Text>
+          </View>
+        }
       </View>
 
       {isModifyActive ? 
@@ -279,6 +293,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 24,
     lineHeight: 30,
-    paddingTop: "2%"
+    paddingTop: "15%"
+  }, 
+  row: {
+    flexDirection: "row",
+    marginLeft: "-20%",
+    marginBottom: "-5%",
   }
 });
