@@ -89,8 +89,11 @@ const Gallery = (props) => {
       const tmp = picIndex + 1;
       setPicIndex(tmp);
     } else {
-      setIsOutOfRange(true);
-      setPicIndex(picGallery.length);
+      setPicIndex(0);
+
+      // my prefered work around gallery borders
+      // setIsOutOfRange(true);
+      // setPicIndex(picGallery.length);
     }
   };
 
@@ -109,8 +112,11 @@ const Gallery = (props) => {
       const tmp = picIndex - 1;
       setPicIndex(tmp);
     } else {
-      setIsOutOfRange(true);
-      setPicIndex(-1);
+      setPicIndex(picGallery.length -1);
+
+      // My prefered work around gallery borders
+      // setIsOutOfRange(true);
+      // setPicIndex(-1);
     }
   };
 
