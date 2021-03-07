@@ -80,54 +80,58 @@ const renderItem = ({ item, index }) => {
               : styles.listItem,
           ]}
         >
+          <View>
+              <Text 
+                style={[
+                  styles.priority, 
+                  item.priority === 3
+                    ? styles.priorityHigh
+                    : item.priority === 2
+                      ? styles.priorityMed
+                      : styles.priorityLow]}
+                >
+                  {getPriority(item.priority)}
+                </Text>
+          </View>  
 
-            <View>
-                <Text 
-                  style={[
-                    styles.priority, 
-                    item.priority === 3
-                      ? styles.priorityHigh
-                      : item.priority === 2
-                        ? styles.priorityMed
-                        : styles.priorityLow]}
-                  >
-                    {getPriority(item.priority)}
-                  </Text>
-            </View>  
+          <View style={styles.rowItem}>
+            {/* <ImageDisplay /> */}
 
-            <View style={styles.rowItem}>
-                <ImageDisplay />
             <View style={styles.columnItem}>
 
-            <View>
-                <Text style={[styles.text, styles.titleText]}>
-                {wrap(item.title, 10)}
+              {/* title */}
+              <View>
+                  <Text style={[styles.text, styles.titleText]}>
+                  {wrap(item.title, 10)}
+                  </Text>
+              </View>         
+              
+              {/* description */}
+              <View>
+                <Text style={[styles.text, styles.descriptionText]}>
+                    {wrap(item.description)}
                 </Text>
-            </View>         
+              </View>
 
-            <View>
-            <Text style={[styles.text, styles.descriptionText]}>
-                {wrap(item.description)}
-            </Text>
-            </View>
+              {/* date */}
+              <View>
+                <Text style={styles.text}>{format(item.date)}</Text>
+              </View>
 
-            <View>
-            <Text style={styles.text}>{format(item.date)}</Text>
-            </View>
-
-            <View>
+              {/* latitude and longitude */}
+              <View>
                 <Text style={styles.text}>
                 {'latitude: ' + item.location.latitude}
                 </Text>
                 <Text style={styles.text}>
                 {'longitude: ' + item.location.longitude}
                 </Text>
+              </View>
+
             </View>
-              
           </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
     );
   };
 
@@ -207,6 +211,7 @@ const styles = StyleSheet.create({
   },
   columnItem: {
     flexDirection: 'column',
+    paddingLeft: "2%",
   },
   priority: {
     color: "rgba(255, 255, 255, 1)",
