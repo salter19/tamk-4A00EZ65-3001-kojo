@@ -15,6 +15,7 @@ import Gallery from './components/Gallery';
 import Cam from './components/CameraComponent';
 import ButtonBase from './components/ButtonBase';
 import ImageDisplay from "./components/ImageDisplay";
+import * as Utils from './components/utils';
 
 // the App to rule them all
 export default function App() {
@@ -37,7 +38,6 @@ export default function App() {
 
   useEffect(() => {
     (async() => {
-      console.log('Loading...');
       const tasks1 = await TaskStorage.LoadTasks().catch(e => console.log(e));
       setTasks(tasks1);
     })()
@@ -45,14 +45,12 @@ export default function App() {
 
   useEffect(() => {
     (async() => {
-      console.log('Saving...');
       await TaskStorage.SaveTasks(tasks).catch(e => console.log(e));
     })();
   }, [tasks]);
   
   // 2:38 =>
   const onSubmit = (taskToSave) => {
-    
     let key_tmp = undefined;
     
     currentTask !== undefined
@@ -72,13 +70,18 @@ export default function App() {
       key: key_tmp, 
       title: taskToSave.title, 
       description: taskToSave.description, 
-      date: taskToSave.date,
+      date: formatDate(taskToSave.date),
       location: {
         latitude: taskToSave.location.latitude, 
         longitude:taskToSave.location.longitude
       },
       priority: taskToSave.priority,
     });   
+  }
+
+  const formatDate = (date) => {
+    let result = "" + Utils.formatDateTimeFromDate(date);
+    return result;
   }
   
   // when ever picture is taken its path is pushed here
@@ -91,7 +94,6 @@ export default function App() {
   // load img paths
   useEffect(() => {
     (async() => {
-      console.log('Loading paths...')
       const paths = await PicStorage.LoadPicPaths().catch(e => {console.error(e)});
       setImgPaths(paths); 
     })();
@@ -100,7 +102,6 @@ export default function App() {
   // save img paths
   useEffect(() => {
     (async() => {
-      console.log('saving paths...')
       await PicStorage.SavePicPaths(imgPaths).catch(e => console.error(e));
     })();
   }, [imgPaths]);
