@@ -19,6 +19,7 @@ import { formatDate, formatTime } from './utils';
 import Priority from './../data/Priority';
 import { FADE_DURATION } from './../data/Constants';
 import ButtonBase from './ButtonBase';
+import Maps from './Maps';
 
 const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
   const [isVisible, setVisible] = useState(false);
@@ -35,6 +36,11 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
   const [priorityMedium, toggleMedium] = useState(false);
   const [priorityLow, toggleLow] = useState(false);
   const [isVisibleNote, setIsVisibleNote] = useState(false);
+  const [isMapVisible, setIsMapVisible] = useState(false);
+  const [location, setLocation] = useState({
+    latitude: undefined, 
+    longitude: undefined
+  });
 
   const titles = ['Task title', 'Description', 'Date', 'Set Date', 'Set Time'];
   const fadeAnimation = useRef(new Animated.Value(0)).current;
@@ -94,6 +100,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
       description: description,
       date: date,
       priority: priority,
+      location: location,
     });
     onClose();
   };
@@ -111,6 +118,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
       setDate(currentTask.date);
       formatDateTime(currentTask.date);
       resetPriority(currentTask.priority);
+      setLocation(currentTask.location);
     } else {
       formatDateTime(date);
     }
@@ -230,6 +238,12 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
       setPriority(null);
     }
   };
+
+  const onCloseMap = (location) => {
+    setIsMapVisible(false);
+    const loc = {latitude: location.latitude, longitude: location.longitude};
+    setLocation(loc);
+  };
   
   return (
     <Modal
@@ -239,6 +253,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
       onRequestClose={saveAndClose}
     >
       <View style={[styles.centeredView, styles.root]}>
+        {/* task title */}
         <View>
           <Text>{titles[0]}</Text>
           <Textfield
@@ -247,6 +262,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
           />
         </View>
 
+        {/* task description */}
         <View>
           <Text>{titles[1]}</Text>
           <Textfield
@@ -255,9 +271,11 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
           />
         </View>
 
+        {/* date and time */}
         <View style={styles.rightAligned}>
-          <View style={styles.row}>
 
+          {/* date */}
+          <View style={styles.row}>
             <Text style={styles.dateTime}>{formattedDate}</Text>
 
             <View style={[styles.button]}>
@@ -265,6 +283,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
             </View>
           </View>
 
+          {/* time */}
           <View style={styles.row}>
             <Text style={styles.dateTime}>{formattedTime}</Text>
 
@@ -273,6 +292,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
             </View>
           </View>
 
+          {/* dateTimePicker */}
           {showPicker && (
             <DateTimePicker
               testID="dateTimePicker"
@@ -284,15 +304,18 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
             />
           )}
 
+          {/* priority checkboxes */}
           <View>
             <Text>Priority</Text>
-
+            
+            {/* set to default if none is chosen */}
             {isVisibleNote && (
               <Animated.Text style={{ opacity: fadeAnimation }}>
                 None chosen, set to default.
               </Animated.Text>
             )}
 
+            {/* checkboxes */}
             <View style={styles.row}>
               <View style={styles.row}>
                 <Text>high</Text>
@@ -302,6 +325,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
                   onValueChange={setHigh}
                 />
               </View>
+
               <View style={styles.row}>
                 <Text>medium</Text>
                 <CheckBox
@@ -310,6 +334,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
                   onValueChange={setMedium}
                 />
               </View>
+
               <View style={styles.row}>
                 <Text>low</Text>
                 <CheckBox
@@ -319,13 +344,32 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
                 />
               </View>
             </View>
+
           </View>
         </View>
+
+        {/* map */}
         <View style={styles.row}>
-           
+          <ButtonBase 
+            onPress={() => setIsMapVisible(true)}
+            buttonText="Open Map"
+            buttonSize={2}
+            />
         </View>
 
+        {/* map view */}
+        {isMapVisible && (
+          <Maps 
+            isVisible={isMapVisible}
+            onClose={onCloseMap}
+            location={location}
+          />
+        )}
+
+        {/* bottom button row */}
         <View style={styles.row}>
+          
+            {/* add - modify button */}
             <View style={[styles.buttonLeft, styles.button]}>
               <ButtonBase 
                 onPress={saveAndClose} 
@@ -334,6 +378,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
               />
             </View>
 
+          {/* close button */}
           <View style={[styles.buttonRight, styles.button]}>
             <ButtonBase 
               onPress={onClosePressed} 
@@ -341,6 +386,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
               buttonSize={2}
             />
           </View>
+        
         </View>
       </View>
     </Modal>

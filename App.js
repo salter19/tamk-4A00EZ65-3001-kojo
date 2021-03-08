@@ -73,7 +73,10 @@ export default function App() {
       title: taskToSave.title, 
       description: taskToSave.description, 
       date: taskToSave.date,
-      location: {latitude: '61.49572', longitude:'23.82407'},
+      location: {
+        latitude: taskToSave.location.latitude, 
+        longitude:taskToSave.location.longitude
+      },
       priority: taskToSave.priority,
     });   
   }
