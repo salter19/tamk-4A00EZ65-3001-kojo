@@ -121,10 +121,10 @@ const renderItem = ({ item, index }) => {
               {/* latitude and longitude */}
               <View>
                 <Text style={styles.text}>
-                {'latitude: ' + item.location.latitude}
+                {item.location.latitude !== undefined ? 'latitude: ' + item.location.latitude : 'latitude: -'}
                 </Text>
                 <Text style={styles.text}>
-                {'longitude: ' + item.location.longitude}
+                {item.location.longitude !== undefined ? 'longitude: ' + item.location.longitude : 'longitude: -'}
                 </Text>
               </View>
 
