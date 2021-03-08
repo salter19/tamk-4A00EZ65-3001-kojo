@@ -106,6 +106,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
       onClose();
     }
 
+    // alert if task is not saved
     const hasNotTitle = () => {
       alert("No task title was set, task not saved.");
       onClose();
@@ -117,6 +118,8 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
   };
 
   const onClosePressed = () => {
+    // Alert about closing without saving
+    // give option to close with or without saving
     Alert.alert(
       "About to close",
       "Save before closing?",
