@@ -298,7 +298,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
       <View style={[styles.centeredView, styles.root]}>
         {/* task title */}
         <View>
-          <Text style={styles.textTitle}>{titles[0]}</Text>
+          <Text style={[styles.textTitle, {marginLeft:"4%"}]}>{titles[0]}</Text>
           <Textfield
             currentItem={currentTask ? currentTask.title : ''}
             updateData={updateTitle}
@@ -307,7 +307,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
 
         {/* task description */}
         <View>
-          <Text style={styles.textTitle}>{titles[1]}</Text>
+          <Text style={[styles.textTitle, {marginLeft:"4%"}]}>{titles[1]}</Text>
           <Textfield
             currentItem={currentTask ? currentTask.description : ''}
             updateData={updateDescription}
