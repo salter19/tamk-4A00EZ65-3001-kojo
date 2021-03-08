@@ -21,27 +21,40 @@ import ButtonBase from './ButtonBase';
 import Maps from './Maps';
 
 const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
+  // states that define if an element is visible or not
   const [isVisible, setVisible] = useState(false);
+  const [isPickerVisible, setIsPickerVisible] = useState(false);
+  const [isPrioritySet, setIsPrioritySet] = useState(false);
+  const [isMapVisible, setIsMapVisible] = useState(false);
+
+  // states that define element values
   const [key, setKey] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState(new Date());
   const [pickerMode, setPickerMode] = useState('date');
-  const [showPicker, setShowPicker] = useState(false);
+
+  // date and time need to be formatted
   const [formattedDate, setFormattedDate] = useState('');
   const [formattedTime, setFormattedTime] = useState('');
+
+  // default value for priority is set to high
   const [priority, setPriority] = useState(Priority.HIGH);
   const [priorityHigh, toggleHigh] = useState(true);
   const [priorityMedium, toggleMedium] = useState(false);
   const [priorityLow, toggleLow] = useState(false);
-  const [isVisibleNote, setIsVisibleNote] = useState(false);
-  const [isMapVisible, setIsMapVisible] = useState(false);
+
   const [location, setLocation] = useState({
     latitude: undefined, 
     longitude: undefined
   });
 
-  const titles = ['Task title', 'Description', 'Date', 'Set Date', 'Set Time'];
+  // Titles of form elements
+  const titles = [
+    'Task title    * mandatory', 
+    'Description', 'Date', 
+    'Set Date', 'Set Time'
+  ];
   const fadeAnimation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -50,7 +63,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
 
   useEffect(() => {
     if (!priority) {
-      setIsVisibleNote(true);
+      setIsPrioritySet(true);
       fadeIn(3000);
     }
   }, [priority]);
@@ -59,7 +72,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
   const fadeOut = (_duration = FADE_DURATION) => {
     (() => {
       const timeout = setTimeout(() => {
-        setIsVisibleNote(false);
+        setIsPrioritySet(false);
       }, 3000);
       return () => clearTimeout(timeout);
     })();
@@ -216,7 +229,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
 
   const showMode = (currentMode) => {
     setPickerMode(currentMode);
-    setShowPicker(true);
+    setIsPickerVisible(true);
   };
 
   const showDatePicker = () => {
@@ -229,7 +242,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
 
   const handlePickerChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShowPicker(Platform.OS === 'ios');
+    setIsPickerVisible(Platform.OS === 'ios');
     setDate(currentDate);
     formatDateToStr(currentDate);
     formatTimeToStr(currentDate);
@@ -285,7 +298,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
       <View style={[styles.centeredView, styles.root]}>
         {/* task title */}
         <View>
-          <Text>{titles[0]}</Text>
+          <Text style={styles.textTitle}>{titles[0]}</Text>
           <Textfield
             currentItem={currentTask ? currentTask.title : ''}
             updateData={updateTitle}
@@ -294,7 +307,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
 
         {/* task description */}
         <View>
-          <Text>{titles[1]}</Text>
+          <Text style={styles.textTitle}>{titles[1]}</Text>
           <Textfield
             currentItem={currentTask ? currentTask.description : ''}
             updateData={updateDescription}
@@ -302,44 +315,59 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
         </View>
 
         {/* date and time */}
-        <View style={styles.rightAligned}>
+        <View>
+          <Text style={[styles.textTitle, styles.textLeftAlign]}>Due time</Text>
+          <View style={styles.rightAligned}>
+            {/* date */}
+            <View style={styles.row}>
+              <Text style={styles.dateTime}>{formattedDate}</Text>
 
-          {/* date */}
-          <View style={styles.row}>
-            <Text style={styles.dateTime}>{formattedDate}</Text>
-
-            <View style={[styles.button]}>
-              <ButtonBase onPress={showDatePicker} buttonText={titles[3]} buttonSize={2}/>                
+              <View style={[styles.button]}>
+                <ButtonBase 
+                  onPress={showDatePicker}
+                  buttonText={titles[3]}
+                  buttonSize={2}
+                  buttonColor="orange"
+                />                
+              </View>
             </View>
-          </View>
 
-          {/* time */}
-          <View style={styles.row}>
-            <Text style={styles.dateTime}>{formattedTime}</Text>
+            {/* time */}
+            <View style={styles.row}>
+              <Text style={styles.dateTime}>{formattedTime}</Text>
 
-            <View style={[styles.button]}>
-              <ButtonBase onPress={showTimePicker} buttonText={titles[4]} buttonSize={2}/>
+              <View style={[styles.button]}>
+                <ButtonBase 
+                  onPress={showTimePicker} 
+                  buttonText={titles[4]} 
+                  buttonSize={2}
+                  buttonColor="orange"
+                />
+              </View>
             </View>
+
+            {/* dateTimePicker */}
+            {isPickerVisible && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode={pickerMode}
+                is24Hour={true}
+                display="default"
+                onChange={handlePickerChange}
+              />
+            )}
+
           </View>
-
-          {/* dateTimePicker */}
-          {showPicker && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode={pickerMode}
-              is24Hour={true}
-              display="default"
-              onChange={handlePickerChange}
-            />
-          )}
-
-          {/* priority checkboxes */}
+        </View>
+        
+        {/* priority checkboxes */}
+        <View>
+          <Text style={[styles.textTitle, styles.textLeftAlign]}>Priority</Text>
           <View>
-            <Text>Priority</Text>
             
             {/* set to default if none is chosen */}
-            {isVisibleNote && (
+            {isPrioritySet && (
               <Animated.Text style={{ opacity: fadeAnimation }}>
                 None chosen, set to default.
               </Animated.Text>
@@ -379,28 +407,56 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
         </View>
 
         {/* map */}
-        <View style={styles.row}>
-          <ButtonBase 
-            onPress={() => setIsMapVisible(true)}
-            buttonText="Open Map"
-            buttonSize={2}
-            />
+        <View>
+          <Text style={[
+            styles.textTitle, 
+            styles.textLeftAlign, {paddingLeft:"7%"}]}>Location</Text>
+          <View>
+            <View style={styles.row}>
+
+              <View style={{flexDirection:"column"}}>
+                <View style={styles.textMap}>
+                  <Text>Latitude:
+                    {location.latitude !== undefined ? 
+                    ` ${location.latitude}` : " -"}
+                  </Text>
+                </View>
+
+                <View style={styles.textMap}>
+                  <Text>Longitude: 
+                    {location.longitude !== undefined ?
+                    ` ${location.longitude}` : " -"}
+                  </Text>
+                </View>
+              </View>
+
+              <View style={[styles.button, styles.buttonMap]}>
+                <ButtonBase 
+                  onPress={() => setIsMapVisible(true)}
+                  buttonText="Open Map"
+                  buttonSize={2}
+                  buttonColor="orange"
+                  />
+              </View>
+            </View>
+
+            {/* map view */}
+            {isMapVisible && (
+              <Maps 
+                isVisible={isMapVisible}
+                onClose={onCloseMap}
+                location={location}
+              />
+            )}
+
+          </View>
         </View>
 
-        {/* map view */}
-        {isMapVisible && (
-          <Maps 
-            isVisible={isMapVisible}
-            onClose={onCloseMap}
-            location={location}
-          />
-        )}
-
         {/* bottom button row */}
-        <View style={styles.row}>
+        <View style={[styles.row, styles.buttonRow]}>
           
             {/* add - modify button */}
-            <View style={[styles.buttonLeft, styles.button]}>
+            <View >
               <ButtonBase 
                 onPress={saveAndClose} 
                 buttonText={currentTask ? ButtonTypes.UPDATE : ButtonTypes.ADD}
@@ -409,7 +465,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
             </View>
 
           {/* close button */}
-          <View style={[styles.buttonRight, styles.button]}>
+          <View >
             <ButtonBase 
               onPress={onClosePressed} 
               buttonText={ButtonTypes.CLOSE} 
@@ -418,6 +474,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
           </View>
         
         </View>
+
       </View>
     </Modal>
   );
@@ -425,7 +482,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
 
 const styles = StyleSheet.create({
   root: {
-    backgroundColor: 'rgba(255, 255, 255, 0.81)',
+    backgroundColor: 'rgba(255, 255, 255, 0.92)',
     height: '80%',
   },
   centeredView: {
@@ -447,14 +504,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   button: {
-    marginTop: '10%',
+    marginTop: '5%',
     width: 100,
-  },
-  buttonLeft: {
-    marginRight: '5%',
-  },
-  buttonRight: {
-    marginLeft: '5%',
   },
   leftAligned: {
     alignItems: 'flex-start',
@@ -462,21 +513,37 @@ const styles = StyleSheet.create({
   rightAligned: {
     alignItems: 'flex-end',
   },
-  myButton: {
-    width: 100,
-    height: 42,
-    justifyContent: 'center',
-    alignItems:'center',
-    marginBottom:'10%',
-    marginHorizontal: '5%',
-    borderRadius: 8,
-    borderWidth: 2,
-    borderColor:"#fff",
-  }, 
   buttonText: {
     color:"#fff",
     fontWeight:"700",
   },
+  buttonMap: {
+    marginTop:"2%",
+    marginLeft: "2%"
+  },
+  buttonRow: {
+    height: 100,
+    width:"81%",
+    marginTop: "-5%",
+    paddingTop: "9%",
+    paddingLeft: "8%",
+    justifyContent: "space-around",
+    alignItems:"center",
+    flexDirection: "row"
+  },
+  textMap: {
+    flexDirection:"column",
+    marginTop:"2%",
+    paddingLeft:"-4%"
+  },
+  textTitle: {
+    fontSize:18,
+    fontWeight:"bold",
+    marginTop:"4%",
+  },
+  textLeftAlign: { 
+    marginLeft:"-9%" 
+  }
 });
 
 export default EditTask;
