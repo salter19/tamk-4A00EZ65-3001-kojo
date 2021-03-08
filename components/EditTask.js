@@ -14,7 +14,7 @@ import CheckBox from '@react-native-community/checkbox';
 
 import Textfield from '../components/Exc2/InputText';
 import ButtonTypes from '../data/ButtonTypes';
-import { formatDate, formatTime } from './utils';
+import * as Utils from './utils';
 import Priority from './../data/Priority';
 import { FADE_DURATION } from './../data/Constants';
 import ButtonBase from './ButtonBase';
@@ -193,9 +193,11 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
       formatDateToStr(dateToFormat);
       formatTimeToStr(dateToFormat);
     } else {
-      setDate(new Date(dateToFormat));
-      const date = formatDate(dateToFormat);
-      const time = formatTime(dateToFormat);
+      const dateObj = new Date(Utils.formatDateTimeFromStr(dateToFormat));
+      console.log('at edit ' + dateObj)
+      setDate(dateObj);
+      const date = Utils.formatDate(dateToFormat);
+      const time = Utils.formatTime(dateToFormat);
       setFormattedDate(date);
       setFormattedTime(time);
     }
@@ -216,6 +218,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
     if (minute < 10) {
       minute = `0${minute}`;
     }
+
     setFormattedTime(`${hour}:${minute}`);
   };
 
@@ -242,6 +245,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
 
   const handlePickerChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
+    console.log('edit current date:' + typeof currentDate)
     setIsPickerVisible(Platform.OS === 'ios');
     setDate(currentDate);
     formatDateToStr(currentDate);
