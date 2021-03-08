@@ -57,14 +57,10 @@ const styles = StyleSheet.create({
     borderColor: "#0c2576",
     backgroundColor: "#fff",
     borderWidth: 4,
-    width: "61%",
+    width: "71%",
     margin: 2,
     paddingLeft: 6,
   },
-  title: {
-    alignSelf: 'flex-start',
-    fontSize: 24,
-  }
 });
 
 export default InputText;

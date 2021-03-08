@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Pressable } from "react-native";
 import Constants from "expo-constants";
 import {v4 as uuidv4} from 'uuid';
+import * as FileSystem from 'expo-file-system';
 
 // my components
 import TaskList from './components/Exc2/TextListView';
@@ -12,6 +13,9 @@ import TaskStorage from './data/TaskStorage';
 import PicStorage from './data/PicStorage';
 import Gallery from './components/Gallery'; 
 import Cam from './components/CameraComponent';
+import ButtonBase from './components/ButtonBase';
+import ImageDisplay from "./components/ImageDisplay";
+import * as Utils from './components/utils';
 
 // the App to rule them all
 export default function App() {
@@ -22,6 +26,7 @@ export default function App() {
     description:undefined, 
     date:undefined,
     location:{ latitude:undefined, longitude:undefined},
+    priority:undefined,
   });
 
   const [tasks, setTasks] = useState([]);
@@ -33,7 +38,6 @@ export default function App() {
 
   useEffect(() => {
     (async() => {
-      console.log('Loading...');
       const tasks1 = await TaskStorage.LoadTasks().catch(e => console.log(e));
       setTasks(tasks1);
     })()
@@ -41,14 +45,12 @@ export default function App() {
 
   useEffect(() => {
     (async() => {
-      console.log('Saving...');
       await TaskStorage.SaveTasks(tasks).catch(e => console.log(e));
     })();
   }, [tasks]);
   
   // 2:38 =>
   const onSubmit = (taskToSave) => {
-    
     let key_tmp = undefined;
     
     currentTask !== undefined
@@ -68,20 +70,30 @@ export default function App() {
       key: key_tmp, 
       title: taskToSave.title, 
       description: taskToSave.description, 
-      date: taskToSave.date,
-      location: {latitude: '61.49572', longitude:'23.82407'},
+      date: formatDate(taskToSave.date),
+      location: {
+        latitude: taskToSave.location.latitude, 
+        longitude:taskToSave.location.longitude
+      },
+      priority: taskToSave.priority,
     });   
+  }
+
+  const formatDate = (date) => {
+    let result = "" + Utils.formatDateTimeFromDate(date);
+    return result;
   }
   
   // when ever picture is taken its path is pushed here
   const saveNewImg = (item) => {
-    setImgPaths([...imgPaths, { path: item }]);
+    // make sure no duplicates are created
+    const tmp = (imgPaths.filter((pic) => pic !== item));
+    setImgPaths([...tmp, { path: item }]);
   }
 
   // load img paths
   useEffect(() => {
     (async() => {
-      console.log('Loading paths...')
       const paths = await PicStorage.LoadPicPaths().catch(e => {console.error(e)});
       setImgPaths(paths); 
     })();
@@ -90,12 +102,19 @@ export default function App() {
   // save img paths
   useEffect(() => {
     (async() => {
-      console.log('saving paths...')
       await PicStorage.SavePicPaths(imgPaths).catch(e => console.error(e));
     })();
   }, [imgPaths]);
 
-  
+  // remove img
+  const deleteImage = async(img) => {
+    // remove img path from storage
+    setImgPaths(imgPaths.filter((item) => item.path !== img));
+
+    // remove img from memory
+    await FileSystem.deleteAsync(img).catch(e => console.error(e));
+  }
+
   // add task to tasks if key is found
   useEffect(() => {
     if (task.key !== undefined) {
@@ -135,16 +154,7 @@ export default function App() {
   const addButton = 
     <View style={[styles.center, styles.buttonRow]}>
       <View style={styles.button}>
-            <Pressable 
-              onPress={addNewTask}
-              style={({pressed}) => [{
-                backgroundColor: pressed
-                ? "rgba(12, 37, 103, 0.81)"
-                : "rgba(12, 37, 103, 1)"
-              }, styles.myButton]}
-            >
-              <Text style={styles.buttonText}>Add Task</Text>
-            </Pressable>
+        <ButtonBase onPress={addNewTask} buttonText="Add Task" buttonSize={1}/>
       </View>
     </View>
   ;
@@ -153,34 +163,24 @@ export default function App() {
     <View style={[styles.center, styles.buttonRow]}>
 
       <View style={styles.button}>
-        <Pressable
-          onPress={() => setGalleryActive(true)}
-          style={({pressed}) => [{
-            backgroundColor: pressed
-            ? "rgba(12, 37, 103, 0.81)"
-            : "rgba(12, 37, 103, 1)"
-          }, styles.myButton]}
-        >
-          <Text style={styles.buttonText}>Open Gallery</Text></Pressable>
+        <ButtonBase 
+          onPress={() => setGalleryActive(true)} 
+          buttonText="Gallery" 
+          buttonSize={2}
+        />
       </View>
 
       <View style={styles.button}>
-        <Pressable 
-          onPress={openCamera}
-          style={({pressed}) => [{
-            backgroundColor: pressed
-            ? "rgba(12, 37, 103, 0.81)"
-            : "rgba(12, 37, 103, 1)"
-          }, styles.myButton]}
-        >
-          <Text style={styles.buttonText}>Camera</Text>
-        </Pressable>
+        <ButtonBase onPress={openCamera} buttonText="Camera" buttonSize={2}/>
       </View>
 
     </View>
   ;
 
-  console.log(imgPaths)
+  const handleFromCameraToGallery = () => {
+    handleCloseCamera();
+    setGalleryActive(true);
+  }
 
   return (
     <View style={styles.root}>
@@ -190,9 +190,22 @@ export default function App() {
         <StatusBar style="auto" />
       </View>
 
-      <Text style={[styles.titleText]}>MY TASKS</Text>
+      <View style={styles.row}>
+        <ImageDisplay />
+        <Text style={[styles.titleText]}>MY TASKS</Text>
+      </View>
+
+      
       <View style={styles.list}>
-        <TaskList tasksArr={tasks} deleteItem={deleteTask} modifyItem={modifyTask}/>
+        {tasks.length > 0 ?
+          <TaskList tasksArr={tasks} del={deleteTask} modify={modifyTask}/>
+          :
+          <View style={[styles.buttonRow, { width: "100%"}]}>
+            <Text style={{color: "#fff", fontWeight:"700"}}>
+              No tasks set yet
+            </Text>
+          </View>
+        }
       </View>
 
       {isModifyActive ? 
@@ -210,15 +223,17 @@ export default function App() {
         <Gallery 
           onClose={() => setGalleryActive(false)} 
           paths={imgPaths}
+          openCamera={openCamera}
+          del={deleteImage}
         />
         : buttonRow
       }
-
-       
+   
       <Cam 
         onCloseCamera={handleCloseCamera}
         isVisible={showCamera}
         saveImg={saveNewImg}
+        onGoGallery={handleFromCameraToGallery}
       />
      
     </View>
@@ -249,7 +264,7 @@ const styles = StyleSheet.create({
   },
   myButton: {
     width: 100,
-    height: 61,
+    height: 42,
     justifyContent: 'center',
     alignItems:'center',
     marginBottom:'10%',
@@ -266,7 +281,8 @@ const styles = StyleSheet.create({
     width:"81%",
     marginTop: "2%",
     paddingTop: "5%",
-    justifyContent:"center",
+    paddingLeft: "3%",
+    justifyContent: "space-around",
     alignItems:"center",
     backgroundColor: "rgba(255, 103, 0, 1)",
     borderColor: "#0c2567",
@@ -274,13 +290,18 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   center: {
-    justifyContent:"center",
+    justifyContent: "center",
     alignItems:"center",
   },
   titleText: {
     fontWeight: "bold",
     fontSize: 24,
     lineHeight: 30,
-    paddingTop: "2%"
+    paddingTop: "15%"
+  }, 
+  row: {
+    flexDirection: "row",
+    marginLeft: "-20%",
+    marginBottom: "-5%",
   }
 });

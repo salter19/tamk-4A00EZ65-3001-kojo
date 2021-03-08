@@ -28,4 +28,5 @@ const SavePicPaths = (picPaths) => {
     return new Promise(func);
 };
 
+
 export default { LoadPicPaths, SavePicPaths};
