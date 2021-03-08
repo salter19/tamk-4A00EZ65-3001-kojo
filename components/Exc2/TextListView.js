@@ -10,7 +10,6 @@ import {
 import Priority from '../../data/Priority';
 
 // my components
-import ImageDisplay from '../ImageDisplay';
 import { formatDateTime, formatDateTimeFromDate } from '../utils';
 
 // dynamic width wrapper for text
@@ -30,9 +29,11 @@ const format = (dateObj) => {
   const str = '';
 
   if (typeof dateObj !== typeof str) {
+    //console.log('at text list view, date is not a string ')
     // handle Date object
     return formatDateTimeFromDate(dateObj);
   } else {
+    //console.log('at text list view, date IS a string ')
     return formatDateTime(dateObj);
   }
 };
