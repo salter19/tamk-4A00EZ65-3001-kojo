@@ -23,12 +23,16 @@ const Maps = (props) => {
     setRegion(location);
   }, [location]);
 
+  // set marker to initial loc when map is opened
   const getInitialLocationAsync = async () => {
+
+    // use of location was not granted
     const notGranted = () => {
       setHasLocationPermission(false);
       return;
     }
 
+    // use of location was granted
     const grantedAsync = async() => {
       setHasLocationPermission(true);
 
@@ -91,7 +95,7 @@ const Maps = (props) => {
     props.onClose(location)
   }
 
-  // ask permission if undefined
+  // ask permission to use location, if undefined
   if (hasLocationPermission === undefined) {
     return (
       <View>
