@@ -80,6 +80,7 @@ const renderItem = ({ item, index }) => {
               : styles.listItem,
           ]}
         >
+          {/* Priority */}
           <View>
               <Text 
                 style={[
@@ -218,7 +219,8 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     borderColor: "#ffffff",
     borderWidth: 2,
-    marginRight: "-76%",
+    marginRight: "-74%",
+    marginTop:"6%",
     marginBottom: "-42%",
     paddingTop: "4%",
     alignSelf: "center",
