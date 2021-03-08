@@ -20,7 +20,6 @@ const Maps = (props) => {
 
   // set region when location changes
   useEffect(() => {
-    console.log(location)
     setRegion(location);
   }, [location]);
 
