@@ -194,7 +194,6 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
       formatTimeToStr(dateToFormat);
     } else {
       const dateObj = new Date(Utils.formatDateTimeFromStr(dateToFormat));
-      console.log('at edit ' + dateObj)
       setDate(dateObj);
       const date = Utils.formatDate(dateToFormat);
       const time = Utils.formatTime(dateToFormat);
@@ -245,7 +244,6 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
 
   const handlePickerChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    console.log('edit current date:' + typeof currentDate)
     setIsPickerVisible(Platform.OS === 'ios');
     setDate(currentDate);
     formatDateToStr(currentDate);
