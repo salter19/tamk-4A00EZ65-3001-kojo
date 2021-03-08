@@ -4,11 +4,10 @@ import {
   Modal,
   StyleSheet,
   View,
-  Button,
   Platform,
   Animated,
   Easing,
-  Pressable,
+  Alert,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import CheckBox from '@react-native-community/checkbox';
@@ -94,20 +93,48 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
   };
 
   const saveAndClose = () => {
-    onSubmitPress({
-      key: key,
-      title: title,
-      description: description,
-      date: date,
-      priority: priority,
-      location: location,
-    });
-    onClose();
+    // if there is a task title, save task at close
+    const hasTitle = () => {
+      onSubmitPress({
+        key: key,
+        title: title,
+        description: description,
+        date: date,
+        priority: priority,
+        location: location,
+      });
+      onClose();
+    }
+
+    const hasNotTitle = () => {
+      alert("No task title was set, task not saved.");
+      onClose();
+    }
+
+    title !== '' 
+    ? hasTitle()
+    : hasNotTitle();
   };
 
   const onClosePressed = () => {
-    console.log('pressed close, should save?');
-    onClose();
+    Alert.alert(
+      "About to close",
+      "Save before closing?",
+      [
+        {
+          text: "Don't save",
+          onPress: onClose(),
+          style:"cancel"
+        },
+        {
+          text: "Save",
+          onPress: saveAndClose(),
+        }
+      ],
+      {
+        cancelable: false
+      }
+    );
   };
 
   useEffect(() => {
