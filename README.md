@@ -6,8 +6,9 @@ The project is at the verge of it's first build.
 
 # Development environment
 The project is written with React Native and it uses Expo.
+It has been tested solely on Android mobile phone.
 
-# Installation guide
+# Project installation
 Clone the project:
     
     `git clone [project url] <dir name>`
@@ -19,3 +20,6 @@ Install the dependencies needed:
 Run expo:
     
     `expo start`
+
+# The application
+This is a Tampere themed TODO application suited for approximately half of the city and whole of Mouhijärvi. 
