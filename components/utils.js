@@ -25,8 +25,6 @@ export const formatDateTimeFromStr = (dateStr) => {
    
   // fix month (array indexing)
   month = Number.parseInt(month) - 1;
-  // fix hour (timezone bubblegum)
-  hour = Number.parseInt(hour) + 2 ;
   
   const event = new Date(year, month, day, hour, minutes);
   return event;

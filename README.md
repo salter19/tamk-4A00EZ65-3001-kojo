@@ -23,3 +23,4 @@ Run expo:
 
 # The application
 This is a Tampere themed TODO application suited for approximately half of the city and whole of Mouhijärvi. 
+
