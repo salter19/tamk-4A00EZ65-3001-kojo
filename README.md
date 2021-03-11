@@ -9,10 +9,13 @@ The project is written with React Native and it uses Expo.
 
 # Installation guide
 Clone the project:
+    
     `git clone [project url] <dir name>`
 
 Install the dependencies needed:
+    
     `npm install`
 
 Run expo:
+    
     `expo start`
