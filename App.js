@@ -27,6 +27,7 @@ export default function App() {
     date:undefined,
     location:{ latitude:undefined, longitude:undefined},
     priority:undefined,
+    picPath:undefined,
   });
 
   const [tasks, setTasks] = useState([]);
@@ -35,6 +36,7 @@ export default function App() {
   const [imgPaths, setImgPaths] = useState([]);
   const [isGalleryActive, setGalleryActive] = useState(false);
   const [showCamera, setShowCamera] = useState(false);
+  const [currentTaskImg, setCurrentTaskImg] = useState(undefined);
 
   useEffect(() => {
     (async() => {
@@ -76,6 +78,7 @@ export default function App() {
         longitude:taskToSave.location.longitude
       },
       priority: taskToSave.priority,
+      picPath: taskToSave.picPath,
     });   
   }
 
@@ -86,6 +89,12 @@ export default function App() {
   
   // when ever picture is taken its path is pushed here
   const saveNewImg = (item) => {
+    // if pic is taken in edit / add task
+    // set it as current task img
+    if (isModifyActive) {
+      setCurrentTaskImg(item);
+    }
+
     // make sure no duplicates are created
     const tmp = (imgPaths.filter((pic) => pic !== item));
     setImgPaths([...tmp, { path: item }]);
@@ -135,11 +144,13 @@ export default function App() {
 
   const modifyTask = (item) => {
     setCurrentTask(item);
+    setCurrentTaskImg(item.picPath);
     setModifyActive(true);
   };
 
   const addNewTask = () => {
     setCurrentTask(undefined);
+    setCurrentTaskImg(undefined);
     setModifyActive(true);
   };
   
@@ -214,7 +225,8 @@ export default function App() {
           onSubmitPress={onSubmit} 
           onClose={() => setModifyActive(false)}
           currentTask={currentTask}
-          saveNewImg={saveNewImg}
+          currentTaskImg={currentTaskImg}
+          openCamera={openCamera}
         />
         : addButton
       }

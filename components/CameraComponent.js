@@ -16,7 +16,6 @@ const CameraComponent = ({onCloseCamera, isVisible, saveImg, onGoGallery}) => {
   const [type, setType] = useState(CAMERA_BACK);
   const [latestPic, setLatestPic] = useState(undefined);
   
-
   // useRefs
   const cameraRef = useRef(undefined);
 

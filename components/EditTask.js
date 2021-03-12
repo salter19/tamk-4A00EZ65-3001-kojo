@@ -8,6 +8,7 @@ import {
   Animated,
   Easing,
   Alert,
+  Image
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import CheckBox from '@react-native-community/checkbox';
@@ -20,7 +21,15 @@ import { FADE_DURATION } from './../data/Constants';
 import ButtonBase from './ButtonBase';
 import Maps from './Maps';
 
-const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
+const EditTask = ({ 
+  isModify, 
+  onClose, 
+  onSubmitPress, 
+  currentTask,
+  currentTaskImg,
+  openCamera,
+  
+}) => {
   // states that define if an element is visible or not
   const [isVisible, setVisible] = useState(false);
   const [isPickerVisible, setIsPickerVisible] = useState(false);
@@ -49,6 +58,9 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
     longitude: undefined
   });
 
+  const [picPath, setPicPath] = useState(undefined);
+  const defaultImg = require("../assets/TaikuriToRight.png");
+
   // Titles of form elements
   const titles = [
     'Task title    * mandatory', 
@@ -57,16 +69,26 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
   ];
   const fadeAnimation = useRef(new Animated.Value(0)).current;
 
+  // sets visibility of the modal
   useEffect(() => {
     setVisible(true);
   }, [isModify]);
 
+  // sets priority default, if priority is set to none
+  // shows note when doing so
   useEffect(() => {
     if (!priority) {
       setIsPrioritySet(true);
       fadeIn(3000);
     }
   }, [priority]);
+
+  // sets img for the task if one is not undefined 
+  useEffect(() => {
+    setPicPath(currentTaskImg);
+    
+  }, [currentTaskImg])
+
 
   // set fade in animation
   const fadeOut = (_duration = FADE_DURATION) => {
@@ -115,6 +137,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
         date: date,
         priority: priority,
         location: location,
+        picPath: picPath,
       });
       onClose();
     }
@@ -162,6 +185,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
       formatDateTime(currentTask.date);
       resetPriority(currentTask.priority);
       setLocation(currentTask.location);
+      setPicPath(currentTaskImg)
     } else {
       formatDateTime(date);
     }
@@ -289,7 +313,7 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
     const loc = {latitude: location.latitude, longitude: location.longitude};
     setLocation(loc);
   };
-  
+
   return (
     <Modal
       animationType="fade"
@@ -298,6 +322,35 @@ const EditTask = ({ isModify, onClose, onSubmitPress, currentTask }) => {
       onRequestClose={saveAndClose}
     >
       <View style={[styles.centeredView, styles.root]}>
+
+        <View>
+          <View style={[styles.latest, styles.preview]}>
+
+            {imgPath =! undefined ? 
+              <Image 
+                source={{uri:picPath}}  
+                style={styles.prevPic}
+              />
+            : <Image 
+                source={defaultImg}  
+                style={styles.prevPic}
+              />
+            }
+            
+          </View>
+            
+          <View style={styles.cameraButton}>
+            <ButtonBase
+              onPress={openCamera}
+              buttonText="CAMERA"
+              buttonColor="orange"
+              buttonSize = {0}
+            />
+          </View>
+            
+
+        </View>
+
         {/* task title */}
         <View>
           <Text style={[styles.textTitle, {marginLeft:"4%"}]}>{titles[0]}</Text>
@@ -545,7 +598,33 @@ const styles = StyleSheet.create({
   },
   textLeftAlign: { 
     marginLeft:"-9%" 
-  }
+  },  
+  latest: {
+    flexDirection:"row",
+    justifyContent:"center",
+  },
+  preview: {
+    backgroundColor: "#0c2567",
+    borderWidth: 4,
+    borderColor: "#fff",
+    borderRadius: 8,
+    width: 151,
+    height: 120,
+    justifyContent:"center",
+    alignItems:"center",
+  },
+  prevPic: {
+    width: 124,
+    height: 93,
+    borderWidth: 2,
+    borderRadius: 2,
+    borderColor: "#fff",
+  },
+  cameraButton: {
+    alignSelf: "center",
+    marginTop: "-5%", 
+    marginBottom: "-10%"
+  },
 });
 
 export default EditTask;
