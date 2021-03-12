@@ -5,10 +5,14 @@ import * as Location from 'expo-location';
 
 import ButtonBase from './ButtonBase';
 
+// custom map component
 const Maps = (props) => {
+
+  // set deltas as constant
   const LATITUDE_DELTA = 0.1;
   const LONGITUDE_DELTA = 0.1;
 
+  // states
   const [location, setLocation] = useState(undefined);
   const [hasLocationPermission, setHasLocationPermission] = useState(undefined);
   const [region, setRegion] = useState(undefined);

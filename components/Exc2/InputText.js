@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { TextInput, View, StyleSheet } from "react-native";
 
+// custom textfield element
 const InputText = (props) => {
   const placeholder = "Fill in";
   const [userInput, setUserInput] = useState("");

@@ -1,8 +1,15 @@
 import React from 'react';
 import {Text, Pressable, StyleSheet} from 'react-native';
 
-const ButtonBase = ({onPress, buttonText, buttonColor = 'blue', buttonSize = 1}) => {
+// Custom button for the project
+const ButtonBase = ({
+  onPress, 
+  buttonText, 
+  buttonColor = 'blue', 
+  buttonSize = 1
+}) => {
 
+  // button base for delete
   const deleteBase = (({ pressed }) => [{
     backgroundColor: pressed
       ? 'rgba(255, 42, 0, 0.81)'
@@ -11,12 +18,15 @@ const ButtonBase = ({onPress, buttonText, buttonColor = 'blue', buttonSize = 1})
     styles.myButton, styles.buttonDel, styles.smallButton
   ]);
 
+  // button base for blue button
   const blueBase = (({ pressed }) => [
     {
       backgroundColor: pressed
         ? 'rgba(12, 37, 103, 0.81)'
         : 'rgba(12, 37, 103, 1)'
     },
+
+    // set button according to given size
     buttonSize === 1 
       ? styles.myButton
       : buttonSize === 0
@@ -25,12 +35,15 @@ const ButtonBase = ({onPress, buttonText, buttonColor = 'blue', buttonSize = 1})
         
   ]);
 
+  // button base for orange button
   const orangeBase = (({ pressed }) => [
     {
       backgroundColor: pressed
         ? 'rgba( 255, 102, 0, 0.81)'
         : 'rgba( 255, 102, 0, 1)'
     },
+
+    // set button according to given sizw
     buttonSize === 1 
       ? styles.myButton
       : buttonSize === 0

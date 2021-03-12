@@ -38,6 +38,7 @@ const format = (dateObj) => {
   }
 };
 
+// custom list view component
 const TextListView = ({ tasksArr, del, modify }) => {
   const [itemToDelete, setItemToDelete] = useState(null);
 
@@ -52,22 +53,22 @@ const TextListView = ({ tasksArr, del, modify }) => {
 
     // call deleteItem in App
     del(item.key);
-};
+  }
 
-const getPriority = (value) => {
-    switch (value) {
-        case Priority.MEDIUM:
-            return "Med";
-        
-        case Priority.LOW:
-            return "Low";
-    
-        default:
-            return "High";
-    }
-}
+  const getPriority = (value) => {
+      switch (value) {
+          case Priority.MEDIUM:
+              return "Med";
+          
+          case Priority.LOW:
+              return "Low";
+      
+          default:
+              return "High";
+      }
+  }
 
-const renderItem = ({ item, index }) => {
+  const renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
         key={item.key}
@@ -134,13 +135,14 @@ const renderItem = ({ item, index }) => {
           </View>
         </View>
       </TouchableOpacity>
-    );
+    )
   };
 
+    
   const itemSeparator = () => {
-    return <View style={styles.separator} />;
+    return <View style={styles.separator} />
   };
-
+    
   return (
     <SafeAreaView style={styles.container}>
       {/* FlatList for scrolling */}
@@ -154,7 +156,7 @@ const renderItem = ({ item, index }) => {
         <Text>{itemToDelete}</Text>
       </FlatList>
     </SafeAreaView>
-  );
+  )
 };
 
 const styles = StyleSheet.create({

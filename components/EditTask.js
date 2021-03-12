@@ -21,6 +21,7 @@ import { FADE_DURATION } from './../data/Constants';
 import ButtonBase from './ButtonBase';
 import Maps from './Maps';
 
+// edit task view, opened with add new task and modify task
 const EditTask = ({ 
   isModify, 
   onClose, 
@@ -30,6 +31,7 @@ const EditTask = ({
   openCamera,
   
 }) => {
+
   // states that define if an element is visible or not
   const [isVisible, setVisible] = useState(false);
   const [isPickerVisible, setIsPickerVisible] = useState(false);
@@ -53,12 +55,16 @@ const EditTask = ({
   const [priorityMedium, toggleMedium] = useState(false);
   const [priorityLow, toggleLow] = useState(false);
 
+  // location
   const [location, setLocation] = useState({
     latitude: undefined, 
     longitude: undefined
   });
 
+  // task related image
   const [picPath, setPicPath] = useState(undefined);
+
+  // default image, TODO: not working
   const defaultImg = require("../assets/TaikuriToRight.png");
 
   // Titles of form elements
@@ -67,6 +73,8 @@ const EditTask = ({
     'Description', 'Date', 
     'Set Date', 'Set Time'
   ];
+
+  // fade animation
   const fadeAnimation = useRef(new Animated.Value(0)).current;
 
   // sets visibility of the modal
@@ -75,7 +83,7 @@ const EditTask = ({
   }, [isModify]);
 
   // sets priority default, if priority is set to none
-  // shows note when doing so
+  // shows animated note when doing so
   useEffect(() => {
     if (!priority) {
       setIsPrioritySet(true);
@@ -127,7 +135,9 @@ const EditTask = ({
     }).start();
   };
 
+  // saves the current task and then closes the edit view
   const saveAndClose = () => {
+
     // if there is a task title, save task at close
     const hasTitle = () => {
       onSubmitPress({
@@ -153,7 +163,9 @@ const EditTask = ({
     : hasNotTitle();
   };
 
+  // either close button was pressed or gesture side swept was used
   const onClosePressed = () => {
+
     // Alert about closing without saving
     // give option to close with or without saving
     Alert.alert(
@@ -176,6 +188,7 @@ const EditTask = ({
     );
   };
 
+  // open current task if one is given (== modify)
   useEffect(() => {
     if (currentTask !== undefined) {
       setKey(currentTask.key);
@@ -187,10 +200,13 @@ const EditTask = ({
       setLocation(currentTask.location);
       setPicPath(currentTaskImg)
     } else {
+      // if current task is not given (== add new task), use current date
+      // format current date for the view
       formatDateTime(date);
     }
   }, []);
 
+  // priority setter, high is the default value
   const resetPriority = (value) => {
       switch (value) {
           case Priority.MEDIUM:
@@ -211,12 +227,17 @@ const EditTask = ({
       }
   }
 
+  // datetime formatter 
   const formatDateTime = (dateToFormat) => {
     const str = "";
+    
     if (typeof dateToFormat !== typeof str) {
+      // if date to format is Date object, format this way
       formatDateToStr(dateToFormat);
       formatTimeToStr(dateToFormat);
+
     } else {
+      // if date to format is String, format this way
       const dateObj = new Date(Utils.formatDateTimeFromStr(dateToFormat));
       setDate(dateObj);
       const date = Utils.formatDate(dateToFormat);
@@ -226,6 +247,7 @@ const EditTask = ({
     }
   };
 
+  // date formatter for Date object
   const formatDateToStr = (dateToFormat) => {
     const day = dateToFormat.getDate();
     const month = dateToFormat.getMonth() + 1;
@@ -234,10 +256,12 @@ const EditTask = ({
     setFormattedDate(`${day}.${month}.${year}`);
   };
 
+  // time formatter for Date object
   const formatTimeToStr = (dateToFormat) => {
     let minute = dateToFormat.getMinutes();
     let hour = dateToFormat.getHours();
 
+    // add leading zero if minute count is under ten
     if (minute < 10) {
       minute = `0${minute}`;
     }
@@ -245,27 +269,33 @@ const EditTask = ({
     setFormattedTime(`${hour}:${minute}`);
   };
 
+  // set or update title
   const updateTitle = (data) => {
     setTitle(data);
   };
 
+  // set or update descripition
   const updateDescription = (data) => {
     setDescription(data);
   };
 
+  // sets datetime picker visible
   const showMode = (currentMode) => {
     setPickerMode(currentMode);
     setIsPickerVisible(true);
   };
 
+  // shows date picker
   const showDatePicker = () => {
     showMode('date');
   };
 
+  // shows time picker
   const showTimePicker = () => {
     showMode('time');
   };
 
+  // sets date and time 
   const handlePickerChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setIsPickerVisible(Platform.OS === 'ios');
@@ -274,40 +304,58 @@ const EditTask = ({
     formatTimeToStr(currentDate);
   };
 
+  // sets priority to high
   const setHigh = () => {
     toggleHigh(!priorityHigh);
 
     if (!priorityHigh) {
       setPriority(Priority.HIGH);
+
+      // wipe other priority setting
       toggleMedium(false);
       toggleLow(false);
+
     } else {
+      // wipe priority high setting
       setPriority(null);
     }
   };
+
+  // sets priority to medium
   const setMedium = () => {
     toggleMedium(!priorityMedium);
 
     if (!priorityMedium) {
       setPriority(Priority.MEDIUM);
+
+      // wipe other priority setting
       toggleHigh(false);
       toggleLow(false);
+
     } else {
+      // wipe priority medium setting
       setPriority(null);
     }
   };
+
+  // sets priority to low
   const setLow = () => {
     toggleLow(!priorityLow);
 
     if (!priorityLow) {
       setPriority(Priority.LOW);
+
+      // wipe other priority setting
       toggleMedium(false);
       toggleHigh(false);
+
     } else {
+      // wipe priority low setting
       setPriority(null);
     }
   };
 
+  // close map view
   const onCloseMap = (location) => {
     setIsMapVisible(false);
     const loc = {latitude: location.latitude, longitude: location.longitude};
@@ -323,22 +371,26 @@ const EditTask = ({
     >
       <View style={[styles.centeredView, styles.root]}>
 
+        {/* task image */}
         <View>
           <View style={[styles.latest, styles.preview]}>
 
-            {imgPath =! undefined ? 
+            {imgPath =! undefined ?  
               <Image 
                 source={{uri:picPath}}  
                 style={styles.prevPic}
               />
-            : <Image 
+            : 
+              // TODO: make default img work 
+              <Image 
                 source={defaultImg}  
                 style={styles.prevPic}
               />
             }
             
           </View>
-            
+
+          {/* camera button */}
           <View style={styles.cameraButton}>
             <ButtonBase
               onPress={openCamera}
@@ -346,8 +398,7 @@ const EditTask = ({
               buttonColor="orange"
               buttonSize = {0}
             />
-          </View>
-            
+          </View>   
 
         </View>
 
@@ -467,8 +518,10 @@ const EditTask = ({
             styles.textTitle, 
             styles.textLeftAlign, {paddingLeft:"7%"}]}>Location</Text>
           <View>
-            <View style={styles.row}>
 
+            <View style={styles.row}>
+              
+              {/* show location  */}
               <View style={{flexDirection:"column"}}>
                 <View style={styles.textMap}>
                   <Text>Latitude:
@@ -485,6 +538,7 @@ const EditTask = ({
                 </View>
               </View>
 
+              {/* open map button */}
               <View style={[styles.button, styles.buttonMap]}>
                 <ButtonBase 
                   onPress={() => setIsMapVisible(true)}

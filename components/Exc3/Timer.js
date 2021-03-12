@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text} from 'react-native';
 
+// timer for the sake of exercise, not used at the app at the moment
 const Timer = ({secondsGone, timeIsUp}) => {
 
   const [time, setTime] = useState(secondsGone);

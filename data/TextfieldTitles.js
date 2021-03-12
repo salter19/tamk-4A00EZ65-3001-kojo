@@ -1,3 +1,4 @@
+// Textfield titles enum
 const TextfieldTitles = {
   TITLE: 0,
   DESCRIPTION: 1,

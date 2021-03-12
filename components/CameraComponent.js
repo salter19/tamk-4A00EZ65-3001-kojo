@@ -8,7 +8,9 @@ import { IMAGE_DIR, CAMERA_BACK, CAMERA_FRONT, WINDOW_WIDTH } from '../data/Cons
 import LoadingAnimation from './LoadingAnimation';
 import ButtonBase from './ButtonBase';
 
+// custom camera component
 const CameraComponent = ({onCloseCamera, isVisible, saveImg, onGoGallery}) => {
+
   // camera permissions
   const [hasPermission, setHasPermission] = useState(undefined);
 
@@ -26,6 +28,7 @@ const CameraComponent = ({onCloseCamera, isVisible, saveImg, onGoGallery}) => {
     }
   }, [latestPic]);
 
+  // shows camera view if permission status is 'granted'
   const onShowCamera = () => {
     (async() => {
         const {status} = await CameraView.requestPermissionsAsync().catch(e => console.log(e));
@@ -61,6 +64,8 @@ const CameraComponent = ({onCloseCamera, isVisible, saveImg, onGoGallery}) => {
         const fullPath = IMAGE_DIR + fileName;
 
         await FileSystem.moveAsync({from: photo.uri, to: fullPath}).catch(e => console.error(e));
+
+        // set latest pic path for the sake of pic preview
         setLatestPic(fullPath);
       }
     })();
@@ -104,6 +109,7 @@ const CameraComponent = ({onCloseCamera, isVisible, saveImg, onGoGallery}) => {
         </View>
       </Modal>
     );
+
   } else {
     return (
       <Modal
@@ -113,6 +119,7 @@ const CameraComponent = ({onCloseCamera, isVisible, saveImg, onGoGallery}) => {
       >
         <View style={styles.root}>
 
+          {/* camera view */}
           <View>
             <CameraView 
               style={styles.cameraPreview}
@@ -122,6 +129,7 @@ const CameraComponent = ({onCloseCamera, isVisible, saveImg, onGoGallery}) => {
             </CameraView>
           </View>
 
+          {/* buttons: toggle, take picture, close camera */}
           <View style={[styles.buttonRow, styles.row]}>
 
             <View style={styles.button}>
@@ -138,6 +146,7 @@ const CameraComponent = ({onCloseCamera, isVisible, saveImg, onGoGallery}) => {
 
           </View>
 
+          {/* pic preview: latest pic, if pressed, move to gallery */}
           <Pressable onPress={onGoGallery}>
             <View style={[styles.latest, styles.preview]}>
               <Image source={{uri:latestPic}}  style={styles.prevPic}/>

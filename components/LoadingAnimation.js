@@ -1,11 +1,13 @@
 import React, {useRef, useEffect} from 'react';
 import {Animated, View, Image, StyleSheet, Easing} from 'react-native';
 
-
+// custom loading animation
 const LoadingAnimation = (props) => {
+
   // the current rotation in degrees
   const spinValue = useRef(new Animated.Value(0));
 
+  // set animation loop
   useEffect(() => {
     Animated.loop(
       Animated.timing(spinValue.current, 
@@ -19,6 +21,7 @@ const LoadingAnimation = (props) => {
     
   });
 
+  // spin the image
   const spin = () => {
     return (
     spinValue.current.interpolate( {
@@ -27,6 +30,7 @@ const LoadingAnimation = (props) => {
     })
     );
   }
+  
   return (
     <View >
       <Animated.Image 

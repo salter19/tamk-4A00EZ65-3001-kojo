@@ -1,3 +1,5 @@
+// utilities for date formatting
+
 export const formatDateTime = (str) => {
   const date = formatDate(str);
   const time = formatTime(str)

@@ -1,3 +1,4 @@
+// Priority enum
 const Priority = {
   HIGH: 3,
   MEDIUM: 2,

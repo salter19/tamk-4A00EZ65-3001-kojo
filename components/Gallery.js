@@ -16,16 +16,27 @@ import ButtonBase from './ButtonBase';
 
 const PADDED_WIDTH = WINDOW_WIDTH * 0.8;
 
+// gallery
 const Gallery = (props) => {
+  // collection of imgs in the gallery
   const [picGallery, setPicGallery] = useState([]);
+
+  // current img object showing
   const [currentPic, setCurrentPic] = useState({
     index: null,
     path: undefined,
   });
+
+  // current index
   const [picIndex, setPicIndex] = useState(null);
+
+  // is gallery visible
   const [isVisible, setIsVisible] = useState(false);
+
+  // if gallery is not carousel, the outer limit
   const [isOutOfRange, setIsOutOfRange] = useState(true);
 
+  // loading view for flipping through the gallery
   const loadingView = (
     <View style={styles.latest}>
       <View style={[styles.prevPic, styles.center]}>
@@ -33,6 +44,8 @@ const Gallery = (props) => {
       </View>
     </View>
   );
+
+  // fade animation init
   const fadeAnimation = useRef(new Animated.Value(0)).current;
 
   // set up pic gallery
@@ -91,7 +104,7 @@ const Gallery = (props) => {
     } else {
       setPicIndex(0);
 
-      // my prefered work around gallery borders
+      // my prefered work around gallery borders: the outer limits
       // setIsOutOfRange(true);
       // setPicIndex(picGallery.length);
     }
@@ -114,7 +127,7 @@ const Gallery = (props) => {
     } else {
       setPicIndex(picGallery.length -1);
 
-      // My prefered work around gallery borders
+      // My prefered work around gallery borders: the outer limits
       // setIsOutOfRange(true);
       // setPicIndex(-1);
     }
@@ -137,6 +150,7 @@ const Gallery = (props) => {
     }).start();
   };
 
+  // delete picture
   const onPressDelete = () => {
     props.del(currentPic.path);
   }
