@@ -4,10 +4,10 @@
     "slug": "TaskApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/TaikuriToRight.png",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "image": "./assets/TaikuriToRight.png",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -23,10 +23,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.exampleproject.TaskAPP"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/TaikuriToRight.png"
     }
   }
 }
